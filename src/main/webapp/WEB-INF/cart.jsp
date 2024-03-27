@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <c:import url="includes/head.jsp"></c:import>
@@ -18,9 +19,9 @@
     <div class="spinner-grow text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
-
+<c:set var="currentPage" value="cart" />
 <c:import url="includes/navbar.jsp">
-    <%--    <c:param name="currentPage" value="${currentPage}" />--%>
+        <c:param name="currentPage" value="${currentPage}" />
 </c:import>
 
 <!-- Modal Search Start -->
