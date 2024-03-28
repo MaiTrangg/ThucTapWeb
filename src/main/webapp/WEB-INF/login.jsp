@@ -5,8 +5,11 @@
   Time: 8:40 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <c:import url="includes/head.jsp"></c:import>
@@ -24,7 +27,7 @@
         <div class="login-card">
             <div class="card-header text-center">Đăng nhập tài khoản</div>
             <div class="card-body">
-                <form action="login" method="post">
+                <form action="loginServlet" method="post">
                     <div class="form-group">
                         <label>Tên khách hàng</label>
                         <input type="text" name="login-username" class="form-control" placeholder="Nhập tên khách hàng">
@@ -36,8 +39,11 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary" >Đăng nhập</button>
                         <br> <a href="register.jsp" >Tạo tài khoản mới</a>
-                        <a href="forgotpassword.jsp"  style="margin-left: 20px;">Quên mật khẩu</a>
+                        <a href="forgotpassword.jsp" >Quên mật khẩu</a>
                     </div>
+
+                        <p style="color: #e21818">${error}</p>
+                    
                 </form>
             </div>
         </div>
