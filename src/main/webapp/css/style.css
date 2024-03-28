@@ -275,19 +275,10 @@
     padding-top: 100px;
 }
 
-.login-wrapper {
-    max-width: 400px; /* hoặc bất kỳ giá trị nào phù hợp với thiết kế của bạn */
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 50px;
-}
-
 .login-card {
-    margin-top: 0;
     border: 1px solid #3e5e04;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding-top: 350px;
     margin: 1rem;
     padding: 1rem;
 }
@@ -318,26 +309,132 @@
     border-radius: 5px;
 }
 
-.login-card .text-center {
-    margin-top: 20px;
-}
-
 .login-card .btn-primary {
     width: 100%;
 }
 
-.login-card a {
+.login-card label.login-loginwith{
+    margin-top: 20px;
+}
+
+.login-card a.login-facebook,
+.login-card a.login-google {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #4d7605;
+    background: white;
+}
+
+.login-card a.login-facebook{
+    margin-right: 15px;
+}
+
+.login-card a.login-facebook i,
+.login-card a.login-google i {
+    position: relative;
+    top: 15px;
+}
+
+.login-card a.login-facebook:hover,
+.login-card a.login-google:hover {
+    background: #b2c983;
+    transform: scale(1.1);
+    transition: border-color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.login-card .login-register,
+.login-card .login-forgotpass{
     color: #3e5e04;
     text-decoration: none;
-    margin-left: 10px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
-.login-card a:hover {
-    text-decoration: #4DC7A0;
+.login-card .login-register:hover,
+.login-card .login-forgotpass:hover{
+    color: #ecb65a;
 }
-
 /*** login end ***/
 
+
+/*** register start ***/
+
+.container-register {
+    max-width: 500px;
+    height: 560px;
+    margin: 170px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #3e5e04;
+}
+
+.card-header {
+    background-color: #3e5e04;
+    color: #fff;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.register-card .register-ti{
+    margin-top: 10px;
+}
+
+.register-card .register-login{
+    margin-top: 10px;
+    display: inline-block;
+    color: #3e5e04;
+    text-decoration: none;
+}
+
+.register-card .register-login:hover{
+    color: #ecb65a;
+}
+/*** register end ***/
+
+/*** forgotpassword start ***/
+.forgotpass-container{
+    max-width: 500px;
+    height: 250px;
+    margin: 180px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #3e5e04;
+}
+
+
+.forgot-card .forgot-login,
+.forgot-card .forgot-register{
+    color: #3e5e04;
+    text-decoration: none;
+    margin-top: 10px;
+    padding-right: 50px;
+    display: inline-block;
+}
+
+.forgot-card .forgot-login:hover,
+.forgot-card .forgot-register:hover{
+    color: #ecb65a;
+}
+
+/*** forgotpassword end ***/
 /*** service Start ***/
 .service .service-item .service-content {
     position: relative;
