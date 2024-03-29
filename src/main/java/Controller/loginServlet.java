@@ -18,8 +18,8 @@ import util.MaHoa;
  */
 @WebServlet(name = "loginServlet", value="/loginServlet")
 public class loginServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -27,6 +27,7 @@ public class loginServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

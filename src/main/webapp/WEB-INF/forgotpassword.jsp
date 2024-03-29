@@ -1,19 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: Thanh Truc
-  Date: 13-Mar-24
-  Time: 8:40 PM
+  Date: 28-Mar-24
+  Time: 8:03 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <c:import url="includes/head.jsp"></c:import>
 </head>
 <body>
+
 <!-- Spinner Start -->
 <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
@@ -24,47 +23,28 @@
     <c:param name="currentPage" value="${currentPage}" />
 </c:import>
 
-<!-- Model start -->
-<div class="container-login">
-    <div class="login-wrapper">
-        <div class="login-card">
-            <div class="card-header text-center">Đăng nhập tài khoản</div>
-            <div class="card-body">
-                <form action="loginServlet" method="post">
-                    <div class="form-group">
-                        <label>Tên khách hàng</label>
-                        <input type="text" name="login-username" class="form-control" placeholder="Nhập tên khách hàng">
-                    </div>
-                    <div class="form-group">
-                        <label>Mật khẩu</label>
-                        <input type="password" name="login-password" class="form-control" placeholder="Nhập mật khẩu">
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary" >Đăng nhập</button>
-                        <label class="login-loginwith">Đăng nhập với</label><br>
-                        <a href="" class="login-facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="" class="login-google"><i class="fab fa-google"></i></a>
-                        <br> <a href="register" class="login-register">Tạo tài khoản mới</a>
-                        <a href="forgotpassword"  class="login-forgotpass" style="margin-left: 20px;">Quên mật khẩu</a>
 
-                        <br> <a href="register.jsp" >Tạo tài khoản mới</a>
-                        <a href="forgotpassword.jsp" >Quên mật khẩu</a>
-                    </div>
-
-<<<<<<< HEAD
-                    <p style="color: #e21818">${error}</p>
-
-=======
-                        <p style="color: #e21818">${error}</p>
-                    
->>>>>>> master
-                </form>
-            </div>
+<div class="forgotpass-container">
+    <div class="forgot-wrapper">
+        <div class="forgot-card">
+        <div class="card-header text-center">Nhập địa chỉ email của bạn</div>
+        <div class="card-body">
+            <form action="forgotpassword" method="post">
+                <div class="form-group">
+                    <label>Địa chỉ Email</label>
+                    <input type="email" name="forgotpassword-email" class="form-control" placeholder="Nhập email">
+                </div>
+<%--                <p class="error"">${errorFromForgotpassword}</p>--%>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Gửi yêu cầu</button><br>
+                    <a href="login" class="forgot-login"> Đăng nhập tài khoản</a>
+                    <a href="register" class="forgot-register"> Tạo tài khoản</a>
+                </div>
+            </form>
+        </div>
         </div>
     </div>
 </div>
-
-<!-- Model end -->
 
 <c:import url="includes/navbar.jsp">
     <c:param name="currentPage" value="${currentPage}" />
@@ -107,6 +87,5 @@
 
 <!-- Template Javascript -->
 <script src="../js/main.js"></script>
-
 </body>
 </html>

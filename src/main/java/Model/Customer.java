@@ -62,7 +62,6 @@ public class Customer {
     /**
      * @param username
      * @param password
-
      */
 //    public Customer(String username, String password) {
 //        this.username = username;
@@ -161,6 +160,6 @@ public class Customer {
         return isAdmin;
     }
 
-
-
 }
+
+

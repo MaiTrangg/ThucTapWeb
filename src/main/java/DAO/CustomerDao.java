@@ -332,14 +332,8 @@ public class CustomerDao {
 
 	public static void main(String[] args) {
 		Customer c = new Customer("trang", "123");
-//		Customer c2 = new Customer("tien", "456");
-//		CustomerDao.GetInstance().insert(c2);
-//		CustomerDao.GetInstance().delete(c2);
-//		List<Customer> list =CustomerDao.GetInstance().getAll();
-//		for (Customer customer : list) {
-//			System.out.println(customer);
-//		}
-		
+
 		System.out.println(CustomerDao.GetInstance().getbyID(c));
 	}
 }
+
