@@ -51,8 +51,13 @@
                         <a href="forgotpassword.jsp" >Quên mật khẩu</a>
                     </div>
 
+<<<<<<< HEAD
                     <p style="color: #e21818">${error}</p>
 
+=======
+                        <p style="color: #e21818">${error}</p>
+                    
+>>>>>>> master
                 </form>
             </div>
         </div>

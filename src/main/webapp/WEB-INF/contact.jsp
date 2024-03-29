@@ -18,7 +18,6 @@
     <div class="spinner-grow text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
-
 <c:set var="currentPage" value="contact" />
 <c:import url="includes/navbar.jsp">
         <c:param name="currentPage" value="${currentPage}" />
