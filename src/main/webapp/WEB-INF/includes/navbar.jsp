@@ -30,11 +30,18 @@
                 <c:set var="currentPage" value="${param.currentPage}"></c:set>
 
                 <div class="navbar-nav mx-auto">
-                    <a href="index" class="nav-item nav-link ${currentPage eq 'index' ? 'active' : ''}">Trang chủ</a>
+                    <a href="index" class="nav-item nav-link ${currentPage eq 'index' ? 'active' : ''}" >Trang chủ</a>
                     <a href="shop" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}">Cửa hàng</a>
                     <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
+                        <c:if test="${currentPage eq 'cart' || currentPage eq 'checkout'|| currentPage eq 'testimonial'}">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
+                        </c:if>
+                        <c:if test="${currentPage ne 'cart' && currentPage ne 'checkout'&& currentPage ne 'testimonial'}">
+                            <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
+                        </c:if>
+
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
                             <a href="cart" class="dropdown-item ${currentPage eq 'cart' ? 'active' : ''}">Giỏ hàng</a>
                             <a href="checkout" class="dropdown-item ${currentPage eq 'checkout' ? 'active' : ''}">Thanh toán</a>
@@ -50,9 +57,21 @@
                         <i class="fa fa-shopping-bag fa-2x"></i>
                         <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                     </a>
-                    <a href="login" class="my-auto">
-                        <i class="fas fa-user fa-2x"></i>
-                    </a>
+
+                    <c:if test="${customer != null}">
+
+                        <a class="my-auto" style="margin-right: 5px">chao ${customer.username} </a>
+                        <a href="logoutServlet" class="my-auto">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </c:if>
+                    <c:if test="${customer == null}">
+                        <a href="login" class="my-auto">
+                            <i class="fas fa-user fa-2x"></i>
+                        </a>
+                    </c:if>
+
+
                 </div>
             </div>
         </nav>

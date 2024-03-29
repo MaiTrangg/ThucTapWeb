@@ -12,9 +12,9 @@ public class JDBCUtil {
             // Load the MySQL JDBC driver
 //			com.mys
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/";
+            String url = "jdbc:mysql://localhost:3306/store";
             String user = "root";
-            String password = "";
+            String password = "123456";
             try {
                 connection =  DriverManager.getConnection(url, user, password);
             } catch (SQLException e) {
@@ -36,5 +36,6 @@ public class JDBCUtil {
             e.printStackTrace();
         }
     }
+
 
 }
