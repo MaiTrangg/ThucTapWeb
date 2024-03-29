@@ -4,11 +4,8 @@ import java.util.UUID;
 
 public class UniqueStringGenerator {
 
-<<<<<<< HEAD
-    public static String generateUniqueString() {
-=======
+
 	public static String generateUniqueString() {
->>>>>>> master
         return UUID.randomUUID().toString();
     }
 
@@ -17,8 +14,5 @@ public class UniqueStringGenerator {
         String uniqueString = generateUniqueString();
         System.out.println("Unique String: " + uniqueString);
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> master

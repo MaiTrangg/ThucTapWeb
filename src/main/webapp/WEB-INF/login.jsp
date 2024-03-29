@@ -47,17 +47,11 @@
                         <br> <a href="register" class="login-register">Tạo tài khoản mới</a>
                         <a href="forgotpassword"  class="login-forgotpass" style="margin-left: 20px;">Quên mật khẩu</a>
 
-                        <br> <a href="register.jsp" >Tạo tài khoản mới</a>
-                        <a href="forgotpassword.jsp" >Quên mật khẩu</a>
                     </div>
 
-<<<<<<< HEAD
-                    <p style="color: #e21818">${error}</p>
 
-=======
                         <p style="color: #e21818">${error}</p>
                     
->>>>>>> master
                 </form>
             </div>
         </div>
