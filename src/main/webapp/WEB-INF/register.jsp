@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <c:import url="includes/head.jsp"></c:import>
@@ -29,7 +30,7 @@
         <div class="register-card">
         <div class="card-header text-center">Đăng kí tài khoản</div>
         <div class="card-body">
-            <form action="register" method="post">
+            <form action="registerServerlet" method="post">
                 <div class="form-group">
                     <label>Tên khách hàng</label>
                     <input type="text" name="register-username" class="form-control" placeholder="Nhập tên khách hàng" value="${username}">
