@@ -70,7 +70,7 @@
                         <input type="password" id="password" name="register-password" class="form-control input-border" placeholder="Nhập mật khẩu" value="${pass}">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary none-border" type="button" id="btnPassword">
-                                <span class="fas fa-eye" id="eyeIcon"></span>
+                                <span class="fas fa-eye-slash" id="eyeIcon"></span>
                             </button>
                         </div>
                     </div>
@@ -145,10 +145,10 @@
             isPasswordVisible = !isPasswordVisible;
             if (isPasswordVisible) {
                 passwordInput.type = 'text';
-                eyeIcon.className = 'fas fa-eye-slash'; // Thêm lớp cho biểu tượng
+                eyeIcon.className = 'fas fa-eye'; // Thêm lớp cho biểu tượng
             } else {
                 passwordInput.type = 'password';
-                eyeIcon.className = 'fas fa-eye'; // Thêm lớp cho biểu tượng
+                eyeIcon.className = 'fas fa-eye-slash'; // Thêm lớp cho biểu tượng
             }
         });
     });
