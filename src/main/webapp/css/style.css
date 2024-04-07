@@ -1,4 +1,6 @@
 /*** Spinner Start ***/
+
+
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -6,9 +8,13 @@
     z-index: 99999;
 }
 
+
+
+
 #error{
     color: var(--bs-red) ;
 }
+
 
 
  #spinner.show {
@@ -477,7 +483,11 @@ label {
     color: var(--bs-secondary);
 }
 
+
 .fruite .fruite-item {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
     height: 100%;
     transition: 0.5s;
 }

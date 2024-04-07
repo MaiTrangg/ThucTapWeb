@@ -18,9 +18,9 @@
   <div class="spinner-grow text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
-<%--<c:set var="currentPage" value="shopDetail" />--%>
+<c:set var="currentPage" value="shopDetail" />
 <c:import url="includes/navbar.jsp">
-<%--    <c:param name="currentPage" value="${currentPage}" />--%>
+ <c:param name="currentPage" value="${currentPage}" />
 </c:import>
 
 <!-- Modal Search Start -->
