@@ -30,23 +30,16 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <c:set var="currentPage" value="${param.currentPage}"></c:set>
-                <c:out value="${currentPage}"/>
+<%--                <c:out value="${currentPage}"/>--%>
 
                 <div class="navbar-nav mx-auto">
                     <a href="index" class="nav-item nav-link ${currentPage eq 'index' ? 'active' : ''}" >Trang chủ</a>
-                    <a href="shop" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}">Cửa hàng</a>
+                    <a href="shopServlet" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}">Cửa hàng</a>
                     <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
                     <div class="nav-item dropdown">
-<<<<<<< HEAD
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
-                        <c:if test="${currentPage eq 'cart' || currentPage eq 'checkout'|| currentPage eq 'testimonial'}">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
-                        </c:if>
-=======
                        <c:if test="${currentPage eq 'cart' || currentPage eq 'checkout'|| currentPage eq 'testimonial'}">
                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
                        </c:if>
->>>>>>> master
                         <c:if test="${currentPage ne 'cart' && currentPage ne 'checkout'&& currentPage ne 'testimonial'}">
                             <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
                         </c:if>
@@ -66,19 +59,11 @@
                         <i class="fa fa-shopping-bag fa-2x"></i>
                         <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                     </a>
-<<<<<<< HEAD
-
-=======
->>>>>>> master
                     <c:if test="${customer != null}">
 
                         <a class="my-auto" style="margin-right: 5px">chao ${customer.username} </a>
                         <a href="logoutServlet" class="my-auto">
-<<<<<<< HEAD
-                            <i class="fas fa-sign-out-alt"></i>
-=======
                              <i class="fas fa-sign-out-alt"></i>
->>>>>>> master
                         </a>
                     </c:if>
                     <c:if test="${customer == null}">

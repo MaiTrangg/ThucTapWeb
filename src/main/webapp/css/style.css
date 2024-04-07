@@ -11,10 +11,6 @@
     color: var(--bs-red) ;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
      visibility: visible;
@@ -432,7 +428,7 @@ label {
 .forgot-card .forgot-register{
     color: #3e5e04;
     text-decoration: none;
-    margin-top: 10px;
+    margin-top: 15px;
     padding-right: 50px;
     display: inline-block;
 }
@@ -443,6 +439,7 @@ label {
 }
 
 /*** forgotpassword end ***/
+
 /*** service Start ***/
 .service .service-item .service-content {
     position: relative;
@@ -470,7 +467,7 @@ label {
 }
 
 .fruite .fruite-categorie .fruite-name {
-    line-height: 40px;
+    line-height: 50px;
 }
 
 .fruite .fruite-categorie .fruite-name a {
@@ -482,6 +479,9 @@ label {
 }
 
 .fruite .fruite-item {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
     height: 100%;
     transition: 0.5s;
 }
@@ -492,6 +492,8 @@ label {
 .fruite .fruite-item .fruite-img {
     overflow: hidden;
     transition: 0.5s;
+    width: 306px;
+    height: 350px;
     border-radius: 10px 10px 0 0;
 }
 
