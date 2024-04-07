@@ -376,7 +376,7 @@
 
 .container-register {
     max-width: 500px;
-    height: 560px;
+    height: auto;
     margin: 170px auto;
     padding: 20px;
     background-color: #fff;
@@ -463,6 +463,8 @@ label {
 
 
 /*** Fruits Start ***/
+
+
 .fruite .tab-class .nav-item a.active {
     background: var(--bs-secondary) !important;
 }
