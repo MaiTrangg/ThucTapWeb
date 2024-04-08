@@ -13,11 +13,12 @@ import java.util.List;
 public class processCategoryTab extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nameTab = request.getParameter("nameTab");
-        System.out.println("nametab: "+nameTab);
-        HttpSession session = request.getSession();
-        List<Product> listP = ProductDAO.getProductByCategory(nameTab);
-        session.setAttribute("listP", listP);
+
+    String nameTab = request.getParameter("nameTab");
+    System.out.println("nametab: "+nameTab);
+    HttpSession session = request.getSession();
+    List<Product> listP = ProductDAO.getProductByCategory(nameTab);
+    session.setAttribute("listP", listP);
         session.setAttribute("nameTab", nameTab);
 
         request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);

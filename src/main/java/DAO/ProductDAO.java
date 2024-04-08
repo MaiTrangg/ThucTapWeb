@@ -23,17 +23,17 @@ public class ProductDAO {
             while(rs.next()) {
 
 
-                Category category= CategoryDAO.getCategoryByID( rs.getInt(8));
-                list.add(new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-                        rs.getInt(7),
-                        category
-                ));
+                      Category category= CategoryDAO.getCategoryByID( rs.getInt(8));
+                       list.add(new Product(
+                               rs.getInt(1),
+                                rs.getString(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getDouble(5),
+                                rs.getDouble(6),
+                                rs.getInt(7),
+                               category
+                       ));
             }
             con.close();
 
@@ -44,7 +44,7 @@ public class ProductDAO {
     }
 
     public static List<Category> countProByCategory(){
-        List<Category> list = new ArrayList<>();
+       List<Category> list = new ArrayList<>();
         String query = "select   categories.nameCate, count(productID) soluong\n" +
                 "from products, categories\n" +
                 "where products.categoryID =categories.categoryID\n" +
@@ -100,5 +100,5 @@ public class ProductDAO {
     }
 
 
-
 }
+

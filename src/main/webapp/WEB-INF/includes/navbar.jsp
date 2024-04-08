@@ -37,6 +37,9 @@
                     <a href="shopServlet" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}">Cửa hàng</a>
                     <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
                     <div class="nav-item dropdown">
+
+
+
                        <c:if test="${currentPage eq 'cart' || currentPage eq 'checkout'|| currentPage eq 'testimonial'}">
                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
                        </c:if>
@@ -59,11 +62,19 @@
                         <i class="fa fa-shopping-bag fa-2x"></i>
                         <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                     </a>
+
+
+
+
                     <c:if test="${customer != null}">
 
                         <a class="my-auto" style="margin-right: 5px">chao ${customer.username} </a>
                         <a href="logoutServlet" class="my-auto">
+
+
                              <i class="fas fa-sign-out-alt"></i>
+
+
                         </a>
                     </c:if>
                     <c:if test="${customer == null}">

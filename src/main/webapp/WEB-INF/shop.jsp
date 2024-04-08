@@ -117,27 +117,29 @@
                                 <div class="mb-3">
                                     <h4>Categories</h4>
                                     <ul class="list-unstyled fruite-categorie"   >
-                                        <c:forEach var="cate" items="${listCate}">
-                                            <li>
-                                                <div class="d-flex justify-content-between fruite-name ">
-                                                    <a  id="${cate.category}"  href="processCategoryTab?nameTab=${cate.category}" ><i class="fas fa-apple-alt me-2 "  ></i>${cate.category}</a>
-                                                    <span>(${cate.quantity})</span>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
 
-                                        <%--        <li >--%>
-                                        <%--            <div class="d-flex justify-content-between fruite-name ">--%>
-                                        <%--                <a href="#" class="tablinks " ><i class="fas fa-apple-alt me-2 "  ></i>Đồ chay</a>--%>
-                                        <%--                <span>(78)</span>--%>
-                                        <%--            </div>--%>
-                                        <%--        </li>--%>
-                                        <%--    <li >--%>
-                                        <%--        <div class="d-flex justify-content-between fruite-name ">--%>
-                                        <%--            <a href="#" class="tablinks " ><i class="fas fa-apple-alt me-2 "  ></i>Ăn vặt</a>--%>
-                                        <%--            <span>(77)</span>--%>
-                                        <%--        </div>--%>
-                                        <%--    </li>--%>
+                                       <c:forEach var="cate" items="${listCate}">
+                                           <li>
+                                               <div class="d-flex justify-content-between fruite-name ">
+                                                   <a  id="${cate.category}"  href="processCategoryTab?nameTab=${cate.category}" ><i class="fas fa-apple-alt me-2 "  ></i>${cate.category}</a>
+                                                   <span>(${cate.quantity})</span>
+                                               </div>
+                                           </li>
+                                       </c:forEach>
+
+<%--        <li >--%>
+<%--            <div class="d-flex justify-content-between fruite-name ">--%>
+<%--                <a href="#" class="tablinks " ><i class="fas fa-apple-alt me-2 "  ></i>Đồ chay</a>--%>
+<%--                <span>(78)</span>--%>
+<%--            </div>--%>
+<%--        </li>--%>
+<%--    <li >--%>
+<%--        <div class="d-flex justify-content-between fruite-name ">--%>
+<%--            <a href="#" class="tablinks " ><i class="fas fa-apple-alt me-2 "  ></i>Ăn vặt</a>--%>
+<%--            <span>(77)</span>--%>
+<%--        </div>--%>
+<%--    </li>--%>
+
 
 
                                     </ul>
@@ -263,8 +265,9 @@
                                             <p>${pro.descriptionP}</p>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">${pro.sellingPrice}</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add </a>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>
+
+                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+
                                             </div>
                                         </div>
                                     </div>
