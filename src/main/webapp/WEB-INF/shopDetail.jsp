@@ -20,7 +20,9 @@
 <!-- Spinner End -->
 <c:set var="currentPage" value="shopDetail" />
 <c:import url="includes/navbar.jsp">
+
  <c:param name="currentPage" value="${currentPage}" />
+
 </c:import>
 
 <!-- Modal Search Start -->

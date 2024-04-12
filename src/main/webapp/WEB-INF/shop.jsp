@@ -82,8 +82,19 @@
                 <div class="row g-4">
                     <div class="col-xl-3">
                         <div class="input-group w-100 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                            <form action="searchServlet" method="get">
+                                <input type="search" class="form-control" id="inputModalSearch"
+                                       name="search" placeholder="Search ..." list="datalist1">
+                                <datalist id="datalist1">
+                                    <c:forEach items="${listP}" var="p">
+                                        <option value="${p.name}"></option>
+                                    </c:forEach>
+                                </datalist>
+                                <button type="submit"
+                                        class="input-group-text bg-success text-light">
+                                    <i class="fa fa-fw fa-search text-white"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="col-6"></div>
@@ -106,6 +117,7 @@
                                 <div class="mb-3">
                                     <h4>Categories</h4>
                                     <ul class="list-unstyled fruite-categorie"   >
+
                                        <c:forEach var="cate" items="${listCate}">
                                            <li>
                                                <div class="d-flex justify-content-between fruite-name ">
@@ -127,6 +139,7 @@
 <%--            <span>(77)</span>--%>
 <%--        </div>--%>
 <%--    </li>--%>
+
 
 
                                     </ul>
@@ -252,7 +265,9 @@
                                             <p>${pro.descriptionP}</p>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">${pro.sellingPrice}</p>
+
                                                 <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+
                                             </div>
                                         </div>
                                     </div>

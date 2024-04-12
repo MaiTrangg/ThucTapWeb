@@ -38,6 +38,8 @@
                     <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
                     <div class="nav-item dropdown">
 
+
+
                        <c:if test="${currentPage eq 'cart' || currentPage eq 'checkout'|| currentPage eq 'testimonial'}">
                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
                        </c:if>
@@ -62,12 +64,16 @@
                     </a>
 
 
+
+
                     <c:if test="${customer != null}">
 
                         <a class="my-auto" style="margin-right: 5px">chao ${customer.username} </a>
                         <a href="logoutServlet" class="my-auto">
 
+
                              <i class="fas fa-sign-out-alt"></i>
+
 
                         </a>
                     </c:if>

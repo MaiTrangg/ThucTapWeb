@@ -21,4 +21,5 @@ public class Category {
     public int getQuantity() {
         return quantity;
     }
+
 }
