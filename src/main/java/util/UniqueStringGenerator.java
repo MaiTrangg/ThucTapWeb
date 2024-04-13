@@ -5,6 +5,7 @@ import java.util.UUID;
 public class UniqueStringGenerator {
 
 
+
 	public static String generateUniqueString() {
         return UUID.randomUUID().toString();
     }
@@ -14,5 +15,7 @@ public class UniqueStringGenerator {
         String uniqueString = generateUniqueString();
         System.out.println("Unique String: " + uniqueString);
     }
+
+
 
 }

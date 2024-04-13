@@ -16,6 +16,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 
 public class MaHoa {
+
 	
 	public static String toSHA1(String mk) {
 		String salt = "ashfjdgkdngnbj;.njkgjk";
@@ -42,3 +43,4 @@ public class MaHoa {
 	}
 
 }
+
