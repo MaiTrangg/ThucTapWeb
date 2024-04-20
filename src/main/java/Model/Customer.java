@@ -1,6 +1,7 @@
 package Model;
 
 public class Customer {
+    private int user_id;
     private String username;
     private String password;
     private String email;
@@ -94,7 +95,16 @@ public class Customer {
      * @param email
      * @param numberPhone
      * @param isAdmin
+     * @param user_id
      */
+    public Customer(int user_id, String username, String password, String email, String numberPhone, int isAdmin) {
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.numberPhone = numberPhone;
+        this.isAdmin = isAdmin;
+    }
     public Customer(String username, String password, String email, String numberPhone, int isAdmin) {
         this.username = username;
         this.password = password;
@@ -107,7 +117,13 @@ public class Customer {
     }
 
 
+    public int getUser_id() {
+        return user_id;
+    }
 
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
     /**
      * @param username the username to set
@@ -159,6 +175,7 @@ public class Customer {
     public int getIsAdmin() {
         return isAdmin;
     }
+
 
 }
 
