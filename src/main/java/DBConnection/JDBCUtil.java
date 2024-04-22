@@ -15,7 +15,7 @@ public class JDBCUtil {
 		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    String url = "jdbc:mysql://localhost:3306/store";
 		    String user = "root";
-		    String password = "123456";
+		    String password = "1234";
 		    try {
 				connection =  DriverManager.getConnection(url, user, password);
 			} catch (SQLException e) {
@@ -37,7 +37,13 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 	}
+	public static void main(String[] args) {
+		Connection c = getConnection();
+		System.out.println(c);
 
+		// Đóng kết nối
+
+	}
 
 }
 
