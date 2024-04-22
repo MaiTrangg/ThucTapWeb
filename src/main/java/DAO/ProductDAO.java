@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLException;
 
 import DBConnection.JDBCUtil;
 import Model.Category;
@@ -132,7 +133,34 @@ public class ProductDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cid);
 
+
             ResultSet rs = preparedStatement.executeQuery();
+=======
+    public static Product getProductByID(int id) {
+        String query ="select * from products where productID = ? ";
+        Product product = null;
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                Category cate = CategoryDAO.getCategoryByID(rs.getInt("categoryID"));
+                product= new Product(rs.getInt("productID"),rs.getString("img")
+                        , rs.getString("nameProduct"),rs.getString("descriptionP")
+                        ,rs.getDouble("originalPrice"),rs.getDouble("sellingPrice")
+                        ,rs.getInt("quantity"),cate);
+            }
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+
 
             while (rs.next()) {
                 return new Category(rs.getString(1), rs.getInt(2));

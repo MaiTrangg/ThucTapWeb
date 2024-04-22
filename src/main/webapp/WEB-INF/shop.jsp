@@ -266,8 +266,8 @@
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">${pro.sellingPrice}</p>
 
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add </a>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>
+                                                <a href="addToCartServlet?idpro=${pro.productId}&value=add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add </a>
+                                                <a href="addToCartServlet?idpro=${pro.productId}&value=buy" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>
                                             </div>
                                         </div>
                                     </div>
