@@ -2,6 +2,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +99,65 @@ public class ProductDAO {
         }
         return list;
     }
+    public static Product getProductByID(int id) {
+        String query ="select * from products where productID = ? ";
+        Product product = null;
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                product= new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getInt(7),new Category(rs.getInt(1)));
+            }
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+        return product;
+    }
+    public static Category getCategory( int cid){
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select * from categories where categoryID=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, cid);
 
+            ResultSet rs = preparedStatement.executeQuery();
 
+            while (rs.next()) {
+                return new Category(rs.getString(1), rs.getInt(2));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+//        ProductDAO pd = new ProductDAO;
+       Product product = ProductDAO.getProductByID(1);
+        System.out.println(product.toString());
+/*
+        Category c = getCategory(1);
+        if (c != null) {
+            System.out.println(c.toString());
+        } else {
+            System.out.println("Không tìm thấy sản phẩm có categoryID là 1");
+        }
+*/
+
+    }
 }
 
