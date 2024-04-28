@@ -12,6 +12,7 @@
 <head>
     <c:import url="includes/head.jsp"></c:import>
 
+
 </head>
 <style>
     .highlighted {
@@ -120,7 +121,7 @@
                                         <c:forEach var="cate" items="${listCate}">
                                             <li>
                                                 <div class="d-flex justify-content-between fruite-name ">
-                                                    <a  id="${cate.category}"  href="processCategoryTab?nameTab=${cate.category}" ><i class="fas fa-apple-alt me-2 "  ></i>${cate.category}</a>
+                                                    <a id="${cate.category}" href="shopServlet?category=${cate.category}" ><i class="fas fa-apple-alt me-2"></i>${cate.category}</a>
                                                     <span>(${cate.quantity})</span>
                                                 </div>
                                             </li>
@@ -271,18 +272,29 @@
                                 </div>
                             </c:forEach>
 
-                            <div class="col-12">
-                                <div class="pagination d-flex justify-content-center mt-5">
-                                    <a href="#" class="rounded">&laquo;</a>
-                                    <a href="#" class="active rounded">1</a>
-                                    <a href="#" class="rounded">2</a>
-                                    <a href="#" class="rounded">3</a>
-                                    <a href="#" class="rounded">4</a>
-                                    <a href="#" class="rounded">5</a>
-                                    <a href="#" class="rounded">6</a>
-                                    <a href="#" class="rounded">&raquo;</a>
-                                </div>
+<%--                            <div class="col-12">--%>
+<%--                                <div class="pagination d-flex justify-content-center mt-5">--%>
+<%--                                    <a href="#" class="rounded">&laquo;</a>--%>
+<%--                                    <a href="#" class="active rounded">1</a>--%>
+<%--                                    <a href="#" class="rounded">2</a>--%>
+<%--                                    <a href="#" class="rounded">3</a>--%>
+<%--                                    <a href="#" class="rounded">4</a>--%>
+<%--                                    <a href="#" class="rounded">5</a>--%>
+<%--                                    <a href="#" class="rounded">6</a>--%>
+<%--                                    <a href="#" class="rounded">&raquo;</a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+
+                            <!-- Pagination -->
+                            <c:set var="page" value="${page}" />
+                            <div class="pagination">
+                                <!-- Pagination -->
+                                <c:forEach begin="1" end="${num}" var="inum">
+                                    <a class="${inum==page?' active':''}" href="shopServlet?page=${inum}&category=${category}">${inum}</a>
+                                </c:forEach>
                             </div>
+
+                            <!-- Thêm các liên kết khác tùy thuộc vào các loại sản phẩm khác -->
                         </div>
                     </div>
                 </div>

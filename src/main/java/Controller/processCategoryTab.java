@@ -22,7 +22,6 @@ public class processCategoryTab extends HttpServlet {
 
         request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 
-
     }
 
     @Override

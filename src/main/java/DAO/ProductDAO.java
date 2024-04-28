@@ -99,6 +99,13 @@ public class ProductDAO {
         return list;
     }
 
-
+    public List<Product> getListByPage(List<Product> listPro, int start, int end) {
+        // TODO Auto-generated method stub
+        ArrayList<Product> arr = new ArrayList<>();
+        for(int i=start; i<end; i++) {
+            arr.add(listPro.get(i));
+        }
+        return arr;
+    }
 
 }
