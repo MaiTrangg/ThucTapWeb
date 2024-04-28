@@ -37,6 +37,9 @@
                     <a href="shopServlet" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}">Cửa hàng</a>
                     <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
                     <div class="nav-item dropdown">
+
+
+
                        <c:if test="${currentPage eq 'cart' || currentPage eq 'checkout'|| currentPage eq 'testimonial'}">
                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Thanh toán sản phẩm</a>
                        </c:if>
@@ -52,18 +55,31 @@
                         </div>
                     </div>
                     <a href="contact" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Liên hệ</a>
+                    <a href="./index_adServlet"> Admin</a>
+
                 </div>
                 <div class="d-flex m-3 me-0">
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                     <a href="cart" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                            <c:if test="${order.orderLines.size() == null }">0</c:if>
+		                    ${ order.orderDetails.size()}
+                        </span>
                     </a>
+
+
+
+
                     <c:if test="${customer != null}">
 
                         <a class="my-auto" style="margin-right: 5px">chao ${customer.username} </a>
                         <a href="logoutServlet" class="my-auto">
+
+
                              <i class="fas fa-sign-out-alt"></i>
+
+
                         </a>
                     </c:if>
                     <c:if test="${customer == null}">

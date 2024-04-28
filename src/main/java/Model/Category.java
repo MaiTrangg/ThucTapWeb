@@ -14,6 +14,18 @@ public class Category {
         this.category = category;
     }
 
+    public Category(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "category='" + category + '\'' +
+                ", quantity=" + quantity +
+                '}';
+    }
+
     public String getCategory() {
         return category;
     }
@@ -21,4 +33,6 @@ public class Category {
     public int getQuantity() {
         return quantity;
     }
+
 }
+

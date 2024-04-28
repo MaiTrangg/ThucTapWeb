@@ -1,15 +1,23 @@
-
 /*** Spinner Start ***/
+
+
 #spinner {
     opacity: 0;
     visibility: hidden;
     transition: opacity .8s ease-out, visibility 0s linear .5s;
     z-index: 99999;
- }
+}
+
+
+
 
 #error{
     color: var(--bs-red) ;
 }
+
+
+
+
 
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
@@ -370,7 +378,7 @@
 
 .container-register {
     max-width: 500px;
-    height: 560px;
+    height: auto;
     margin: 170px auto;
     padding: 20px;
     background-color: #fff;
@@ -432,11 +440,11 @@ label {
     padding-right: 50px;
     display: inline-block;
 }
-
 .forgot-card .forgot-login:hover,
 .forgot-card .forgot-register:hover{
     color: #ecb65a;
 }
+
 
 /*** forgotpassword end ***/
 
@@ -458,6 +466,8 @@ label {
 
 
 /*** Fruits Start ***/
+
+
 .fruite .tab-class .nav-item a.active {
     background: var(--bs-secondary) !important;
 }
@@ -477,6 +487,7 @@ label {
 .fruite .fruite-categorie .fruite-name a:hover {
     color: var(--bs-secondary);
 }
+
 
 .fruite .fruite-item {
     flex-direction: column;

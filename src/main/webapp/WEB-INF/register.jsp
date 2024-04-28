@@ -7,10 +7,38 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <c:import url="includes/head.jsp"></c:import>
 </head>
+<style>
+    .input-password{
+        display: flex;
+        justify-content: space-between;
+    }
+    .none-border{
+        border-radius: 0 ;
+        border: none;
+        margin-top: 5px;
+    }
+    .none-border:hover {
+        background: white;
+    }
+    .input-border{
+        border-radius: 10px 0 0 10px;
+    }
+    .input-group-append{
+        border-radius: 0 10px 10px 0;
+        background: white;
+        border: 1px solid #ffb524;
+    }
+    /*.input-group-append:hover{*/
+    /*    background:#ffb524 ;*/
+    /*}*/
+
+
+</style>
 <body>
 
 <!-- Spinner Start -->
@@ -29,7 +57,7 @@
         <div class="register-card">
         <div class="card-header text-center">Đăng kí tài khoản</div>
         <div class="card-body">
-            <form action="register" method="post">
+            <form action="registerServerlet" method="post">
                 <div class="form-group">
                     <label>Tên khách hàng</label>
                     <input type="text" name="register-username" class="form-control" placeholder="Nhập tên khách hàng" value="${username}">
@@ -37,7 +65,16 @@
                 </div>
                 <div class="form-group">
                     <label>Mật khẩu</label>
-                    <input type="password" name="register-password" class="form-control" placeholder="Nhập mật khẩu" value="${pass}">
+                    <p>(*)Mật khẩu phải chứa ít nhất 1 kí tự viết hoa, 1 kí tự đặc biệt, 1 số và độ dài từ 8 trở lên </p>
+                    <div class="input-password">
+                        <input type="password" id="password" name="register-password" class="form-control input-border" placeholder="Nhập mật khẩu" value="${pass}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary none-border" type="button" id="btnPassword">
+                                <span class="fas fa-eye-slash" id="eyeIcon"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <p id="passwordFeedback"></p>
                 </div>
                 <div class="form-group">
                     <label>Email</label>
@@ -58,9 +95,7 @@
     </div>
 </div>
 
-<c:import url="includes/navbar.jsp">
-    <c:param name="currentPage" value="${currentPage}" />
-</c:import>
+
 
 <!-- Start Footer Section -->
 <c:import url="includes/footer.jsp"></c:import>
@@ -99,6 +134,54 @@
 
 <!-- Template Javascript -->
 <script src="../js/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var passwordInput = document.getElementById('password');
+        var eyeIcon = document.getElementById('eyeIcon');
+        var btnPassword = document.getElementById('btnPassword');
+        var isPasswordVisible = false;
+
+        btnPassword.addEventListener('click', function() {
+            isPasswordVisible = !isPasswordVisible;
+            if (isPasswordVisible) {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'fas fa-eye'; // Thêm lớp cho biểu tượng
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'fas fa-eye-slash'; // Thêm lớp cho biểu tượng
+            }
+        });
+    });
+
+</script>
+
+<script>
+    window.onload = function() {
+        var passwordInput = document.getElementById("password");
+        var feedbackElement = document.getElementById("passwordFeedback");
+
+        passwordInput.addEventListener("input", function() {
+            var matKhau = passwordInput.value;
+
+            // Kiểm tra độ dài mật khẩu
+            var lengthOk = matKhau.length >= 8;
+            var containsUppercase = /[A-Z]/.test(matKhau);
+            var containsSpecialCharAndNumber = /(?=.*[!@#$%^&*()_+=\-\\|[\]{};:'",<.>\/?])(?=.*[0-9])/.test(matKhau);
+
+            // Hiển thị phản hồi cho người dùng
+            if (lengthOk && containsUppercase && containsSpecialCharAndNumber) {
+                feedbackElement.innerHTML = "Mật khẩu mạnh";
+                feedbackElement.style.color = "green";
+            } else {
+                feedbackElement.innerHTML = "Mật khẩu yếu";
+                feedbackElement.style.color = "red";
+            }
+        });
+    };
+</script>
+
+
 
 </body>
+
 </html>
