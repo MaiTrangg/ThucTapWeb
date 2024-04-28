@@ -90,27 +90,32 @@
                             <p class="mb-0 mt-4">${od.product.sellingPrice}</p>
                         </td>
                         <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                            <form action="updatePriceServlet" method="post">
+                                <input type="hidden" name="idpro" value="${od.product.productId}">
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm text-center border-0" value="${od.quantity}" name="quantity">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="${od.quantity}">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            </form>
                         </td>
                         <td>
                             <p class="mb-0 mt-4">${od.price }</p>
                         </td>
                         <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
+                           <a href="removeToCartServlet?idpro=${od.product.productId} ">
+                               <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                   <i class="fa fa-times text-danger"></i>
+                               </button>
+                           </a>
                         </td>
 
                     </tr>
@@ -131,7 +136,7 @@
                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">$96.00</p>
+                            <p class="mb-0">${order.total()}</p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-0 me-4">Shipping</h5>
@@ -143,7 +148,7 @@
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">$99.00</p>
+                        <p class="mb-0 pe-4">${order.total()}</p>
                     </div>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                 </div>

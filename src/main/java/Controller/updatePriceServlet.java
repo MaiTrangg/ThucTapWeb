@@ -1,6 +1,8 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,17 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Model.Order;
+
 /**
- * Servlet implementation class index_adServlet
+ * Servlet implementation class updatePriceServlet
  */
-@WebServlet("/index_adServlet")
-public class index_adServlet extends HttpServlet {
+@WebServlet("/updatePriceServlet")
+public class updatePriceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public index_adServlet() {
+    public updatePriceServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,16 +31,19 @@ public class index_adServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("haha");
+		System.out.println(request.getQueryString()+" dữ liệu được gửi đi");
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-//		double total = OrderLineDao.revenue();
-//		int prosale =OrderLineDao.productsSale();
-//		session.setAttribute("total", total);
-//		System.out.println("doanh thu "+ total);
-//		System.out.println("tong bán "+ prosale);
-//		session.setAttribute("prosale", prosale);
-		request.getRequestDispatcher("/WEB-INF/index_ad.jsp").forward(request, response);
-	/*	response.sendRedirect("/WEB-INF/index_ad.jsp");*/
+		String i =request.getParameter("idpro");
+		int idpro = Integer.parseInt(i);
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+//		System.out.println("quantity là: "+quantity);
+		Order o = (Order) session.getAttribute("order");
+		o.updatePrice(idpro, quantity);
+		session.setAttribute("order", o);
+		request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
+//		request.getRequestDispatcher("/cart.jsp").forward(request, response);
 	}
 
 	/**
