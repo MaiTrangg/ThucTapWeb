@@ -15,32 +15,42 @@ public class ProductDAO {
     private static  PreparedStatement ps = null;
     private static ResultSet rs = null;
 
-    public static List<Product> getAllProduct(){
+    public static List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
         String query = "select * from products";
         try {
             con = new JDBCUtil().getConnection();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
 
 
-                      Category category= CategoryDAO.getCategoryByID( rs.getInt(8));
-                       list.add(new Product(
-                               rs.getInt(1),
-                                rs.getString(2),
-                                rs.getString(3),
-                                rs.getString(4),
-                                rs.getDouble(5),
-                                rs.getDouble(6),
-                                rs.getInt(7),
-                               category
-                       ));
+                Category category = CategoryDAO.getCategoryByID(rs.getInt(8));
+                list.add(new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getInt(7),
+                        category
+                ));
             }
-            con.close();
+//            con.close();
+//            ps.close();
+//            rs.close();
 
         } catch (Exception e) {
-            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
         }
         return list;
     }
