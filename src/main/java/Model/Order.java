@@ -168,6 +168,7 @@ public class Order {
 			total+=orderLine.getPrice();
 		}
 		setTotalMoney(total);
+		System.out.println("tinh tong thanh cong: "+total);
 		return total;
 	}
 	

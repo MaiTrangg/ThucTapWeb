@@ -72,12 +72,12 @@
                     <th scope="col">Handle</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="orderDetail">
 <%--                <c:if test="${order} == null">--%>
 <%--                    order null--%>
 <%--                </c:if>--%>
                 <c:forEach items="${order.orderDetails}" var="od">
-                    <tr>
+                    <tr >
                         <th scope="row">
                             <div class="d-flex align-items-center">
                                 <img src="${od.product.img}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
@@ -90,29 +90,29 @@
                             <p class="mb-0 mt-4">${od.product.sellingPrice}</p>
                         </td>
                         <td>
-                            <form action="updatePriceServlet" method="post">
+<%--                            <form action="updatePriceServlet" method="post">--%>
                                 <input type="hidden" name="idpro" value="${od.product.productId}">
                                 <div class="input-group quantity mt-4" style="width: 100px;">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                        <button id="decrease" class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
                                     <input type="text" class="form-control form-control-sm text-center border-0" value="${od.quantity}" name="quantity">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <button id="increase" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+<%--                            </form>--%>
                         </td>
                         <td>
-                            <p class="mb-0 mt-4">${od.price }</p>
+                            <p class="mb-0 mt-4"  id="pro-${od.product.productId}" >${od.price }</p>
                         </td>
                         <td>
-                           <a href="removeToCartServlet?idpro=${od.product.productId} ">
-                               <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                           <a href="#">
+                               <button class="btn btn-md rounded-circle bg-light border mt-4" id="delete" name="btn-delete" value="delete">
                                    <i class="fa fa-times text-danger"></i>
                                </button>
                            </a>
@@ -136,7 +136,7 @@
                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">${order.total()}</p>
+                            <p class="mb-0" id="totalPrice-first">${order.total()}</p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-0 me-4">Shipping</h5>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">${order.total()}</p>
+                        <p class="mb-0 pe-4" id="totalPrice-after">${order.total()}</p>
                     </div>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                 </div>
@@ -194,6 +194,91 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#increase, #decrease").click(function(e) {
+            e.preventDefault();
+            /**
+             * khi click vào nút tăng hoặc giảm số lượng sản phẩm
+             * @type {string|jQuery|*}
+             */
+            var idproValue = $(this).closest("tr").find('input[name="idpro"]').val();
+            var quantityValue = $(this).closest("tr").find('input[name="quantity"]').val();
+
+            console.log(idproValue);
+            // var quantityValue = $('input[name="quantity"]').val();
+            console.log(quantityValue);
+            var currentPro = $(this);
+
+
+            // Gửi dữ liệu lên server bằng AJAX
+            $.ajax({
+                type: "POST",
+                url: "/updatePriceServlet",
+                data:{
+                   idpro : idproValue,
+                   quantity : quantityValue
+                } ,
+                success: function(response) {
+                    // Xử lý phản hồi từ server nếu cần
+                    // console.log("Đã cập nhật giá thành công");
+                    var newPrice = response.newPrice; // Trích xuất giá mới từ phản hồi
+                    var newTotal = response.newTotalPrice;//lấy ra tổng giá mới sau khi xử lí trong servlet
+                    var newQuantity = response.newQuantity;//lấy ra số lượng sp sau khi xử lí trong servlet
+
+                    console.log("newtotal: "+newTotal);
+                    $("#pro-"+idproValue+"").text(newPrice); // cập nhật lại giá trên giao diện người dùng
+                    $("#totalPrice-first, #totalPrice-after").text(newTotal);///cập nhật tổng giá trên giao diện người dùng
+                    console.log("newQuantity: "+newQuantity.type);
+                    //nếu quantity từ servlet trả về là 0 thì sẽ tiến hành xóa thẻ tr gần nơi sự kiện được kích hoạt
+                    if(newQuantity===0) currentPro.closest("tr").remove();
+
+                },
+                error: function(xhr,error) {
+                    // Xử lý lỗi nếu có
+                    console.error("Lỗi khi cập nhật giá:", error);
+                }
+            });
+        });
+
+        $("#delete").click(function(e) {
+            e.preventDefault();
+            /**
+             * khi click vào nút tăng hoặc giảm số lượng sản phẩm
+             * @type {string|jQuery|*}
+             */
+            var idproValue = $(this).closest("tr").find('input[name="idpro"]').val();// lấy ra giá trị của thẻ input có name là idpro
+
+            var currentPro = $(this);// lấy ra phần mục đươc kích hoạt sự kiện
+
+
+            // Gửi dữ liệu lên server bằng AJAX
+            $.ajax({
+                type: "POST",
+                url: "/removeToCartServlet",
+                data:{
+                    idpro : idproValue// gửi id khi chuyển đến trang removeToCartServlet
+                } ,
+                success: function(response) {
+                    var newPrice = response.newPrice; // Trích xuất giá mới từ phản hồi
+                    var newTotal = response.newTotalPrice;//lấy ra tổng giá mới sau khi xử lí trong servlet
+
+                    console.log("newtotal: "+newTotal);
+                    $("#pro-"+idproValue+"").text(newPrice); // cập nhật lại giá trên giao diện người dùng
+                    $("#totalPrice-first, #totalPrice-after").text(newTotal);//cập nhật tổng giá trên giao diện người dùng
+                    currentPro.closest("tr").remove();//tìm đến thẻ tr gần nút được click nhất và tiến hành xóa nó đi
+
+                },
+                error: function(xhr,error) {
+                    // Xử lý lỗi nếu có
+                    console.error("Lỗi khi cập nhật giá:", error);
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
