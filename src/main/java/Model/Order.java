@@ -132,10 +132,10 @@ public class Order {
 	}
 	
 	public void removeOrderline(OrderDetail ol) {
-		/*for (OrderLine orderLine : orderLines) {
-			if(orderLine.existProduct(ol)) orderLines.remove(orderLine);
+		for (OrderDetail orderLine : orderDetails) {
+			if(orderLine.existProduct(ol)) orderDetails.remove(orderLine);
 			break;
-		}*/
+		}
 		orderDetails.remove(ol);
 	}
 	
@@ -157,17 +157,19 @@ public class Order {
 		}
 		
 		ol.setQuantity(quantity);
+//		total();
 		ol.setPrice(ol.getProduct().getSellingPrice()*ol.getQuantity());
 		
 	}
 	
-	public void total() {
+	public double total() {
 		double total =0;
 		for (OrderDetail orderLine : orderDetails) {
 			total+=orderLine.getPrice();
 		}
 		setTotalMoney(total);
-//		return total;
+		System.out.println("tinh tong thanh cong: "+total);
+		return total;
 	}
 	
 	

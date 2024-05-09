@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class addToCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("da vao servlet addtocart");
 		HttpSession session = request.getSession();
 		int idpro = Integer.parseInt(request.getParameter("idpro"));
 		System.out.println("idpro: "+idpro);
@@ -65,10 +67,21 @@ public class addToCartServlet extends HttpServlet {
 		}
 		String value = request.getParameter("value");
 		System.out.println("value"+value);
+//		PrintWriter out = response.getWriter();
 		if(value.equals("buy")) {
+			System.out.println("da vao noi xu ly");
 			request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
-		}else {
-		request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
+//			response.sendRedirect("/WEB-INF/cart.jsp");
+		}else{
+			int quantityCart = o.getOrderLines().size();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("{\"quantityCart\": " + quantityCart + "}");
+			out.flush();
+			out.close();
+
+			request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 		}
 	}
 
