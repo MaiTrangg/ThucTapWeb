@@ -47,6 +47,7 @@ public class removeToCartServlet extends HttpServlet {
 				break;
 			}
 		}
+		int quantityCart = o.getOrderLines().size();
 		System.out.println("newprice: "+newPrice);
 
 		response.setContentType("application/json");
@@ -54,10 +55,7 @@ public class removeToCartServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 //		String newHtml="";
 
-		out.print("{\"newPrice\": " + newPrice + ", \"newTotalPrice\": " + newTotal + "}");
-//		out.print("{\"newHtml\": \"" + newHtml + "\", \"newTotalPrice\": " + newTotal + "}");
-//		out.print("{\"newHtml\": \"" + newHtml + "\", \"newTotalPrice\": " + newTotal + "}");
-
+		out.print("{\"newPrice\": " + newPrice + ", \"newTotalPrice\": " + newTotal +  ", \"quantityCart\": " + quantityCart + "}");
 		out.flush();
 		out.close();
 

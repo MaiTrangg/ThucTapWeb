@@ -58,6 +58,7 @@ public class updatePriceServlet extends HttpServlet {
 				break;
 			}
 		}
+		int quantityCart = o.getOrderLines().size();
 		System.out.println("newprice: "+newPrice);
 
 		response.setContentType("application/json");
@@ -65,7 +66,7 @@ public class updatePriceServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 //		String newHtml="";
 
-		out.print("{\"newPrice\": " + newPrice + ", \"newTotalPrice\": " + newTotal +", \"newQuantity\": " + newQuantity + "}");
+		out.print("{\"newPrice\": " + newPrice + ", \"newTotalPrice\": " + newTotal +", \"newQuantity\": " + newQuantity +", \"quantityCart\": " + quantityCart + "}");
 //		out.print("{\"newHtml\": \"" + newHtml + "\", \"newTotalPrice\": " + newTotal + "}");
 //		out.print("{\"newHtml\": \"" + newHtml + "\", \"newTotalPrice\": " + newTotal + "}");
 

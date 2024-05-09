@@ -198,7 +198,11 @@
 
 <script>
     $(document).ready(function() {
-        $("#increase, #decrease").click(function(e) {
+        // $("#increase, #decrease").click(function(e) {  việc gán sự kiện chỉ được thực hiện cho phần tử tồn
+        // tại tại thời điểm đó, và không ảnh hưởng đến các phần tử sau này được thêm vào DOM
+            $(document).on("click", "#increase, #decrease", function(e) {//việc gán sự kiện được thực hiện một lần và áp dụng cho tất cả các phần tử con khớp
+                // với selector, dù chúng được thêm vào sau đó. Điều này có thể làm giảm hiệu suất một chút so với việc gán sự kiện trực tiếp cho phần tử
+                // cụ thể, nhất là khi có nhiều sự kiện được gán trên document
             e.preventDefault();
             /**
              * khi click vào nút tăng hoặc giảm số lượng sản phẩm
@@ -233,7 +237,11 @@
                     $("#totalPrice-first, #totalPrice-after").text(newTotal);///cập nhật tổng giá trên giao diện người dùng
                     console.log("newQuantity: "+newQuantity.type);
                     //nếu quantity từ servlet trả về là 0 thì sẽ tiến hành xóa thẻ tr gần nơi sự kiện được kích hoạt
-                    if(newQuantity===0) currentPro.closest("tr").remove();
+                    if(newQuantity===0) {
+                        currentPro.closest("tr").remove();
+                        updateQuantityInCart(response);
+                    }
+
 
                 },
                 error: function(xhr,error) {
@@ -243,7 +251,7 @@
             });
         });
 
-        $("#delete").click(function(e) {
+        $(document).on("click", "#delete", function(e) {
             e.preventDefault();
             /**
              * khi click vào nút tăng hoặc giảm số lượng sản phẩm
@@ -269,14 +277,19 @@
                     $("#pro-"+idproValue+"").text(newPrice); // cập nhật lại giá trên giao diện người dùng
                     $("#totalPrice-first, #totalPrice-after").text(newTotal);//cập nhật tổng giá trên giao diện người dùng
                     currentPro.closest("tr").remove();//tìm đến thẻ tr gần nút được click nhất và tiến hành xóa nó đi
-
+                    updateQuantityInCart(response);
                 },
                 error: function(xhr,error) {
                     // Xử lý lỗi nếu có
                     console.error("Lỗi khi cập nhật giá:", error);
                 }
             });
+
         });
+        function updateQuantityInCart(respone){
+            //hàm này dùng để cập nhật lại so lượng giỏ hàng trong navbar
+            updatePage(respone);
+        };
     });
 </script>
 

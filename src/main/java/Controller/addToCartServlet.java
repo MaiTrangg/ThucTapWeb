@@ -73,6 +73,14 @@ public class addToCartServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
 //			response.sendRedirect("/WEB-INF/cart.jsp");
 		}else{
+			int quantityCart = o.getOrderLines().size();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("{\"quantityCart\": " + quantityCart + "}");
+			out.flush();
+			out.close();
+
 			request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 		}
 	}
