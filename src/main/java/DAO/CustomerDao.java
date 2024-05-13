@@ -191,7 +191,7 @@ public class CustomerDao {
 			ResultSet rs= pst.executeQuery();
 			while(rs.next()) {
 //				username,pass,email,numberphone,isadmin
-				c = new Customer(	rs.getInt("customer_id"),
+				c = new Customer(	/*rs.getInt("customer_id"),*/
 						rs.getString("username"),
 						rs.getString("pass"),
 						rs.getString("email"),

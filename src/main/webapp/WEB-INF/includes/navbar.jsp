@@ -55,7 +55,11 @@
                         </div>
                     </div>
                     <a href="contact" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Liên hệ</a>
-                    <a href="./index_adServlet"> Admin</a>
+                    <c:if test="${sessionScope.customer.isAdmin == 1}">
+                        <a href="./index_adServlet">
+                            <b>Quản lý</b>
+                        </a>
+                    </c:if>
 
                 </div>
                 <div class="d-flex m-3 me-0">
