@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBConnection.JDBCUtil;
-import Model.OrderLine;
+import Model.OrderDetail;
 import Model.Product;
 
-public class OrderLineDao {
+public class OrderDetailDAO {
 
 	private static Connection con ;
 	private static  PreparedStatement ps = null;
@@ -49,9 +49,9 @@ public class OrderLineDao {
 //			e.printStackTrace();
 //		}
 //	}
-	public static List<OrderLine> ListOrderLines(int order_id) {
+	public static List<OrderDetail> ListOrderLines(int order_id) {
 		String query ="select * from orderlines where order_id = ? ";
-		List<OrderLine> orderLines = new ArrayList<OrderLine>();
+		List<OrderDetail> orderLines = new ArrayList<OrderDetail>();
 		try {
 			con = new JDBCUtil().getConnection();
 			PreparedStatement pst = con.prepareStatement(query);
@@ -59,7 +59,7 @@ public class OrderLineDao {
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				Product p = ProductDAO.getProductByID(rs.getInt("product_id"));
-				orderLines.add(new OrderLine(p, rs.getInt("quantity"), rs.getDouble("price")));
+				orderLines.add(new OrderDetail(p, rs.getInt("quantity"), rs.getDouble("price")));
 			}
 			con.close();
 		} catch (SQLException e) {

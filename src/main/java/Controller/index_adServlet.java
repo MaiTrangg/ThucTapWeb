@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import DAO.OrderLineDao;
-
 /**
  * Servlet implementation class index_adServlet
  */
@@ -31,12 +29,12 @@ public class index_adServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		double total = OrderLineDao.revenue();
-		int prosale =OrderLineDao.productsSale();
-		session.setAttribute("total", total);
-		System.out.println("doanh thu "+ total);
-		System.out.println("tong bán "+ prosale);
-		session.setAttribute("prosale", prosale);
+//		double total = OrderLineDao.revenue();
+//		int prosale =OrderLineDao.productsSale();
+//		session.setAttribute("total", total);
+//		System.out.println("doanh thu "+ total);
+//		System.out.println("tong bán "+ prosale);
+//		session.setAttribute("prosale", prosale);
 		request.getRequestDispatcher("/WEB-INF/index_ad.jsp").forward(request, response);
 	/*	response.sendRedirect("/WEB-INF/index_ad.jsp");*/
 	}

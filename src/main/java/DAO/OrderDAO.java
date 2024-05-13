@@ -1,4 +1,3 @@
-/*
 package DAO;
 
 import java.sql.Connection;
@@ -78,4 +77,3 @@ public class OrderDAO {
 		System.out.println("---------------------------------------------id"+insertOrder("nhan","nhan@gmail.com",new Date(new java.util.Date().getTime())));
 	}
 }
-*/

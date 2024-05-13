@@ -252,9 +252,9 @@
                     </div>
                     <div class="col-lg-9">
 
-                        <div class="row g-4 justify-content-center" >
+                        <div class="row g-4 justify-content-center" id="content-pro" >
                             <c:forEach var="pro" items="${listP}">
-                                <div class="col-md-6 col-lg-6 col-xl-4" >
+                                <div id="show-pro" class="col-md-6 col-lg-6 col-xl-4" >
                                     <div class="rounded position-relative fruite-item ">
                                         <div class="fruite-img">
                                             <img src="${pro.img}" class="img-fluid w-100 rounded-top " alt="">
@@ -265,9 +265,13 @@
                                             <p>${pro.descriptionP}</p>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">${pro.sellingPrice}</p>
+                                                <input type="hidden" name="idpro" value="${pro.productId}">
 
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add </a>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>
+                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary" id="addPro"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add </a>
+                                                <a href="addToCartServlet?idpro=${pro.productId}&value=buy" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>
+<%--                                                <a href="#" id="add-to-cart" data-id="${pro.productId}" data-action="add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>Add </a>--%>
+<%--                                                <a href="#" id="buy-now" data-id="${pro.productId}" data-action="buy" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>--%>
+<%--                                                <a href="addToCartServlet?idpro=${pro.productId}&value=buy" class="btn border border-secondary rounded-pill px-3 text-primary">Buy</a>--%>
                                             </div>
                                         </div>
                                     </div>
@@ -333,6 +337,9 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%--xử lí load lại trang khi theem sảnphaamrm vào giỏ hàng--%>
+
 
 
 
@@ -344,7 +351,49 @@
             linkToHighlight.classList.add("highlighted");
         }
     });
+
+
 </script>
+<script>
+
+
+        $(document).ready(function (){
+            $(document).on("click", "#addPro", function(e) {
+                e.preventDefault();
+                var id = $(this).closest("#show-pro").find('input[name = "idpro"]').val();
+                console.log("valueIdpro: "+id);
+                $.ajax({
+                    type: "POST",
+                    url: "/addToCartServlet",
+                    data:{
+                        idpro : id,
+                        value: "add"
+                    } ,
+                    success: function(response) {
+                        // console.log("da vao success");
+                        updateQuantityInShop(response);
+
+
+
+                    },
+
+                    error: function(xhr,error) {
+                        // Xử lý lỗi nếu có
+                        console.error("Lỗi khi cập nhật giá:", error);
+                    }
+                });
+            });
+
+
+
+        });
+        function updateQuantityInShop(respone){
+            //hàm này dùng để cập nhật lại so lượng giỏ hàng trong navbar
+            updatePage(respone);
+        };
+</script>
+
+
 
 </body>
 </html>

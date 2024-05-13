@@ -34,7 +34,7 @@
 
                 <div class="navbar-nav mx-auto">
                     <a href="index" class="nav-item nav-link ${currentPage eq 'index' ? 'active' : ''}" >Trang chủ</a>
-                    <a href="shopServlet" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}">Cửa hàng</a>
+                    <a href="#" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}" id="item-shop">Cửa hàng</a>
                     <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
                     <div class="nav-item dropdown">
 
@@ -66,7 +66,10 @@
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                     <a href="cart" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;" id="quantityCart">
+                            <c:if test="${order.orderLines.size() == null }">0</c:if>
+		                    ${ order.orderDetails.size()}
+                        </span>
                     </a>
 
 
@@ -95,3 +98,48 @@
         </nav>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function updatePageShop(response){
+            console.log("da vao updatePageShop");
+            $('#content-pro').html(response);
+            window.location.href = "/shop";// sau khi xử lí ajax xong sẽ được chuyển hướng sang trang shop.jsp
+        }
+
+        $(document).ready(function (){
+            $(document).on("click", "#item-shop", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/shopServlet",
+                    // data:{
+                    //
+                    // } ,
+                    success: function(response) {
+                        console.log("da vao success");
+                        updateProInShop(response);
+                    },
+                    error: function(xhr,error) {
+                        // Xử lý lỗi nếu có
+                        console.error("Lỗi khi cập nhật giá:", error);
+                    }
+                });
+            });
+
+            function updateProInShop(response){
+                console.log("da vao updateProInShop");
+                updatePageShop(response);
+            }
+
+        });
+    });
+    function updatePage(respone){
+        var qc = respone.quantityCart;
+        $('#quantityCart').text(qc);
+
+    }
+</script>
+

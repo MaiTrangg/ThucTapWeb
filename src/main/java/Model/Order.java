@@ -33,10 +33,10 @@ public class Order {
 		this.orderId = orderId;
 		this.customer = customer;
 		this.orderLines = orderLines;
-		
+
 	}
-	
-	
+
+
 	/**
 	 * @param orderId
 	 * @param customer
@@ -55,9 +55,9 @@ public class Order {
 //		 + ", customer=" + customer.toString() + ", orderLines=" + orderLines +
 	}
 	public Order() {
-		
+
 	}
-	
+
 	/**
 	 * @return the orderId
 	 */
@@ -101,7 +101,7 @@ public class Order {
 		this.orderLines = orderLines;
 	}
 	public void addOrderline(OrderLine ol) {
-	boolean existed =false ;
+		boolean existed =false ;
 		for (OrderLine orderLine : orderLines) {
 			if(existed=orderLine.existProduct(ol)) {
 				orderLine.setQuantity(orderLine.getQuantity()+1);
@@ -111,16 +111,16 @@ public class Order {
 		}
 		if(!existed) orderLines.add(ol);
 	}
-	
+
 	public void removeOrderline(OrderLine ol) {
 		/*for (OrderLine orderLine : orderLines) {
 			if(orderLine.existProduct(ol)) orderLines.remove(orderLine);
 			break;
 		}*/
-		 orderLines.remove(ol);
+		orderLines.remove(ol);
 	}
-	
-	public OrderLine getOrderLinebyIDPro(int idpro) { 
+
+	public OrderLine getOrderLinebyIDPro(int idpro) {
 		for (OrderLine orderLine : orderLines) {
 			if(orderLine.getProduct().getProductId()==idpro) {
 				return orderLine;
@@ -128,7 +128,7 @@ public class Order {
 		}
 		return null;
 	}
-	 
+
 	public void updatePrice(int idpro, int quantity) {
 		OrderLine ol= getOrderLinebyIDPro(idpro);
 		if(quantity==0) {
@@ -136,12 +136,12 @@ public class Order {
 			removeOrderline(ol);
 			return;
 		}
-		
+
 		ol.setQuantity(quantity);
 		ol.setPrice(ol.getProduct().getSellingPrice()*ol.getQuantity());
-		
+
 	}
-	
+
 	public double total() {
 		double total =0;
 		for (OrderLine orderLine : orderLines) {
@@ -149,8 +149,8 @@ public class Order {
 		}
 		return total;
 	}
-	
-	
-	
+
+
+
 
 }
