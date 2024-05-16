@@ -37,12 +37,33 @@ public class shopServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ProductDAO pdao = new ProductDAO();
-        List<Product> listPro = pdao.getAllProduct();
+//        List<Product> listPro = pdao.getAllProduct();
         List<Category> listCate = pdao.countProByCategory();
 
+        String category = request.getParameter("category");
+        List<Product> listPro = (category != null && !category.isEmpty()) ?
+                pdao.getProductByCategory(category) : pdao.getAllProduct();
 
+        int numberPerPage = 15;
+        int size = listPro.size();
+        int num = (size % 15 == 0 ? (size / 15) : ((size / 15)) + 1);
+        int page;
 
-        session.setAttribute("listP", listPro);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+
+        int start = (page - 1) * numberPerPage;
+        int end = Math.min(page * numberPerPage, size);
+        List<Product> list = pdao.getListByPage(listPro, start, end);
+
+        session.setAttribute("listP", list);
+        session.setAttribute("page", page);
+        session.setAttribute("num", num);
+        session.setAttribute("category", category);
         session.setAttribute("listCate", listCate);
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -69,9 +90,9 @@ public class shopServlet extends HttpServlet {
         out.flush();
         out.close();
 
-
         request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
     }
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -81,5 +102,6 @@ public class shopServlet extends HttpServlet {
 		doGet(request, response);
 //        request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 	}
+
 
 }

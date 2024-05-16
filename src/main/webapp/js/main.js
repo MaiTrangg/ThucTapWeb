@@ -149,3 +149,19 @@
 
 })(jQuery);
 
+document.addEventListener("DOMContentLoaded", function() {
+    let categoryLinks = document.querySelectorAll('.category-link');
+
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            // Xóa class active-tab từ tất cả các tab
+            categoryLinks.forEach(item => {
+                item.classList.remove('active-tab');
+            });
+
+            // Thêm class active-tab cho tab được chọn
+            this.classList.add('active-tab');
+        });
+    });
+});
+
