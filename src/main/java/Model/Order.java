@@ -10,8 +10,7 @@ public class Order {
 	private int orderId;
 	private Customer customer;
 	private Date dateOrder;
-	private List<OrderDetail> orderDetails ;
-	private double totalMoney ;
+	private List<OrderLine> orderLines ;
 	/**
 	 * @return the dateOrder
 	 */
@@ -28,28 +27,27 @@ public class Order {
 	/**
 	 * @param orderId
 	 * @param customer
-	 * @param orderDetails
+	 * @param orderLines
 	 */
-	public Order(int orderId, Customer customer, List<OrderDetail> orderDetails) {
+	public Order(int orderId, Customer customer, List<OrderLine> orderLines) {
 		this.orderId = orderId;
 		this.customer = customer;
-		this.orderDetails = orderDetails;
-		
+		this.orderLines = orderLines;
+
 	}
-	
-	
+
+
 	/**
 	 * @param orderId
 	 * @param customer
 	 * @param dateOrder
-	 * @param orderDetails
+	 * @param orderLines
 	 */
-	public Order(int orderId, Customer customer, Date dateOrder, List<OrderDetail> orderDetails, double totalMoney) {
+	public Order(int orderId, Customer customer, Date dateOrder, List<OrderLine> orderLines) {
 		this.orderId = orderId;
 		this.customer = customer;
 		this.dateOrder = dateOrder;
-		this.orderDetails = orderDetails;
-		this.totalMoney = totalMoney;
+		this.orderLines = orderLines;
 	}
 	@Override
 	public String toString() {
@@ -57,15 +55,7 @@ public class Order {
 //		 + ", customer=" + customer.toString() + ", orderLines=" + orderLines +
 	}
 	public Order() {
-		
-	}
 
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
 	}
 
 	/**
@@ -86,15 +76,6 @@ public class Order {
 	public Customer getCustomer() {
 		return customer;
 	}
-
-	public double getTotalMoney() {
-		return totalMoney;
-	}
-
-	public void setTotalMoney(double totalMoney) {
-		this.totalMoney = totalMoney;
-	}
-
 	/**
 	 * @param customer the customer to set
 	 */
@@ -104,73 +85,72 @@ public class Order {
 	/**
 	 * @return the orderLines
 	 */
-	public List<OrderDetail> getOrderLines() {
-		return orderDetails;
+	public List<OrderLine> getOrderLines() {
+		return orderLines;
 	}
 	/**
 	 * @param orderLines the orderLines to set
 	 */
-	public void setOrderLines(List<OrderDetail> orderLines) {
-		this.orderDetails = orderLines;
+	public void setOrderLines(List<OrderLine> orderLines) {
+		this.orderLines = orderLines;
 	}
 	/**
-	 * @param orderDetails
+	 * @param orderLines
 	 */
-	public Order(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public Order(List<OrderLine> orderLines) {
+		this.orderLines = orderLines;
 	}
-	public void addOrderline(OrderDetail ol) {
-	boolean existed =false ;
-		for (OrderDetail orderLine : orderDetails) {
+	public void addOrderline(OrderLine ol) {
+		boolean existed =false ;
+		for (OrderLine orderLine : orderLines) {
 			if(existed=orderLine.existProduct(ol)) {
 				orderLine.setQuantity(orderLine.getQuantity()+1);
 				orderLine.setPrice(orderLine.getQuantity()*orderLine.getProduct().getSellingPrice());
 				break;
 			}
 		}
-		if(!existed) orderDetails.add(ol);
+		if(!existed) orderLines.add(ol);
 	}
-	
-	public void removeOrderline(OrderDetail ol) {
+
+	public void removeOrderline(OrderLine ol) {
 		/*for (OrderLine orderLine : orderLines) {
 			if(orderLine.existProduct(ol)) orderLines.remove(orderLine);
 			break;
 		}*/
-		orderDetails.remove(ol);
+		orderLines.remove(ol);
 	}
-	
-	public OrderDetail getOrderLinebyIDPro(int idpro) {
-		for (OrderDetail orderLine : orderDetails) {
+
+	public OrderLine getOrderLinebyIDPro(int idpro) {
+		for (OrderLine orderLine : orderLines) {
 			if(orderLine.getProduct().getProductId()==idpro) {
 				return orderLine;
 			}
 		}
 		return null;
 	}
-	 
+
 	public void updatePrice(int idpro, int quantity) {
-		OrderDetail ol= getOrderLinebyIDPro(idpro);
+		OrderLine ol= getOrderLinebyIDPro(idpro);
 		if(quantity==0) {
 			System.out.println("huhu");
 			removeOrderline(ol);
 			return;
 		}
-		
+
 		ol.setQuantity(quantity);
 		ol.setPrice(ol.getProduct().getSellingPrice()*ol.getQuantity());
-		
+
 	}
-	
-	public void total() {
+
+	public double total() {
 		double total =0;
-		for (OrderDetail orderLine : orderDetails) {
+		for (OrderLine orderLine : orderLines) {
 			total+=orderLine.getPrice();
 		}
-		setTotalMoney(total);
-//		return total;
+		return total;
 	}
-	
-	
-	
+
+
+
 
 }

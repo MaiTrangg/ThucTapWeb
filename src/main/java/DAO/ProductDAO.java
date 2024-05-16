@@ -38,6 +38,7 @@ public class ProductDAO {
                 ));
             }
             con.close();
+
 //            con.close();
 //            ps.close();
 //            rs.close();
@@ -146,32 +147,37 @@ public class ProductDAO {
 
 
             ResultSet rs = preparedStatement.executeQuery();
-//=======
-//            public static Product getProductByID(int id) {
-//                String query ="select * from products where productID = ? ";
-//                Product product = null;
-//                try {
-//                    con = new JDBCUtil().getConnection();
-//                    PreparedStatement pst = con.prepareStatement(query);
-//                    pst.setInt(1, id);
-//                    rs = pst.executeQuery();
-//                    while(rs.next()) {
-//                        Category cate = CategoryDAO.getCategoryByID(rs.getInt("categoryID"));
-//                        product= new Product(rs.getInt("productID"),rs.getString("img")
-//                                , rs.getString("nameProduct"),rs.getString("descriptionP")
-//                                ,rs.getDouble("originalPrice"),rs.getDouble("sellingPrice")
-//                                ,rs.getInt("quantity"),cate);
-//                    }
-//                    con.close();
-//                } catch (SQLException e) {
-//                    // TODO Auto-generated catch block
-//                    System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
-//                    e.printStackTrace();
-//                }
-//                return product;
+
+
+//        }
+//        }
+//
+//    public static Product getProductByID(int id) {
+//        String query ="select * from products where productID = ? ";
+//        Product product = null;
+//        try {
+//            con = new JDBCUtil().getConnection();
+//            PreparedStatement pst = con.prepareStatement(query);
+//            pst.setInt(1, id);
+//            rs = pst.executeQuery();
+//            while(rs.next()) {
+//                Category cate = CategoryDAO.getCategoryByID(rs.getInt("categoryID"));
+//                product= new Product(rs.getInt("productID"),rs.getString("img")
+//                        , rs.getString("nameProduct"),rs.getString("descriptionP")
+//                        ,rs.getDouble("originalPrice"),rs.getDouble("sellingPrice")
+//                        ,rs.getInt("quantity"),cate);
 //            }
-
-
+//            con.close();
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+//            e.printStackTrace();
+//        }
+//        return product;
+//    }
+//
+//
+//
 
             while (rs.next()) {
                 return new Category(rs.getString(1), rs.getInt(2));
@@ -184,11 +190,27 @@ public class ProductDAO {
         return null;
     }
 
+
     public List<Product> getListByPage(List<Product> listPro, int start, int end) {
         // TODO Auto-generated method stub
         ArrayList<Product> arr = new ArrayList<>();
         for(int i=start; i<end; i++) {
             arr.add(listPro.get(i));
+        }
+        return arr;
+    }
+
+    public static void main(String[] args) {
+//        ProductDAO pd = new ProductDAO;
+       Product product = ProductDAO.getProductByID(1);
+//        System.out.println(product.toString());
+/*
+        Category c = getCategory(1);
+        if (c != null) {
+            System.out.println(c.toString());
+        } else {
+            System.out.println("Không tìm thấy sản phẩm có categoryID là 1");
+
         }
         return arr;
     }
