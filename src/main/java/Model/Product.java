@@ -71,22 +71,22 @@ public class Product {
 		return category;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Product{" +
-//				"productId=" + productId +
-//				", img='" + img + '\'' +
-//				", name='" + name + '\'' +
-//				", descriptionP='" + descriptionP + '\'' +
-//				", originalPrice=" + originalPrice +
-//				", sellingPrice=" + sellingPrice +
-//				", available=" + available +
-//				", category=" + category +
-//				'}';
-//	}
+	@Override
+	public String toString() {
+		return "Product{" +
+				"productId=" + productId +
+				", img='" + img + '\'' +
+				", name='" + name + '\'' +
+				", descriptionP='" + descriptionP + '\'' +
+				", originalPrice=" + originalPrice +
+				", sellingPrice=" + sellingPrice +
+				", available=" + available +
+				", category=" + category +
+				'}';
+	}
 
-//	public void setAvailable(int available) {
-//		this.available = available;
-//	}
+	public void setAvailable(int available) {
+		this.available = available;
+	}
 }
 
