@@ -4,8 +4,8 @@ public class OrderDetail {
 	private Product product;
 	private int quantity;
 	private double price;
-	
-	
+
+
 	/**
 	 * @param product
 	 * @param quantity
@@ -22,7 +22,7 @@ public class OrderDetail {
 	public String toString() {
 		return "OrderLine [Product=" + product.toString()+ ", quantity=" + quantity + ", price=" + price + "]";
 	}
-	
+
 	/**
 	 * @return the product
 	 */
@@ -81,11 +81,11 @@ public class OrderDetail {
 		if(ol.product.getProductId()==this.product.getProductId()) return true;
 		return false;
 	}
-	
+
 	public void updateAvailable() {
 		product.setAvailable(product.getAvailable()-this.quantity);
 	}
 
-	
- 
+
+
 }

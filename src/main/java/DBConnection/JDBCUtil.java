@@ -16,7 +16,7 @@ public class JDBCUtil {
 		    String url = "jdbc:mysql://localhost:3306/store";
 		    String user = "root";
 
-		    String password = "010814";
+		    String password = "tr21092003";
 
 
 
