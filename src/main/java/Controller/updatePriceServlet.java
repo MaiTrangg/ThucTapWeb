@@ -1,4 +1,3 @@
-/*
 package Controller;
 
 import java.io.IOException;
@@ -15,30 +14,24 @@ import javax.servlet.http.HttpSession;
 import Model.Order;
 import Model.OrderDetail;
 
-*/
 /**
  * Servlet implementation class updatePriceServlet
- *//*
-
+ */
 @WebServlet("/updatePriceServlet")
 public class updatePriceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    */
-/**
-     * @see HttpServlet#HttpServlet()
-     *//*
 
-    public updatePriceServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public updatePriceServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-	*/
-/**
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 *//*
-
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("haha");
 		System.out.println(request.getQueryString()+" dữ liệu được gửi đi");
@@ -84,15 +77,12 @@ public class updatePriceServlet extends HttpServlet {
 //		request.getRequestDispatcher("/cart.jsp").forward(request, response);
 	}
 
-	*/
-/**
+	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 *//*
-
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 }
-*/

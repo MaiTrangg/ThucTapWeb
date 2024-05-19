@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <%@page isELIgnored="false" %>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->

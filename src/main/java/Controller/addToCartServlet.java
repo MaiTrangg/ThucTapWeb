@@ -1,4 +1,3 @@
-/*
 package Controller;
 
 import java.io.IOException;
@@ -16,33 +15,26 @@ import javax.servlet.http.HttpSession;
 import DAO.ProductDAO;
 import Model.OrderDetail;
 import Model.Order;
-import Model.OrderLine;
 import Model.Product;
 
-*/
 /**
  * Servlet implementation class addToCartServlet
- *//*
-
+ */
 @WebServlet("/addToCartServlet")
 public class addToCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    */
-/**
-     * @see HttpServlet#HttpServlet()
-     *//*
 
-    public addToCartServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public addToCartServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-	*/
-/**
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 *//*
-
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("da vao servlet addtocart");
@@ -51,7 +43,7 @@ public class addToCartServlet extends HttpServlet {
 		System.out.println("idpro: "+idpro);
 		Product p = ProductDAO.getProductByID(idpro);
 		OrderDetail ol = new OrderDetail(p, 1, p.getSellingPrice());
-		
+
 		Order o = (Order) session.getAttribute("order");
 		if(o==null) {
 //			newlistOrderLine.add(ol);
@@ -65,12 +57,12 @@ public class addToCartServlet extends HttpServlet {
 //			listOrderLine.add(ol);
 //			o.setOrderLines(listOrderLine);
 			o.addOrderline(ol);
-			
+
 			session.setAttribute("order", o);
 		}
 		session.setAttribute("countOrderLine", o.getOrderLines().size());
 		System.out.println("-----------------------------");
-		for (OrderLine orderLine : o.getOrderLines()) {
+		for (OrderDetail orderLine : o.getOrderLines()) {
 			System.out.println(orderLine);
 		}
 		String value = request.getParameter("value");
@@ -93,15 +85,12 @@ public class addToCartServlet extends HttpServlet {
 		}
 	}
 
-	*/
-/**
+	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 *//*
-
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 }
-*/
