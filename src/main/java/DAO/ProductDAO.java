@@ -37,6 +37,8 @@ public class ProductDAO {
                         category
                 ));
             }
+            con.close();
+
 //            con.close();
 //            ps.close();
 //            rs.close();
@@ -145,9 +147,11 @@ public class ProductDAO {
 
 
             ResultSet rs = preparedStatement.executeQuery();
+
+
 //        }
 //        }
-//=======
+//
 //    public static Product getProductByID(int id) {
 //        String query ="select * from products where productID = ? ";
 //        Product product = null;
@@ -174,6 +178,7 @@ public class ProductDAO {
 //
 //
 //
+
             while (rs.next()) {
                 return new Category(rs.getString(1), rs.getInt(2));
             }
@@ -185,9 +190,19 @@ public class ProductDAO {
         return null;
     }
 
+
+    public List<Product> getListByPage(List<Product> listPro, int start, int end) {
+        // TODO Auto-generated method stub
+        ArrayList<Product> arr = new ArrayList<>();
+        for(int i=start; i<end; i++) {
+            arr.add(listPro.get(i));
+        }
+        return arr;
+    }
+
     public static void main(String[] args) {
 //        ProductDAO pd = new ProductDAO;
-       Product product = ProductDAO.getProductByID(1);
+        Product product = ProductDAO.getProductByID(1);
 //        System.out.println(product.toString());
 /*
         Category c = getCategory(1);
@@ -195,9 +210,25 @@ public class ProductDAO {
             System.out.println(c.toString());
         } else {
             System.out.println("Không tìm thấy sản phẩm có categoryID là 1");
-        }
-*/
 
+        }
+        return arr;
+    }
+
+//    public static void main(String[] args) {
+////        ProductDAO pd = new ProductDAO;
+//       Product product = ProductDAO.getProductByID(1);
+//        System.out.println(product.toString());
+///*
+//        Category c = getCategory(1);
+//        if (c != null) {
+//            System.out.println(c.toString());
+//        } else {
+//            System.out.println("Không tìm thấy sản phẩm có categoryID là 1");
+//        }
+//*/
+//
+//    }
     }
 }
 

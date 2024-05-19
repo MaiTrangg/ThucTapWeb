@@ -12,10 +12,15 @@
 <head>
     <c:import url="includes/head.jsp"></c:import>
 
+
 </head>
 <style>
     .highlighted {
         color: var(--bs-secondary);; /* Màu chữ của liên kết được highlight */
+    }
+    .active {
+        font-weight: bold; /* Có thể thay đổi kiểu hiển thị của mục được chọn */
+        color: var(--bs-secondary);
     }
     .h-30{
         height: 30%;
@@ -116,16 +121,28 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Categories</h4>
-                                    <ul class="list-unstyled fruite-categorie"   >
+<%--                                    <ul class="list-unstyled fruite-categorie"   >--%>
 
-                                       <c:forEach var="cate" items="${listCate}">
-                                           <li>
-                                               <div class="d-flex justify-content-between fruite-name ">
-                                                   <a  id="${cate.category}"  href="processCategoryTab?nameTab=${cate.category}" ><i class="fas fa-apple-alt me-2 "  ></i>${cate.category}</a>
-                                                   <span>(${cate.quantity})</span>
-                                               </div>
-                                           </li>
-                                       </c:forEach>
+<%--                                        <c:forEach var="cate" items="${listCate}">--%>
+<%--                                            <li>--%>
+<%--                                                <div class="d-flex justify-content-between fruite-name ">--%>
+<%--                                                    <a id="${cate.category}" href="shopServlet?category=${cate.category}" ><i class="fas fa-apple-alt me-2"></i>${cate.category}</a>--%>
+<%--                                                    <span>(${cate.quantity})</span>--%>
+<%--                                                </div>--%>
+<%--                                            </li>--%>
+<%--                                        </c:forEach>--%>
+
+                                    <ul class="list-unstyled fruite-categorie">
+                                        <c:forEach var="cate" items="${listCate}">
+                                            <li>
+                                                <div class="d-flex justify-content-between fruite-name">
+                                                    <a id="${cate.category}" href="shopServlet?category=${cate.category}" onclick="highlightCategory(this)"><i class="fas fa-apple-alt me-2"></i>${cate.category}</a>
+
+                                                    <span>(${cate.quantity})</span>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+
 
 <%--        <li >--%>
 <%--            <div class="d-flex justify-content-between fruite-name ">--%>
@@ -278,18 +295,29 @@
                                 </div>
                             </c:forEach>
 
-                            <div class="col-12">
-                                <div class="pagination d-flex justify-content-center mt-5">
-                                    <a href="#" class="rounded">&laquo;</a>
-                                    <a href="#" class="active rounded">1</a>
-                                    <a href="#" class="rounded">2</a>
-                                    <a href="#" class="rounded">3</a>
-                                    <a href="#" class="rounded">4</a>
-                                    <a href="#" class="rounded">5</a>
-                                    <a href="#" class="rounded">6</a>
-                                    <a href="#" class="rounded">&raquo;</a>
-                                </div>
+<%--                            <div class="col-12">--%>
+<%--                                <div class="pagination d-flex justify-content-center mt-5">--%>
+<%--                                    <a href="#" class="rounded">&laquo;</a>--%>
+<%--                                    <a href="#" class="active rounded">1</a>--%>
+<%--                                    <a href="#" class="rounded">2</a>--%>
+<%--                                    <a href="#" class="rounded">3</a>--%>
+<%--                                    <a href="#" class="rounded">4</a>--%>
+<%--                                    <a href="#" class="rounded">5</a>--%>
+<%--                                    <a href="#" class="rounded">6</a>--%>
+<%--                                    <a href="#" class="rounded">&raquo;</a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+
+                            <!-- Pagination -->
+                            <c:set var="page" value="${page}" />
+                            <div class="pagination">
+                                <!-- Pagination -->
+                                <c:forEach begin="1" end="${num}" var="inum">
+                                    <a class="${inum==page?' active':''}" href="shopServlet?page=${inum}&category=${category}">${inum}</a>
+                                </c:forEach>
                             </div>
+
+                            <!-- Thêm các liên kết khác tùy thuộc vào các loại sản phẩm khác -->
                         </div>
                     </div>
                 </div>
@@ -344,13 +372,37 @@
 
 
 <script>
+    <%--document.addEventListener("DOMContentLoaded", function() {--%>
+    <%--    var highlightLinkId = '${nameTab}';--%>
+    <%--    var linkToHighlight = document.getElementById(highlightLinkId);--%>
+    <%--    if (linkToHighlight) {--%>
+    <%--        linkToHighlight.classList.add("highlighted");--%>
+    <%--    }--%>
+    <%--});--%>
+    function highlightCategory(element) {
+        // Xoá lớp active ở tất cả các mục
+        var allItems = document.querySelectorAll('.fruite-categorie a');
+        allItems.forEach(item => item.classList.remove('active'));
+
+        // Thêm lớp active vào mục được chọn
+        element.classList.add('active');
+    }
+
+
     document.addEventListener("DOMContentLoaded", function() {
-        var highlightLinkId = '${nameTab}';
-        var linkToHighlight = document.getElementById(highlightLinkId);
-        if (linkToHighlight) {
-            linkToHighlight.classList.add("highlighted");
+        // Lấy giá trị category từ URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var categoryParam = urlParams.get('category');
+
+        // Nếu có categoryParam, thực hiện highlight cho mục tương ứng
+        if (categoryParam) {
+            var categoryLink = document.querySelector('.fruite-categorie a[id="' + categoryParam + '"]');
+            if (categoryLink) {
+                categoryLink.classList.add('active');
+            }
         }
     });
+
 
 
 </script>
@@ -391,6 +443,7 @@
             //hàm này dùng để cập nhật lại so lượng giỏ hàng trong navbar
             updatePage(respone);
         };
+
 </script>
 
 
