@@ -12,6 +12,7 @@ public class Order {
 	private Date dateOrder;
 	private List<OrderDetail> orderDetails ;
 	private double totalMoney ;
+	private String status;
 	/**
 	 * @return the dateOrder
 	 */
