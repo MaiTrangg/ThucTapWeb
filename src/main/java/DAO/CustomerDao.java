@@ -336,5 +336,6 @@ public class CustomerDao {
 
 		System.out.println(CustomerDao.GetInstance().getbyID(c));
 	}
+
 }
 

@@ -11,6 +11,9 @@ public class Customer {
     private String fristName;
     private String lastName;
     private String address;
+
+
+
     /**
      * @return the country
      */
