@@ -1,14 +1,14 @@
 package Model;
 
 public class Transaction {
-    private String transactionId;
+    private int transactionId;
     private Customer customer;// tai khoan thuc hien giao dich
     private String fullName;
     private String email;
     private String numberPhone;
-    private String amount; //so tien giao dich
+    private double amount; //so tien giao dich
 
-    public Transaction(String transactionId, Customer customer, String fullName, String email, String numberPhone, String amount) {
+    public Transaction(int transactionId, Customer customer, String fullName, String email, String numberPhone, double amount) {
         this.transactionId = transactionId;
         this.customer = customer;
         this.fullName = fullName;
@@ -17,11 +17,18 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getTransactionId() {
+    public Transaction(String fullName, String email, String numberPhone, double amount) {
+        this.fullName = fullName;
+        this.email = email;
+        this.numberPhone = numberPhone;
+        this.amount = amount;
+    }
+
+    public int getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(String transactionId) {
+    public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -57,11 +64,11 @@ public class Transaction {
         this.numberPhone = numberPhone;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

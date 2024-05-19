@@ -60,13 +60,13 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <h1 class="mb-4">Billing details</h1>
-        <form action="#">
+        <form action="checkoutServlet" method="post">
             <div class="row g-5">
                 <div class="col-md-12 col-lg-6 col-xl-7">
 
                     <div class="form-item">
                         <label class="form-label my-3">Họ và tên<sup>*</sup></label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="fullName" required>
                     </div>
 <%--                    <div class="row">--%>
 <%--                        <div class="col-md-12 col-lg-6">--%>
@@ -85,22 +85,22 @@
 
                     <div class="row">
                         <div class="col-md-12 col-lg-12">
-                            <div class="form-item d-flex justify-content-between align-items-center">
+                            <div class="form-item d-flex justify-content-between align-items-center css-province">
                                 <div class="w-30">
                                     <label class="form-label my-3">Địa chỉ<sup>*</sup></label>
                                 </div>
                                 <div class="w-20">
-                                    <select class="css_select" id="tinh" name="tinh">
+                                    <select  id="tinh" name="tinh" required>
                                         <option value="-1">Tỉnh Thành</option>
                                     </select>
                                 </div>
                                 <div class="w-20">
-                                    <select class="css_select" id="quan" name="quan">
+                                    <select  id="quan" name="quan" required>
                                         <option value="-1">Quận Huyện</option>
                                     </select>
                                 </div>
                                 <div class="w-20">
-                                    <select class="css_select" id="phuong" name="phuong">
+                                    <select  id="phuong" name="phuong" required>
                                         <option value="-1">Phường Xã</option>
                                     </select>
                                 </div>
@@ -109,15 +109,15 @@
                     </div>
 
                     <div class="form-item">
-                        <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="5" placeholder="Tên đường, tòa nhà, số nhà"></textarea>
+                        <textarea name="noteAddress" class="form-control" spellcheck="false" cols="30" rows="5" placeholder="Tên đường, tòa nhà, số nhà" required></textarea>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Email <sup>*</sup></label>
-                        <input type="email" class="form-control" >
+                        <input type="email" class="form-control" name="email">
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Số điện thoại<sup>*</sup></label>
-                        <input type="tel" class="form-control">
+                        <input type="tel" class="form-control" name="numberPhone">
                     </div>
 <%--                    <div class="form-item">--%>
 <%--                        <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>--%>
@@ -141,7 +141,7 @@
 <%--                        <label class="form-check-label" for="Address-1">Ship to a different address?</label>--%>
 <%--                    </div>--%>
                     <div class="form-item my-3">
-                        <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú cho đơn hàng"></textarea>
+                        <textarea name="noteOrder" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú cho đơn hàng"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6 col-xl-5">
@@ -227,41 +227,9 @@
                             </tbody>
                         </table>
                     </div>
-<%--                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">--%>
-<%--                        <div class="col-12">--%>
-<%--                            <div class="form-check text-start my-3">--%>
-<%--                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1" name="Transfer" value="Transfer">--%>
-<%--                                <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>--%>
-<%--                            </div>--%>
-<%--                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">--%>
-<%--                        <div class="col-12">--%>
-<%--                            <div class="form-check text-start my-3">--%>
-<%--                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments">--%>
-<%--                                <label class="form-check-label" for="Payments-1">Check Payments</label>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">--%>
-<%--                        <div class="col-12">--%>
-<%--                            <div class="form-check text-start my-3">--%>
-<%--                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery">--%>
-<%--                                <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">--%>
-<%--                        <div class="col-12">--%>
-<%--                            <div class="form-check text-start my-3">--%>
-<%--                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="Paypal" value="Paypal">--%>
-<%--                                <label class="form-check-label" for="Paypal-1">Paypal</label>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+
                     <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                        <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                     </div>
                 </div>
             </div>

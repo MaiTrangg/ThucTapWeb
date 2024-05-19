@@ -8,11 +8,13 @@ import java.util.List;
 
 public class Order {
 	private int orderId;
-	private Customer customer;
+	private Transaction transaction;
+	private ShippingAddress shippingAddress;
 	private Date dateOrder;
 	private List<OrderDetail> orderDetails ;
 	private double totalMoney ;
-	private String status;
+	private String statusOrder;
+	private String noteOrder;
 	/**
 	 * @return the dateOrder
 	 */
@@ -26,37 +28,42 @@ public class Order {
 		this.dateOrder = dateOrder;
 	}
 
-	/**
-	 * @param orderId
-	 * @param customer
-	 * @param orderDetails
-	 */
-	public Order(int orderId, Customer customer, List<OrderDetail> orderDetails) {
+	public Order(int orderId, Transaction transaction, ShippingAddress shippingAddress, Date dateOrder, List<OrderDetail> orderDetails, double totalMoney, String statusOrder, String noteOrder) {
 		this.orderId = orderId;
-		this.customer = customer;
-		this.orderDetails = orderDetails;
-
-	}
-
-
-	/**
-	 * @param orderId
-	 * @param customer
-	 * @param dateOrder
-	 * @param orderDetails
-	 */
-	public Order(int orderId, Customer customer, Date dateOrder, List<OrderDetail> orderDetails, double totalMoney) {
-		this.orderId = orderId;
-		this.customer = customer;
+		this.transaction = transaction;
+		this.shippingAddress = shippingAddress;
 		this.dateOrder = dateOrder;
 		this.orderDetails = orderDetails;
 		this.totalMoney = totalMoney;
+		this.statusOrder = statusOrder;
+		this.noteOrder = noteOrder;
 	}
-	@Override
-	public String toString() {
-		return "Order [orderId=" + orderId  + ", customer="  + customer.toString() + "]";
-//		 + ", customer=" + customer.toString() + ", orderLines=" + orderLines +
-	}
+	//	public Order(int orderId, Customer customer, List<OrderDetail> orderDetails) {
+//		this.orderId = orderId;
+//		this.customer = customer;
+//		this.orderDetails = orderDetails;
+//
+//	}
+
+
+//	/**
+//	 * @param orderId
+//	 * @param customer
+//	 * @param dateOrder
+//	 * @param orderDetails
+//	 */
+//	public Order(int orderId, Customer customer, Date dateOrder, List<OrderDetail> orderDetails, double totalMoney) {
+//		this.orderId = orderId;
+//		this.customer = customer;
+//		this.dateOrder = dateOrder;
+//		this.orderDetails = orderDetails;
+//		this.totalMoney = totalMoney;
+//	}
+//	@Override
+//	public String toString() {
+//		return "Order [orderId=" + orderId  + ", customer="  + customer.toString() + "]";
+////		 + ", customer=" + customer.toString() + ", orderLines=" + orderLines +
+//	}
 	public Order() {
 
 	}
@@ -84,9 +91,9 @@ public class Order {
 	/**
 	 * @return the customer
 	 */
-	public Customer getCustomer() {
-		return customer;
-	}
+//	public Customer getCustomer() {
+//		return customer;
+//	}
 
 	public double getTotalMoney() {
 		return totalMoney;
@@ -99,9 +106,9 @@ public class Order {
 	/**
 	 * @param customer the customer to set
 	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
 	/**
 	 * @return the orderLines
 	 */
@@ -111,6 +118,7 @@ public class Order {
 	/**
 	 * @param orderLines the orderLines to set
 	 */
+
 	public void setOrderLines(List<OrderDetail> orderLines) {
 		this.orderDetails = orderLines;
 	}

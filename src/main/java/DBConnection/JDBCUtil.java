@@ -13,9 +13,8 @@ public class JDBCUtil {
 		    // Load the MySQL JDBC driver
 //			com.mys
 		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    String url = "jdbc:mysql://localhost:3306/store";
+		    String url = "jdbc:mysql://localhost:3306/store?useUnicode=true&characterEncoding=UTF-8";
 		    String user = "root";
-
 		    String password = "123456";
 
 
