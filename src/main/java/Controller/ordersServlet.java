@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import DAO.OrderDAO;
+import DAO.OrderDao;
 import Model.Order;
 
 /**
@@ -34,7 +34,7 @@ public class ordersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		List<Order> orders = OrderDAO.getAllOrders();
+		List<Order> orders = OrderDao.getAllOrders();
 		if(orders == null) System.out.println("orders null"); else
 			System.out.println("đã vào ordersServlet "+orders);
 		session.setAttribute("orders", orders);
