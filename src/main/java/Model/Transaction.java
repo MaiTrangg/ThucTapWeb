@@ -83,4 +83,14 @@ public class Transaction {
                 ", amount='" + amount + '\'' +
                 '}';
     }
+
+    public String printTran() {
+        return "Transaction{" +
+                ", customer=" + customer +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", numberPhone='" + numberPhone + '\'' +
+                ", amount='" + amount + '\'' +
+                '}';
+    }
 }

@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DAO.LogDao;
 import DAO.ProductDAO;
+import Model.ILog;
 import Model.OrderDetail;
 import Model.Order;
 import Model.Product;
@@ -68,11 +70,14 @@ public class addToCartServlet extends HttpServlet {
 		String value = request.getParameter("value");
 		System.out.println("value"+value);
 //		PrintWriter out = response.getWriter();
+
 		if(value.equals("buy")) {
+
 			System.out.println("da vao noi xu ly");
 			request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
 //			response.sendRedirect("/WEB-INF/cart.jsp");
 		}else{
+			// lay ra so luong san pham co trong gio haàng va cap nhat len gio hang sau khi them
 			int quantityCart = o.getOrderLines().size();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
