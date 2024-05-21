@@ -13,7 +13,7 @@ import Model.Customer;
 public class CustomerDao {
 	private Connection con;
 	private String query;
-	
+
 
 	/**
 	 * @param con
