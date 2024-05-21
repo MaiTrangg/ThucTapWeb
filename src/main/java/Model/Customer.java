@@ -14,6 +14,7 @@ public class Customer {
 
 
 
+
     /**
      * @return the country
      */
@@ -118,6 +119,7 @@ public class Customer {
     public Customer() {
 
     }
+
 
 
     public int getUser_id() {

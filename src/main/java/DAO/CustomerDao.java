@@ -12,6 +12,9 @@ import Model.Customer;
 
 public class CustomerDao {
 	private Connection con;
+	private String query;
+
+
 
 	public static CustomerDao GetInstance() {
 		return new CustomerDao();
