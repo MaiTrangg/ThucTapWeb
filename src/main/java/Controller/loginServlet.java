@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import DAO.CustomerDao;
 import DAO.LogDao;
 import Model.Customer;
+import Model.Geo_API;
 import Model.ILog;
 import util.MaHoa;
 
@@ -44,6 +45,8 @@ public class loginServlet extends HttpServlet {
 		System.out.println("UserName: "+username);
 		String password = request.getParameter("login-password").trim();
 		System.out.println("Pass: "+password);
+
+//		String clientIP = new Geo_API().getClientIp(request); //lay ra dia chi ip cua may khach
 		if(username.isEmpty()|| username == null) {
 			session.setAttribute("error", "Nhập vào username!");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);

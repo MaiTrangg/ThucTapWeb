@@ -1,5 +1,8 @@
 package Model;
 
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class LogEntry {
@@ -10,6 +13,7 @@ public class LogEntry {
     private String userId;
     private String sessionId;
     private String ipAddress;
+//    private String location;
 
     public LogEntry( LogLevel logLevel, String beforeMessage, String afterMessage, String userId, String sessionId, String ipAddress) {
         this.logTime = LocalDateTime.now();
@@ -19,6 +23,8 @@ public class LogEntry {
         this.userId = userId;
         this.sessionId = sessionId;
         this.ipAddress = ipAddress;
+
+
     }
 
     public LogEntry(LocalDateTime logTime, LogLevel logLevel, String beforeMessage, String afterMessage, String userId, String sessionId, String ipAddress) {
@@ -86,4 +92,12 @@ public class LogEntry {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
+
+//    public String getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(String location) {
+//        this.location = location;
+//    }
 }

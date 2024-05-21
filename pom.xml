@@ -54,17 +54,20 @@
       <artifactId>tomcat-util</artifactId>
       <version>8.5.23</version>
     </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.maxmind.geoip2</groupId>-->
+<!--      <artifactId>geoip2</artifactId>-->
+<!--      <version>4.2.0</version>-->
+<!--    </dependency>-->
     <dependency>
-      <groupId>com.ip2location</groupId>
-      <artifactId>ip2location-io-java</artifactId>
-      <version>1.0.0</version>
+      <groupId>com.maxmind.geoip2</groupId>
+      <artifactId>geoip2</artifactId>
+      <version>2.14.0</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20210307</version>
-    </dependency>
+
+
 
 
   </dependencies>
