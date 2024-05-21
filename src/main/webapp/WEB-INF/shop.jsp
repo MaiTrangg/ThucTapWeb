@@ -133,31 +133,23 @@
 <%--                                        </c:forEach>--%>
 
                                     <ul class="list-unstyled fruite-categorie">
-                                        <c:forEach var="cate" items="${listCate}">
-                                            <li>
-                                                <div class="d-flex justify-content-between fruite-name">
-                                                    <a id="${cate.category}" href="shopServlet?category=${cate.category}" onclick="highlightCategory(this)"><i class="fas fa-apple-alt me-2"></i>${cate.category}</a>
+<%--                                        <c:forEach var="cate" items="${listCate}">--%>
+<%--                                            <li>--%>
+<%--                                                <div class="d-flex justify-content-between fruite-name">--%>
+<%--                                                    <a id="${cate.category}" href="shopServlet?category=${cate.category}" onclick="highlightCategory(this)"><i class="fas fa-apple-alt me-2"></i>${cate.category}</a>--%>
 
-                                                    <span>(${cate.quantity})</span>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-
-
-<%--        <li >--%>
-<%--            <div class="d-flex justify-content-between fruite-name ">--%>
-<%--                <a href="#" class="tablinks " ><i class="fas fa-apple-alt me-2 "  ></i>Đồ chay</a>--%>
-<%--                <span>(78)</span>--%>
-<%--            </div>--%>
-<%--        </li>--%>
-<%--    <li >--%>
-<%--        <div class="d-flex justify-content-between fruite-name ">--%>
-<%--            <a href="#" class="tablinks " ><i class="fas fa-apple-alt me-2 "  ></i>Ăn vặt</a>--%>
-<%--            <span>(77)</span>--%>
-<%--        </div>--%>
-<%--    </li>--%>
-
-
+<%--                                                    <span>(${cate.quantity})</span>--%>
+<%--                                                </div>--%>
+<%--                                            </li>--%>
+<%--                                        </c:forEach>--%>
+    <c:forEach var="cate" items="${listCate}">
+        <li>
+            <div class="d-flex justify-content-between fruite-name">
+                <a id="${cate.category}" href="#" class="category-link" data-category="${cate.category}" onclick="highlightCategory(this)"><i class="fas fa-apple-alt me-2"></i>${cate.category}</a>
+                <span>(${cate.quantity})</span>
+            </div>
+        </li>
+    </c:forEach>
 
                                     </ul>
                                 </div>
@@ -295,27 +287,22 @@
                                 </div>
                             </c:forEach>
 
-<%--                            <div class="col-12">--%>
-<%--                                <div class="pagination d-flex justify-content-center mt-5">--%>
-<%--                                    <a href="#" class="rounded">&laquo;</a>--%>
-<%--                                    <a href="#" class="active rounded">1</a>--%>
-<%--                                    <a href="#" class="rounded">2</a>--%>
-<%--                                    <a href="#" class="rounded">3</a>--%>
-<%--                                    <a href="#" class="rounded">4</a>--%>
-<%--                                    <a href="#" class="rounded">5</a>--%>
-<%--                                    <a href="#" class="rounded">6</a>--%>
-<%--                                    <a href="#" class="rounded">&raquo;</a>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
 
                             <!-- Pagination -->
                             <c:set var="page" value="${page}" />
+<%--                            <div class="pagination">--%>
+<%--                                <!-- Pagination -->--%>
+<%--                                <c:forEach begin="1" end="${num}" var="inum">--%>
+<%--                                    <a class="${inum==page?' active':''}" href="shopServlet?page=${inum}&category=${category}">${inum}</a>--%>
+<%--                                </c:forEach>--%>
+<%--                            </div>--%>
                             <div class="pagination">
-                                <!-- Pagination -->
+                                <!-- Pagination links should have 'pagination-link' class -->
                                 <c:forEach begin="1" end="${num}" var="inum">
-                                    <a class="${inum==page?' active':''}" href="shopServlet?page=${inum}&category=${category}">${inum}</a>
+                                    <a class="pagination-link${inum==page?' active':''}" href="#" data-page="${inum}">${inum}</a>
                                 </c:forEach>
                             </div>
+
 
                             <!-- Thêm các liên kết khác tùy thuộc vào các loại sản phẩm khác -->
                         </div>
@@ -403,12 +390,49 @@
         }
     });
 
+    $(document).ready(function() {
+        // Xử lý sự kiện phân trang
+        $(document).on('click', '.pagination-link', function(e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+            var page = $(this).data('page');
+            var category = $('.category-link.active').data('category') || null;
+            loadProducts(page, category);
+        });
 
+        // Xử lý sự kiện chọn mục sản phẩm
+        $(document).on('click', '.category-link', function(e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+            var category = $(this).data('category');
+            loadProducts(1, category); // Trang đầu tiên khi chọn một danh mục sản phẩm
+        });
 
+        // Hàm tải sản phẩm
+        function loadProducts(page, category) {
+            $.ajax({
+                url: 'shopServlet',
+                type: 'GET',
+                data: {
+                    page: page,
+                    category: category
+                },
+                success: function(response) {
+                    var newContent = $(response).find('#content-pro').html();
+                    var newPagination = $(response).find('.pagination').html();
+                    $('#content-pro').html(newContent);
+                    $('.pagination').html(newPagination);
+
+                    // Cuộn lên đầu trang sau khi cập nhật nội dung
+                    $('html, body').animate({ scrollTop: $('#content-pro').offset().top }, 'fast');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Lỗi khi tải sản phẩm:', error);
+                }
+            });
+        }
+    });
 </script>
+
 <script>
-
-
         $(document).ready(function (){
             $(document).on("click", "#addPro", function(e) {
                 e.preventDefault();
