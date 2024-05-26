@@ -1,6 +1,7 @@
 package DAO;
 
 import DBConnection.JDBCUtil;
+import Model.Customer;
 import Model.Transaction;
 
 import java.sql.*;
@@ -43,12 +44,13 @@ public class TransactionDAO {
             pst.setInt(1, order_id);
             rs = pst.executeQuery();
             if (rs.next()) {
-                int transactionId =rs.getInt("transactionId");
+                int transactionId =rs.getInt("transaction_id");
                 String fullName = rs.getString("fullName");
                 String email = rs.getString("email_tran");
                 String numberPhone = rs.getString("numberPhone_tran");
                 double amount = rs.getDouble("amount");
-                transaction = new Transaction(fullName, email, numberPhone, amount);
+                Customer customer = new CustomerDao().getCustomerById(rs.getInt("customer_id"));
+                transaction = new Transaction(transactionId, customer,fullName, email, numberPhone, amount);
             }
             con.close();
             pst.close();

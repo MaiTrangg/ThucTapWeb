@@ -97,6 +97,7 @@
                             <th>Account</th>
                             <th>TotalPrice</th>
                             <th>ExportDate</th>
+                            <th>Status</th>
                            <!--  <th>Actions</th> -->
                         </tr>
                     </thead>
@@ -111,11 +112,13 @@
                                     </span>
                                 </td> -->
                                 <td>${o.orderId}</td>
-                                <td> ${o.customer.username} </td>
-                                 <td> ${ o.total() } </td>
+<%--                                <td> ${o.customer.username} </td>--%>
+                                <td> ${o.transaction.customer.username} </td>
+                                 <td> ${ o.totalMoney } </td>
                                 <td>
 								<p> <fmt:formatDate value="${o.dateOrder}" pattern="dd/MM/yyyy" /></p>
-                               
+                                </td>
+                                <td>${o.statusOrder}</td>
                                <%--  <td>
                                     <a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
                                     <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>

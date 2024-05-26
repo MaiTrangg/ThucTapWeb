@@ -181,7 +181,49 @@ public class Order {
 		return total;
 	}
 
+	@Override
+	public String toString() {
+		return "Order{" +
+				"orderId=" + orderId +
+				", transaction=" + transaction.toString() +
+				", shippingAddress=" + shippingAddress.toString() +
+				", dateOrder=" + dateOrder +
+				", orderDetails=" + orderDetails +
+				", totalMoney=" + totalMoney +
+				", statusOrder='" + statusOrder + '\'' +
+				", noteOrder='" + noteOrder + '\'' +
+				'}';
+	}
 
+	public Transaction getTransaction() {
+		return transaction;
+	}
 
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
+	}
 
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public String getStatusOrder() {
+		return statusOrder;
+	}
+
+	public void setStatusOrder(String statusOrder) {
+		this.statusOrder = statusOrder;
+	}
+
+	public String getNoteOrder() {
+		return noteOrder;
+	}
+
+	public void setNoteOrder(String noteOrder) {
+		this.noteOrder = noteOrder;
+	}
 }

@@ -93,6 +93,16 @@ public class OrderDao {
         return orders;
     }
     public static void main(String[] args) {
+        List<Order> orders = getAllOrders();
+        if (orders == null || orders.isEmpty()) {
+            System.out.println("Không có đơn hàng nào.");
+        } else {
+            System.out.println("Danh sách đơn hàng:");
+            for (Order order : orders) {
+                System.out.println(order);
+            }
+        }
     }
+
 }
 

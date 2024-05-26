@@ -35,7 +35,7 @@ public class ordersServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		List<Order> orders = OrderDao.getAllOrders();
-		if(orders == null) System.out.println("orders null"); else
+//		if(orders == null) System.out.println("orders null"); else
 			System.out.println("đã vào ordersServlet "+orders);
 		session.setAttribute("orders", orders);
 		//response.sendRedirect("/WEB-INF/Orders.jsp");
