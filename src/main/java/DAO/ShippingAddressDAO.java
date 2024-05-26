@@ -45,7 +45,7 @@ public class ShippingAddressDAO {
             pst.setInt(1, order_id);
             rs = pst.executeQuery();
             if (rs.next()) {
-                Integer shippingAddressId = rs.getInt("shippingAddressId");
+                Integer shippingAddressId = rs.getInt("shippingAddress_id");
                 String province = rs.getString("province");
                 String district = rs.getString("district");
                 String commune = rs.getString("commune");

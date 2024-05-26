@@ -56,7 +56,7 @@ public class OrderDetailDAO {
 			pst.setInt(1, order_id);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				Product p = ProductDAO.getProductByID(rs.getInt("product_id"));
+				Product p = ProductDAO.getProductByID(rs.getInt("productID"));
 				orderLines.add(new OrderDetail(p, rs.getInt("quantity"), rs.getDouble("price")));
 			}
 		} catch (SQLException e) {
