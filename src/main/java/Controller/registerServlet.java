@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.CustomerDao;
+import DAO.LogDao;
 import Model.Customer;
+import Model.ILog;
 import util.MaHoa;
 
 /**
@@ -56,17 +58,22 @@ public class registerServlet extends HttpServlet {
 			session.setAttribute("errorFromRegister", "please enter pass!");
 			request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
 		}
-		
+			ILog log = new LogDao();
 		Customer customer = new Customer(username, pass, email, numberphone, 0);
 //		session.removeAttribute("errorFromRegister");
 		if(CustomerDao.GetInstance().checkExistUsername(customer) != null ) {
 			 errorFromRegister = "User name exited!";
 			 session.setAttribute("errorFromRegister", errorFromRegister);
+			 //log
+			log.info("Chưa đăng kí","đăng kí thất bại: "+errorFromRegister,username,request.getSession().getId(),request.getRemoteAddr());
+
 			request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
 		}
 		if(CustomerDao.GetInstance().checkExistEmail(customer.getEmail()) != null ) {
 			 errorFromRegister = "Email exited!";
 			 session.setAttribute("errorFromRegister", errorFromRegister);
+			//log
+			log.info("Chưa đăng kí","đăng kí thất bại: "+errorFromRegister,username,request.getSession().getId(),request.getRemoteAddr());
 			request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
 		}
 		
@@ -77,6 +84,9 @@ public class registerServlet extends HttpServlet {
 			session.removeAttribute("pass");
 			session.removeAttribute("email");
 			session.removeAttribute("numberphone");
+			//log
+			log.info("Chưa đăng kí","đăng kí thành công: "+customer.toString(),username,request.getSession().getId(),request.getRemoteAddr());
+
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}
 		}

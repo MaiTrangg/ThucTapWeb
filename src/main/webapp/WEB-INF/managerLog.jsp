@@ -47,6 +47,7 @@
         border-collapse: collapse;
         font-size: 16px;
         text-align: left;
+        color: rgba(0, 0, 0, 0.71);
     }
 
     #logTable thead th {
@@ -90,6 +91,7 @@
 
     #logTable tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
+        /*background-color: #009879;*/
     }
 
     #logTable tbody tr:hover {
@@ -159,6 +161,32 @@
             font-weight: bold;
             text-align: left;
         }
+        /*#logTable_info{*/
+        /*    margin: 20px 0;*/
+        /*}*/
+
+    }
+
+    .logLevel.INFO{
+        background:#c8c5c5;
+        border-radius: 5px;
+        opacity: 0.89;
+        text-align: center;
+    }
+    .logLevel.DANGER{
+        background: #fc3737;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .ALERT{
+        background: #fc7d7d;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .WARN{
+        background: rgba(252, 252, 105, 0.93);
+        border-radius: 5px;
+        text-align: center;
     }
 
 
@@ -226,7 +254,7 @@
                         <c:forEach items="${listLog}" var="l">
                             <tr>
                                 <td data-label="logTime">${l.logTime}</td>
-                                <td data-label="logLevel">${l.logLevel}</td>
+                                <td class="logLevel ${l.logLevel} ">${l.logLevel}</td>
                                 <td data-label="beforeMessage">${l.beforeMessage}</td>
                                 <td data-label="afterMessage">${l.afterMessage}</td>
                                 <td data-label="userId">${l.userId}</td>

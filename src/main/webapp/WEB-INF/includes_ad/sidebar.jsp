@@ -51,7 +51,7 @@
     <li class="nav-item ${currentPage eq 'managerLog' ? 'active' : ''}">
       <a class="nav-link" href="logsServlet">
         <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
-        <span class="menu-title">Orders</span>
+        <span class="menu-title">Logs</span>
       </a>
     </li>
    <!--  <li class="nav-item">
