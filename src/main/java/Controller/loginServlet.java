@@ -10,7 +10,10 @@ import javax.servlet.http.HttpSession;
 
 
 import DAO.CustomerDao;
+import DAO.LogDao;
 import Model.Customer;
+import Model.Geo_API;
+import Model.ILog;
 import util.MaHoa;
 
 /**
@@ -42,15 +45,17 @@ public class loginServlet extends HttpServlet {
 		System.out.println("UserName: "+username);
 		String password = request.getParameter("login-password").trim();
 		System.out.println("Pass: "+password);
+
+//		String clientIP = new Geo_API().getClientIp(request); //lay ra dia chi ip cua may khach
 		if(username.isEmpty()|| username == null) {
-			session.setAttribute("error", "Please, enter username!");
+			session.setAttribute("error", "Nhập vào username!");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
 
 		} else
 		if(!password.isEmpty() && password != null) {
 			password = MaHoa.toSHA1(password);
 		}else {
-			session.setAttribute("error", "please enter password!");
+			session.setAttribute("error", "Nhập vào password!");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
 		}
 //		password = MaHoa.toSHA1(password);
@@ -58,14 +63,23 @@ public class loginServlet extends HttpServlet {
 		System.out.print(c);
 		Customer recustomer = CustomerDao.GetInstance().getbyID(c);
 		System.out.print("reCustomer: "+recustomer);
+		ILog log = new LogDao();
 		if(recustomer==null) {
-			String error = "Wrong login information, please try again!";
+			//ghi log
+
+			log.warn("Chưa đăng nhập","đăng nhập thất bại",username,request.getSession().getId(),request.getRemoteAddr());
+
+			//thong bao loi
+			String error = "Sai thông tin đăng nhập!";
 			session.setAttribute("error", error);
 //			request.getRequestDispatcher("/login").forward(request, response);
 //			response.sendRedirect("login");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
 		}else {
 			if (session != null) {
+				//ghi log
+			log.info("Chưa đăng nhập","đăng nhập thành công",username,request.getSession().getId(),request.getRemoteAddr());
+
 			session.removeAttribute("error");
 			session.setAttribute("customer", recustomer);
 			System.out.println("Đã vào login và customer là: "+ recustomer );
