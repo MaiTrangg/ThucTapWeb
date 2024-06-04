@@ -4,7 +4,7 @@ public class Transaction {
     private int transactionId;
     private Customer customer;// tai khoan thuc hien giao dich
     private String fullName;
-    private String email;
+    private String email;   
     private String numberPhone;
     private double amount; //so tien giao dich
 

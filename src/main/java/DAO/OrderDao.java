@@ -1,11 +1,6 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +16,15 @@ public class OrderDao {
     private static  PreparedStatement ps = null;
     private static ResultSet rs = null;
 // lưu order vào cơ so dữ liệu và return về id của order vừa lưu
-    public static int insertOrder(double totalMoney, Date dateorder, String statusOrder, String noteOrder) {
+    public static int insertOrder(double totalMoney, Timestamp dateorder, String statusOrder, String noteOrder) {
         String query ="insert into orders(totalMoney, dateorder, statusOrder, noteOrder) values(?,?,?,?)";
         int orderID=0;
         try {
             con = new JDBCUtil().getConnection();
             PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pst.setDouble(1, totalMoney);
-            pst.setDate(2, dateorder);
+//            pst.setDate(2, dateorder);
+            pst.setTimestamp(2, dateorder);
             pst.setString(3, statusOrder);
             pst.setString(4, noteOrder);
             pst.executeUpdate();
@@ -69,7 +65,8 @@ public class OrderDao {
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
                 double totalMoney = rs.getDouble("totalMoney");
-                Date dateOrder = rs.getDate("dateorder");
+//                Date dateOrder = rs.getDate("dateorder");
+                Timestamp dateOrder = rs.getTimestamp("dateorder");
                 String statusOrder = rs.getString("statusOrder");
                 String noteOrder = rs.getString("noteOrder");
 
@@ -92,6 +89,37 @@ public class OrderDao {
 
         return orders;
     }
+
+    public static void updateOrderStatus(int orderId, String statusOrder) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = new JDBCUtil().getConnection();
+            String sql = "UPDATE orders SET statusOrder = ? WHERE order_id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, statusOrder);
+            ps.setInt(2, orderId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         List<Order> orders = getAllOrders();
         if (orders == null || orders.isEmpty()) {
