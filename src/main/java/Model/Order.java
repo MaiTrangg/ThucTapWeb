@@ -217,34 +217,6 @@ public class Order {
 		return total;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Order{" +
-//				"orderId=" + orderId +
-//				", transaction=" + transaction.toString() +
-//				", shippingAddress=" + shippingAddress.toString() +
-//				", dateOrder=" + dateOrder +
-//				", orderDetails=" + orderDetails +
-//				", totalMoney=" + totalMoney +
-//				", statusOrder='" + statusOrder + '\'' +
-//				", noteOrder='" + noteOrder + '\'' +
-//				'}';
-//	}
-
-	@Override
-	public String toString() {
-		return "Order{" +
-				"orderId=" + orderId +
-				", transaction=" + (transaction != null ? transaction.toString() : "null") +
-				", shippingAddress=" + (shippingAddress != null ? shippingAddress.toString() : "null") +
-				", dateOrder=" + dateOrder +
-				", orderDetails=" + orderDetails +
-				", totalMoney=" + totalMoney +
-				", statusOrder='" + statusOrder + '\'' +
-				", noteOrder='" + noteOrder + '\'' +
-				'}';
-	}
-
 	public Transaction getTransaction() {
 		return transaction;
 	}

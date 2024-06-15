@@ -115,8 +115,8 @@ public class checkoutServlet extends HttpServlet {
 		}else {
 		session.removeAttribute("errorFromCheckoutServlet");
 		java.util.Date utilDate = new java.util.Date();
-		Date dateorder = new Date(utilDate.getTime());
-
+//		Date dateorder = new Date(utilDate.getTime());
+		Timestamp dateorder = new Timestamp(System.currentTimeMillis());
 		// lay ra order từ session
 
 		Order o = (Order) session.getAttribute("order");
@@ -146,7 +146,7 @@ public class checkoutServlet extends HttpServlet {
 
 			//ghi log
 			ILog log = new LogDao();
-			log.info("Chưa hoàn tất đơn hàng","Đơn hàng: "+o.printOrder()+" /t:Đặt hàng thành công",cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
+//			log.info("Chưa hoàn tất đơn hàng","Đơn hàng: "+o.printOrder()+" /t:Đặt hàng thành công",cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
 
 			request.getRequestDispatcher("/WEB-INF/thankyou.jsp").forward(request, response);
 		}
