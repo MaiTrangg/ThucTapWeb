@@ -78,6 +78,32 @@ public class Order {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Order{" +
+				"orderId=" + orderId +
+				", transaction=" + transaction +
+				", shippingAddress=" + shippingAddress +
+				", dateOrder=" + dateOrder +
+				", orderDetails=" + orderDetails +
+				", totalMoney=" + totalMoney +
+				", statusOrder='" + statusOrder + '\'' +
+				", noteOrder='" + noteOrder + '\'' +
+				'}';
+	}
+	public String printOrder() {
+		return "Order{" +
+				"orderId=" + orderId +
+				", transaction=" + transaction.printTran()+
+				", shippingAddress=" + shippingAddress.printShippingAdr() +
+				", dateOrder=" + dateOrder +
+				", orderDetails=" + orderDetails +
+				", totalMoney=" + totalMoney +
+				", statusOrder='" + statusOrder + '\'' +
+				", noteOrder='" + noteOrder + '\'' +
+				'}';
+	}
+
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
 	}

@@ -112,41 +112,42 @@ public class checkoutServlet extends HttpServlet {
 			String errorFromCheckoutServlet = "Please, select address!";
 			session.setAttribute("errorFromCheckoutServlet", errorFromCheckoutServlet);
 			request.getRequestDispatcher("/checkout.jsp").forward(request, response);
-		} else {
-			session.removeAttribute("errorFromCheckoutServlet");
-			java.util.Date utilDate = new java.util.Date();
-//			Date dateorder = new Date(utilDate.getTime());
-			Timestamp dateorder = new Timestamp(System.currentTimeMillis());
+		}else {
+		session.removeAttribute("errorFromCheckoutServlet");
+		java.util.Date utilDate = new java.util.Date();
+		Date dateorder = new Date(utilDate.getTime());
 
-			Order o = (Order) session.getAttribute("order");
-			if (o == null) {
-				System.out.println("Order object is null");
-				request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
-				return;
-			}
-			System.out.println(o + " this is the order");
+		// lay ra order từ session
 
-			int order_id = OrderDao.insertOrder(o.getTotalMoney(), dateorder, "Chờ xác nhận", noteOrder);
-			System.out.println("Order ID is: " + order_id);
+		Order o = (Order) session.getAttribute("order");
+		System.out.println(o +" day la order");
+		//lấy ra id đơn hàng vừa được lưu
+		int order_id = OrderDao.insertOrder(o.getTotalMoney(),dateorder,"Chờ xác nhận",noteOrder);
+		o.setOrderId(order_id);
+		System.out.println("order_id là: "+order_id);
+		// update infor of customer
+//				CustomerDao.GetInstance().updateCheckout(firstname, lastname, country, phone, address,o.getCustomer().getUsername(),o.getCustomer().getEmail());
+		//get customer current
+		Customer cus = (Customer) session.getAttribute("customer");
+		//lưu thông tin giao dịch
+			TransactionDAO.insertTransaction(order_id, cus.getUser_id(),new Transaction(fullName,email,numberPhone,o.getTotalMoney()));
 
-			Customer cus = (Customer) session.getAttribute("customer");
-			if (cus == null) {
-				System.out.println("Customer object is null");
-				request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
-				return;
-			}
+		//lưu địa chỉ giao hàng
+			ShippingAddressDAO.insertShippingAddress(order_id, new ShippingAddress(0,tinh,quan,phuong,"Việt Nam",noteAddress));
+		for (OrderDetail ol : o.getOrderLines()) {
+			//lưu các orderline của khách đặt xuống csdl
+			OrderDetailDAO.insertOrderLine(order_id, ol.getProduct().getProductId(), ol.getQuantity(), ol.getPrice());
+			//update lại số lượng còn lại trong csdl sau khi đặt
+			ol.updateAvailable();
+//			ProductDAO.updateProduct(ol.getProduct().getProductId(), ol.getProduct().getName(), ol.getProduct().getImg(), ol.getProduct().getPrice(), ol.getProduct().getAvailable());
+		}
 
-			Transaction transaction = new Transaction(fullName, email, numberPhone, o.getTotalMoney());
-			TransactionDAO.insertTransaction(order_id, cus.getUser_id(), transaction);
-			ShippingAddress shippingAddress = new ShippingAddress(0, tinh, quan, phuong, "Việt Nam", noteAddress);
-			ShippingAddressDAO.insertShippingAddress(order_id, shippingAddress);
+		session.removeAttribute("order");
 
-			for (OrderDetail ol : o.getOrderLines()) {
-				OrderDetailDAO.insertOrderLine(order_id, ol.getProduct().getProductId(), ol.getQuantity(), ol.getPrice());
-				ol.updateAvailable();
-			}
+			//ghi log
+			ILog log = new LogDao();
+			log.info("Chưa hoàn tất đơn hàng","Đơn hàng: "+o.printOrder()+" /t:Đặt hàng thành công",cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
 
-			session.removeAttribute("order");
 			request.getRequestDispatcher("/WEB-INF/thankyou.jsp").forward(request, response);
 		}
 	}

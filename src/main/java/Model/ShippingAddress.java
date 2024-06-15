@@ -76,4 +76,15 @@ public class ShippingAddress {
                 ", noteAddress='" + noteAddress + '\'' +
                 '}';
     }
+
+
+    public String printShippingAdr() {
+        return "ShippingAddress{" +
+                ", province='" + province + '\'' +
+                ", District='" + district + '\'' +
+                ", commune='" + commune + '\'' +
+                ", country='" + country + '\'' +
+                ", noteAddress='" + noteAddress + '\'' +
+                '}';
+    }
 }
