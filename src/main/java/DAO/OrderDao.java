@@ -16,30 +16,30 @@ public class OrderDao {
     private static  PreparedStatement ps = null;
     private static ResultSet rs = null;
 // lưu order vào cơ so dữ liệu và return về id của order vừa lưu
-    public static int insertOrder(double totalMoney, Timestamp dateorder, String statusOrder, String noteOrder) {
-        String query ="insert into orders(totalMoney, dateorder, statusOrder, noteOrder) values(?,?,?,?)";
-        int orderID=0;
-        try {
-            con = new JDBCUtil().getConnection();
-            PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            pst.setDouble(1, totalMoney);
+public static int insertOrder(double totalMoney, Timestamp dateorder, String statusOrder, String noteOrder) {
+    String query ="insert into orders(totalMoney, dateorder, statusOrder, noteOrder) values(?,?,?,?)";
+    int orderID=0;
+    try {
+        con = new JDBCUtil().getConnection();
+        PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        pst.setDouble(1, totalMoney);
 //            pst.setDate(2, dateorder);
-            pst.setTimestamp(2, dateorder);
-            pst.setString(3, statusOrder);
-            pst.setString(4, noteOrder);
-            pst.executeUpdate();
-            ResultSet generatedKeys = pst.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                orderID = generatedKeys.getInt(1);
-            }
-            con.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
-            e.printStackTrace();
+        pst.setTimestamp(2, dateorder);
+        pst.setString(3, statusOrder);
+        pst.setString(4, noteOrder);
+        pst.executeUpdate();
+        ResultSet generatedKeys = pst.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            orderID = generatedKeys.getInt(1);
         }
-        return orderID;
+        con.close();
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+        e.printStackTrace();
     }
+    return orderID;
+}
 
     public static List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<Order>();
