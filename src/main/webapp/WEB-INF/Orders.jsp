@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> 
-         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -20,24 +20,49 @@
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">  -->
 
  <!-- jQuery -->
- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
 <!--  Popper.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
 <!-- Bootstrap JS-->
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>  
-        
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
   <c:import url="includes_ad/header.jsp"></c:import>
   <link href="css/manager.css" rel="stylesheet" />
 </head>
-  
+
   <style>
          #sp  img{
                 width: 200px;
                 height: 120px;
             }
-        </style>
+         /* Style cho bảng */
+         .table-striped tbody tr:nth-of-type(odd) {
+             background-color: #f9f9f9;
+         }
+
+         .table-hover tbody tr:hover {
+             background-color: #f1f1f1;
+         }
+
+         /* Style cho các cột */
+         th, td {
+             text-align: left;
+             padding: 8px;
+         }
+
+         option[value="Chờ xác nhận"] { background-color: #e3d981; }
+         option[value="Đang xử lý"] { background-color: #B4EEB4; }
+         option[value="Hoàn tất xác nhận"] { background-color: #00EE76; }
+         option[value="Đóng gói"] { background-color: #EECFA1; }
+         option[value="Đang giao hàng"] { background-color: #EEC900; }
+         option[value="Hoàn thành"] { background-color: #63B8FF; }
+         option[value="Đã hủy"] { background-color: #EE3B3B;
+
+         }
+
+  </style>
   <body>
     <div class="container-scroller">
       <div class="row p-0 m-0 proBanner" id="proBanner">
@@ -69,7 +94,7 @@
 </c:import>
       <%--  <c:import url="includes_ad/sidebar.jsp"></c:import> --%>
         <!-- partial -->
-        
+
         <div class="main-panel">
         <div class="container" id="sp">
          <div class="table-wrapper">
@@ -78,10 +103,6 @@
                         <div class="col-sm-6">
                             <h2>Manage <b>Orders</b></h2>
                         </div>
-                       <!--  <div class="col-sm-6">
-                            <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
-                        </div> -->
                     </div>
                 </div>
                 <table id="2" class="table table-striped table-hover">
@@ -101,7 +122,7 @@
                            <!--  <th>Actions</th> -->
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                         <c:forEach items="${orders }" var="o">
                             <tr>
@@ -116,9 +137,33 @@
                                 <td> ${o.transaction.customer.username} </td>
                                  <td> ${ o.totalMoney } </td>
                                 <td>
-								<p> <fmt:formatDate value="${o.dateOrder}" pattern="dd/MM/yyyy" /></p>
+								<p> <fmt:formatDate value="${o.dateOrder}" pattern="dd/MM/yyyy HH:mm:ss" /></p>
                                 </td>
-                                <td>${o.statusOrder}</td>
+<%--                                <td>${o.statusOrder}</td>--%>
+                                <td>
+<%--                                    <form action="ordersServlet" method="post">--%>
+<%--                                        <input type="hidden" name="orderId" value="${o.orderId}">--%>
+<%--                                        <select name="statusOrder" onchange="this.form.submit()">--%>
+<%--                                            <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>--%>
+<%--                                            <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''}>Đang xử lý</option>--%>
+<%--                                            <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''}>Hoàn tất xác nhận</option>--%>
+<%--                                            <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''}>Đang giao hàng</option>--%>
+<%--                                            <option value="Hoàn thành" ${o.statusOrder == 'Hoàn thành' ? 'selected' : ''}>Hoàn thành</option>--%>
+<%--                                            <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>--%>
+<%--                                        </select>--%>
+<%--                                    </form>--%>
+
+                            <input type="hidden" name="orderId" value="${o.orderId}">
+                            <select name="statusOrder" onchange="updateOrderStatus(${o.orderId}, this.value)">
+                                <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
+                                <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''}>Đang xử lý</option>
+                                <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''}>Hoàn tất xác nhận</option>
+                                <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''}>Đang giao hàng</option>
+                                <option value="Hoàn thành" ${o.statusOrder == 'Hoàn thành' ? 'selected' : ''}>Hoàn thành</option>
+                                <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
+                            </select>
+
+                                </td>
                                <%--  <td>
                                     <a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
                                     <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
@@ -127,10 +172,13 @@
                         </c:forEach>
                     </tbody>
                 </table>
+             <br>
   <button onclick="exportTableToExcel('2', 'orders_data')">Export Table Data To Excel File</button>
- 
+
                 <div class="clearfix">
+                    <br>
                     <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                    <br>
                     <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
                         <li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -150,11 +198,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="ad_addproServlet" method="post"  >
-                        <div class="modal-header">						
+                        <div class="modal-header">
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input name="name" type="text" class="form-control" >
@@ -171,20 +219,8 @@
                                 <label>available</label>
                                 <input name="available" type="number" class="form-control" required>
                             </div>
-                            <%-- <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="category" class="form-select" aria-label="Default select example">
-                                    <c:forEach begin="1" end="3" var="o">
-                                        <option value="1">Giày Adidas</option>
-                                    </c:forEach>
-                                </select>
-                            </div> --%>
 
-                        </div> 
+                        </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                             <input type="submit" class="btn btn-success" value="Add" >
@@ -198,11 +234,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="ad_editproServlet" >
-                        <div class="modal-header">						
+                        <div class="modal-header">
                             <h4 class="modal-title">Edit Employee</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" value="${p.name }" required>
@@ -218,7 +254,7 @@
                             <div class="form-group">
                                 <label>Available</label>
                                 <input type="number" class="form-control" value="${p.available }" required>
-                            </div>					
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -233,11 +269,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form>
-                        <div class="modal-header">						
+                        <div class="modal-header">
                             <h4 class="modal-title">Delete Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
+                        <div class="modal-body">
                             <p>Are you sure you want to delete these Records?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
                         </div>
@@ -249,22 +285,22 @@
                 </div>
             </div>
             </div>
-            
+
             <script type="text/javascript">
             function exportTableToExcel(tableID, filename = ''){
         	    var downloadLink;
         	    var dataType = 'application/vnd.ms-excel';
         	    var tableSelect = document.getElementById(tableID);
         	    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-        	    
+
         	    // Specify file name
         	    filename = filename?filename+'.xls':'excel_data.xls';
-        	    
+
         	    // Create download link element
         	    downloadLink = document.createElement("a");
-        	    
+
         	    document.body.appendChild(downloadLink);
-        	    
+
         	    if(navigator.msSaveOrOpenBlob){
         	        var blob = new Blob(['\ufeff', tableHTML], {
         	            type: dataType
@@ -273,17 +309,59 @@
         	    }else{
         	        // Create a link to the file
         	        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-        	    
+
         	        // Setting the file name
         	        downloadLink.download = filename;
-        	        
+
         	        //triggering the function
         	        downloadLink.click();
         	    }
         	}
             </script>
+
+<%--            ajax--%>
+            <script>
+                    function updateOrderStatus(orderId, statusOrder) {
+                    $.ajax({
+                        type: "POST",
+                        url: "ordersServlet",
+                        data: {
+                            orderId: orderId,
+                            statusOrder: statusOrder,
+                            ajax: "true"
+                        },
+                        success: function(response) {
+                            if (response.status === "success") {
+                                alert("Order status updated successfully!");
+                            } else {
+                                alert("Failed to update order status. Please try again.");
+                            }
+                        },
+                        error: function() {
+                            alert("An error occurred while updating the order status.");
+                        }
+                    });
+                }
+
+                    $(document).ready(function() {
+                        // Lặp qua mỗi dropdown menu
+                        $("select[name='statusOrder']").each(function() {
+                            // Lấy giá trị đã chọn
+                            var selectedColor = $(this).find(":selected").css("background-color");
+                            // Đặt màu sắc cho dropdown menu
+                            $(this).css("background-color", selectedColor);
+                        });
+
+                        // Xử lý sự kiện khi dropdown menu thay đổi giá trị
+                        $("select[name='statusOrder']").change(function() {
+                            var selectedColor = $(this).find(":selected").css("background-color");
+                            $(this).css("background-color", selectedColor);
+                        });
+                    });
+
+            </script>
             <script src="js/manager.js" ></script>
-        
+
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
          <c:import url="includes_ad/footer.jsp"></c:import>

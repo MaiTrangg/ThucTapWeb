@@ -3,6 +3,7 @@ package Model;
 
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,8 @@ public class Order {
 	private int orderId;
 	private Transaction transaction;
 	private ShippingAddress shippingAddress;
-	private Date dateOrder;
+//	private Date dateOrder;
+	private Timestamp dateOrder;
 	private List<OrderDetail> orderDetails ;
 	private double totalMoney ;
 	private String statusOrder;
@@ -18,17 +20,25 @@ public class Order {
 	/**
 	 * @return the dateOrder
 	 */
-	public Date getDateOrder() {
+//	public Date getDateOrder() {
+//		return dateOrder;
+//	}
+//	/**
+//	 * @param dateOrder the dateOrder to set
+//	 */
+//	public void setDateOrder(Date dateOrder) {
+//		this.dateOrder = dateOrder;
+//	}
+
+	public Timestamp getDateOrder() {
 		return dateOrder;
 	}
-	/**
-	 * @param dateOrder the dateOrder to set
-	 */
-	public void setDateOrder(Date dateOrder) {
+
+	public void setDateOrder(Timestamp dateOrder) {
 		this.dateOrder = dateOrder;
 	}
 
-	public Order(int orderId, Transaction transaction, ShippingAddress shippingAddress, Date dateOrder, List<OrderDetail> orderDetails, double totalMoney, String statusOrder, String noteOrder) {
+	public Order(int orderId, Transaction transaction, ShippingAddress shippingAddress, Timestamp dateOrder, List<OrderDetail> orderDetails, double totalMoney, String statusOrder, String noteOrder) {
 		this.orderId = orderId;
 		this.transaction = transaction;
 		this.shippingAddress = shippingAddress;
@@ -46,7 +56,7 @@ public class Order {
 //	}
 
 
-//	/**
+	//	/**
 //	 * @param orderId
 //	 * @param customer
 //	 * @param dateOrder
@@ -207,12 +217,26 @@ public class Order {
 		return total;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Order{" +
+//				"orderId=" + orderId +
+//				", transaction=" + transaction.toString() +
+//				", shippingAddress=" + shippingAddress.toString() +
+//				", dateOrder=" + dateOrder +
+//				", orderDetails=" + orderDetails +
+//				", totalMoney=" + totalMoney +
+//				", statusOrder='" + statusOrder + '\'' +
+//				", noteOrder='" + noteOrder + '\'' +
+//				'}';
+//	}
+
 	@Override
 	public String toString() {
 		return "Order{" +
 				"orderId=" + orderId +
-				", transaction=" + transaction.toString() +
-				", shippingAddress=" + shippingAddress.toString() +
+				", transaction=" + (transaction != null ? transaction.toString() : "null") +
+				", shippingAddress=" + (shippingAddress != null ? shippingAddress.toString() : "null") +
 				", dateOrder=" + dateOrder +
 				", orderDetails=" + orderDetails +
 				", totalMoney=" + totalMoney +

@@ -48,7 +48,24 @@ public class ordersServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+//		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("application/json;charset=UTF-8");
+
+		String orderIdStr = request.getParameter("orderId");
+		String statusOrder = request.getParameter("statusOrder");
+		String ajax = request.getParameter("ajax");
+
+		if (orderIdStr != null && statusOrder != null) {
+			int orderId = Integer.parseInt(orderIdStr);
+			OrderDao.updateOrderStatus(orderId, statusOrder);
+		}
+
+		if ("true".equals(ajax)) {
+			response.getWriter().write("{\"status\": \"success\"}");
+		} else {
+			doGet(request, response);
+		}
 	}
 
 }
