@@ -60,7 +60,7 @@ public class ordersServlet extends HttpServlet {
 			int orderId = Integer.parseInt(orderIdStr);
 			OrderDao.updateOrderStatus(orderId, statusOrder);
 		}
-
+	
 		if ("true".equals(ajax)) {
 			response.getWriter().write("{\"status\": \"success\"}");
 		} else {
