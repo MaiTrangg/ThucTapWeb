@@ -91,7 +91,7 @@ public class checkoutServlet extends HttpServlet {
 
 			//ghi log
 			ILog log = new LogDao();
-			log.info("Chưa hoàn tất đơn hàng","Đơn hàng: "+o.printOrder()+" /t:Đặt hàng thành công",cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
+//			log.info("Chưa hoàn tất đơn hàng","Đơn hàng: "+o.printOrder()+" /t:Đặt hàng thành công",cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
 
 			request.getRequestDispatcher("/WEB-INF/thankyou.jsp").forward(request, response);
 		}
