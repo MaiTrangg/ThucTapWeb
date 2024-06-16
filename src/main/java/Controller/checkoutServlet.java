@@ -69,6 +69,7 @@ public class checkoutServlet extends HttpServlet {
 		//lấy ra id đơn hàng vừa được lưu
 		int order_id = OrderDao.insertOrder(o.getTotalMoney(),dateorder,"Chờ xác nhận",noteOrder);
 		o.setOrderId(order_id);
+		o.setNoteOrder(noteOrder);
 		System.out.println("order_id là: "+order_id);
 		// update infor of customer
 //				CustomerDao.GetInstance().updateCheckout(firstname, lastname, country, phone, address,o.getCustomer().getUsername(),o.getCustomer().getEmail());
@@ -86,12 +87,14 @@ public class checkoutServlet extends HttpServlet {
 			ol.updateAvailable();
 //			ProductDAO.updateProduct(ol.getProduct().getProductId(), ol.getProduct().getName(), ol.getProduct().getImg(), ol.getProduct().getPrice(), ol.getProduct().getAvailable());
 		}
-
-		session.removeAttribute("order");
-
 			//ghi log
 			ILog log = new LogDao();
-//			log.info("Chưa hoàn tất đơn hàng","Đơn hàng: "+o.printOrder()+" /t:Đặt hàng thành công",cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
+			log.info("Chưa hoàn tất đơn hàng","Đặt hàng thành công Đơn hàng: "+o.printOrder(),cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
+
+
+			session.removeAttribute("order");
+
+
 
 			request.getRequestDispatcher("/WEB-INF/thankyou.jsp").forward(request, response);
 		}

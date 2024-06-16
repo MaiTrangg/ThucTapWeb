@@ -68,6 +68,38 @@ public class Order {
 
 	}
 
+	public Transaction getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
+	}
+
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public String getStatusOrder() {
+		return statusOrder;
+	}
+
+	public void setStatusOrder(String statusOrder) {
+		this.statusOrder = statusOrder;
+	}
+
+	public String getNoteOrder() {
+		return noteOrder;
+	}
+
+	public void setNoteOrder(String noteOrder) {
+		this.noteOrder = noteOrder;
+	}
+
 	@Override
 	public String toString() {
 		return "Order{" +
@@ -84,12 +116,12 @@ public class Order {
 	public String printOrder() {
 		return "Order{" +
 				"orderId=" + orderId +
-				", transaction=" + transaction.printTran()+
-				", shippingAddress=" + shippingAddress.printShippingAdr() +
+//				", transaction=" + transaction.printTran()+
+//				", shippingAddress=" + shippingAddress.printShippingAdr() +
 				", dateOrder=" + dateOrder +
-				", orderDetails=" + orderDetails +
+				", OrderDetails=" + orderDetails +
 				", totalMoney=" + totalMoney +
-				", statusOrder='" + statusOrder + '\'' +
+//				", statusOrder='" + statusOrder + '\'' +
 				", noteOrder='" + noteOrder + '\'' +
 				'}';
 	}

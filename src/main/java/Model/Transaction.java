@@ -86,7 +86,7 @@ public class Transaction {
 
     public String printTran() {
         return "Transaction{" +
-                ", customer=" + customer +
+//                ", customer=" + customer +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", numberPhone='" + numberPhone + '\'' +
