@@ -277,6 +277,40 @@
             </script>
 
             <script>
+                function handleStatusChange(orderId, status) {
+                    const now = new Date();
+                    const statusChangeTime = now.getTime();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ordersServlet",
+                        data: {
+                            orderId: orderId,
+                            statusOrder: status,
+                            statusChangeTime: statusChangeTime,
+                            ajax: "true"
+                        },
+                        success: function(response) {
+                            if (response.status === "success") {
+                                alert("Cập nhật trạng thái đơn hàng thành công!");
+                                // Cập nhật trạng thái đơn hàng mà không cần tải lại trang
+                                updateSelectColor($("select[name='statusOrder'][data-order-id='" + orderId + "']"));
+
+                                if (status === "Đang xử lý") {
+                                    setTimeout(() => {
+                                        updateOrderStatus(orderId, 'Hoàn tất xác nhận');
+                                    }, 2 * 60 * 1000); // 2 phút
+                                }
+                            } else {
+                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
+                            }
+                        },
+                        error: function() {
+                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                        }
+                    });
+                }
+
                 function updateOrderStatus(orderId, statusOrder) {
                     $.ajax({
                         type: "POST",

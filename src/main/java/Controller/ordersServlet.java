@@ -2,6 +2,8 @@ package Controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,6 +61,16 @@ public class ordersServlet extends HttpServlet {
 		if (orderIdStr != null && statusOrder != null) {
 			int orderId = Integer.parseInt(orderIdStr);
 			OrderDao.updateOrderStatus(orderId, statusOrder);
+
+			if (statusOrder.equals("Đang xử lý")) {
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						OrderDao.updateOrderStatus(orderId, "Hoàn tất xác nhận");
+					}
+				}, 2 * 60 * 1000); // 2 phút
+			}
 		}
 	
 		if ("true".equals(ajax)) {
