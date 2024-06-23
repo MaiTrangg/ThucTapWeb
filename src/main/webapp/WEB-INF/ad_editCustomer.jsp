@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <%@page isELIgnored="false" %>
  <c:import url="includes/head.jsp"></c:import> 
 </head>
 <body>
