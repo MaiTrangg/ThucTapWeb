@@ -10,7 +10,9 @@
         <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> 
          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<%--            link cho improt file excel--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -36,7 +38,70 @@
                 width: 200px;
                 height: 120px;
             }
-        </style>
+
+
+         /* Styling the DataTables pagination buttons */
+         .dataTables_wrapper .dataTables_paginate .paginate_button {
+             padding: 0.5em 1em;
+             margin-left: 2px;
+             border-radius: 4px;
+             border: 1px solid transparent;
+             color: white;
+             background-color: #44ce42;
+         }
+
+         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+             color: white !important;
+             border: 1px solid transparent;
+             background-color: #1d8c1bf2;
+         }
+         #productTable_info{
+             margin-bottom: 20px;
+         }
+
+         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+             color: white;
+             border: 1px solid #1d8c1bf2;
+             background-color: #44ce42;
+         }
+
+         .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+             outline: none;
+             background-color: #1d8c1bf2;
+             color: white;
+         }
+  /*       css cho import file excel*/
+         .upload-form {
+             margin-top: 20px;
+         }
+
+         .upload-form label {
+             font-weight: bold;
+         }
+
+         .upload-form .custom-file-label::after {
+             content: "Browse";
+         }
+
+         .upload-form .btn-primary {
+             margin-top: 10px;
+         }
+         .setcolorbtn{
+             background: #44ce42;
+             margin-bottom: 20px;
+         }
+         .form-group label{
+             padding-top: 10px;
+         }
+         .custom-file{
+             width: 36%;
+         }
+  </style>
+
+
+
+
   <body>
     <div class="container-scroller">
       <div class="row p-0 m-0 proBanner" id="proBanner">
@@ -83,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover" id="productTable">
                     <thead>
                         <tr>
                             <th>
@@ -114,27 +179,41 @@
                                 <td>
                                     <img src= ${p.img } >
                                 </td> 
-                                <td> ${ p.price } </td>
+                                <td> ${ p.sellingPrice } </td>
                                 <td>
-<a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
+                                    <a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
                                     <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
+
+             <div class="container upload-form">
+                 <h2 class="my-4">Upload Excel File</h2>
+                 <form action="upload" method="post" enctype="multipart/form-data">
+                     <div class="form-group">
+                         <label for="file">Select Excel File:</label>
+                         <div class="custom-file">
+                             <input type="file" class="custom-file-input" id="file" name="file" accept=".xls,.xlsx">
+                             <label class="custom-file-label" for="file">Choose file</label>
+                         </div>
+                     </div>
+                     <button type="submit" class="btn btn-primary setcolorbtn">Upload</button>
+                 </form>
+             </div>
+<%--                <div class="clearfix">--%>
+<%--                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>--%>
+<%--                    <ul class="pagination">--%>
+<%--                        <li class="page-item disabled"><a href="#">Previous</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">1</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">2</a></li>--%>
+<%--                        <li class="page-item active"><a href="#" class="page-link">3</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">4</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">5</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">Next</a></li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
             </div>
             <a href="index.jsp"><button type="button" class="btn btn-primary">Back to home</button> </a>
 <!-- ad_addproServlet -->
@@ -237,5 +316,27 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $('#productTable').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true
+        });
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Update the file input label with the selected file name
+        $('.custom-file-input').on('change', function(event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+    </script>
   </body>
 </html>
