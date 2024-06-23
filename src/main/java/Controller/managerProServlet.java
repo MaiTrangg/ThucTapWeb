@@ -29,7 +29,7 @@ public class managerProServlet extends HttpServlet {
 		List<Product> listNew = ProductDAO.getAllProduct();
 		session.removeAttribute("listP");
 		session.setAttribute("listP", listNew);
-		request.getRequestDispatcher("WEB-INF/ManagerProduct.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/ManagerProduct.jsp").forward(request, response);
 		
 	}
 	/**
