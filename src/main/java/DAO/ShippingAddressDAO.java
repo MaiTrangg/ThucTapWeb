@@ -35,4 +35,30 @@ public class ShippingAddressDAO {
             }
 
         }
+    // Lấy shipping address theo order_id
+    public static ShippingAddress getShippingAddressByOrderId(int order_id) {
+        String query = "SELECT * FROM shippingaddresses WHERE order_id = ?";
+        ShippingAddress shippingAddress = null;
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, order_id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                Integer shippingAddressId = rs.getInt("shippingAddress_id");
+                String province = rs.getString("province");
+                String district = rs.getString("district");
+                String commune = rs.getString("commune");
+                String country = rs.getString("country");
+                String noteAddress = rs.getString("noteAddress");
+                shippingAddress = new ShippingAddress(shippingAddressId ,province, district, commune, country, noteAddress);
+            }
+            con.close();
+            pst.close();
+        } catch (SQLException e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+        return shippingAddress;
+    }
 }

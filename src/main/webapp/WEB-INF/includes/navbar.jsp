@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
+
 <div class="container-fluid fixed-top">
     <div class="container topbar bg-primary d-none d-lg-block">
         <div class="d-flex justify-content-between">
@@ -76,15 +77,17 @@
 
 
                     <c:if test="${customer != null}">
-
-                        <a class="my-auto" style="margin-right: 5px">chao ${customer.username} </a>
-                        <a href="logoutServlet" class="my-auto">
-
-
-                             <i class="fas fa-sign-out-alt"></i>
-
-
-                        </a>
+                        <div class="my-auto dropdown">
+                            <a class="dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                chao ${customer.username}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>
+                                <li><a class="dropdown-item" href="orders">Đơn hàng của tôi</a></li>
+                                <li><a class="dropdown-item" href="changePass">Đổi mật khẩu</a></li>
+                                <li><a class="dropdown-item" href="logoutServlet">Đăng xuất</a></li>
+                            </ul>
+                        </div>
                     </c:if>
                     <c:if test="${customer == null}">
                         <a href="login" class="my-auto">
@@ -141,5 +144,6 @@
         $('#quantityCart').text(qc);
 
     }
+
 </script>
 

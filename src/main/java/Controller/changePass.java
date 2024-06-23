@@ -5,16 +5,15 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "checkout", value = "/checkout")
-public class checkout extends HttpServlet {
+@WebServlet(name = "changePass", value = "/changePass")
+public class changePass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("da vao servlet checkout" );
-        request.getRequestDispatcher("/WEB-INF/checkout.jsp").forward(request,response);
+        request.getRequestDispatcher("WEB-INF/changePassword.jsp").forward(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
+
     }
 }

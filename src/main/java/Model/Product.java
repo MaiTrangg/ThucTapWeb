@@ -89,4 +89,3 @@ public class Product {
 		this.available = available;
 	}
 }
-

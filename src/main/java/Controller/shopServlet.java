@@ -46,7 +46,8 @@ public class shopServlet extends HttpServlet {
 
         int numberPerPage = 15;
         int size = listPro.size();
-        int num = (size % 15 == 0 ? (size / 15) : ((size / 15)) + 1);
+//        int num = (size % 15 == 0 ? (size / 15) : ((size / 15)) + 1);
+        int num = (size % numberPerPage == 0 ? (size / numberPerPage) : (size / numberPerPage) + 1);
         int page;
 
         String xpage = request.getParameter("page");
@@ -90,7 +91,11 @@ public class shopServlet extends HttpServlet {
 //        out.flush();
 //        out.close();
 
-        request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
+        }
     }
 
 

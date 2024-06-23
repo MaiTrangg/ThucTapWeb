@@ -12,6 +12,9 @@ import Model.Customer;
 
 public class CustomerDao {
 	private Connection con;
+	private String query;
+
+
 
 	public static CustomerDao GetInstance() {
 		return new CustomerDao();
@@ -357,10 +360,38 @@ public class CustomerDao {
 		return recode;
 	}
 
+	public Customer getCustomerById(int customerID) {
+		// TODO Auto-generated method stub
+//		List<Customer> list = new ArrayList<Customer>();
+		Customer c =null;
+		try {
+			con = JDBCUtil.getConnection();
+			String query = "select * from customers where customer_id =?";
+			PreparedStatement pst = con.prepareStatement(query);
+			pst.setInt(1, customerID);
+			ResultSet rs= pst.executeQuery();
+			while(rs.next()) {
+//				username,pass,email,numberphone,isadmin
+				c = new Customer(rs.getString("username"),
+						rs.getString("pass"),
+						rs.getString("email"),
+						rs.getString("numberphone"),
+						rs.getInt("isadmin"));
+
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return c;
+	}
+
 	public static void main(String[] args) {
 		Customer c = new Customer("trang", "123");
 
 //		System.out.println(CustomerDao.GetInstance().getbyID(c));
 	}
+
 }
 

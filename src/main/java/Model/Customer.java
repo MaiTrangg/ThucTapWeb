@@ -11,6 +11,10 @@ public class Customer {
     private String fristName;
     private String lastName;
     private String address;
+
+
+
+
     /**
      * @return the country
      */
@@ -115,6 +119,7 @@ public class Customer {
     public Customer() {
 
     }
+
 
 
     public int getUser_id() {
