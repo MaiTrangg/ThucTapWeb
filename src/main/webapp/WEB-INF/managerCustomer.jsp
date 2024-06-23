@@ -139,7 +139,7 @@
                     </ul>
                 </div>
             </div>
-            <a href="index.jsp"><button type="button" class="btn btn-primary">Back to home</button> </a>
+            <a href="index"><button type="button" class="btn btn-primary">Back to home</button> </a>
 <!-- ad_addproServlet -->
         </div>
         <!-- add Modal HTML -->

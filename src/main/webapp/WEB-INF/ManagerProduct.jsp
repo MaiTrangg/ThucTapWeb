@@ -136,7 +136,7 @@
                     </ul>
                 </div>
             </div>
-            <a href="index.jsp"><button type="button" class="btn btn-primary">Back to home</button> </a>
+            <a href="index"><button type="button" class="btn btn-primary">Back to home</button> </a>
 <!-- ad_addproServlet -->
         </div>
         <!-- add Modal HTML -->
@@ -178,7 +178,7 @@
                                 </select>
                             </div> --%>
 
-                        </div> 
+                        </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                             <input type="submit" class="btn btn-success" value="Add" >
