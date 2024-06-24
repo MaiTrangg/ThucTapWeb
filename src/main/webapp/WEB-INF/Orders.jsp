@@ -141,27 +141,18 @@
                                 </td>
 <%--                                <td>${o.statusOrder}</td>--%>
                                 <td>
-<%--                                    <form action="ordersServlet" method="post">--%>
-<%--                                        <input type="hidden" name="orderId" value="${o.orderId}">--%>
-<%--                                        <select name="statusOrder" onchange="this.form.submit()">--%>
-<%--                                            <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>--%>
-<%--                                            <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''}>Đang xử lý</option>--%>
-<%--                                            <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''}>Hoàn tất xác nhận</option>--%>
-<%--                                            <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''}>Đang giao hàng</option>--%>
-<%--                                            <option value="Hoàn thành" ${o.statusOrder == 'Hoàn thành' ? 'selected' : ''}>Hoàn thành</option>--%>
-<%--                                            <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>--%>
-<%--                                        </select>--%>
-<%--                                    </form>--%>
 
-                            <input type="hidden" name="orderId" value="${o.orderId}">
-                            <select name="statusOrder" onchange="updateOrderStatus(${o.orderId}, this.value)">
-                                <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
-                                <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''}>Đang xử lý</option>
-                                <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''}>Hoàn tất xác nhận</option>
-                                <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''}>Đang giao hàng</option>
-                                <option value="Hoàn thành" ${o.statusOrder == 'Hoàn thành' ? 'selected' : ''}>Hoàn thành</option>
-                                <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
-                            </select>
+                                <input type="hidden" name="orderId" value="${o.orderId}">
+                                <select name="statusOrder" data-order-id="${o.orderId}" onchange="updateOrderStatus(${o.orderId}, this.value)">
+                                    <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''} ${['Đang xử lý', 'Hoàn tất xác nhận', 'Đóng gói', 'Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Chờ xác nhận</option>
+                                    <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''} ${['Hoàn tất xác nhận', 'Đóng gói', 'Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đang xử lý</option>
+                                    <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''} ${['Đóng gói', 'Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Hoàn tất xác nhận</option>
+                                    <option value="Đóng gói" ${o.statusOrder == 'Đóng gói' ? 'selected' : ''} ${['Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đóng gói</option>
+                                    <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''} ${['Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đang giao hàng</option>
+                                    <option value="Hoàn thành" ${o.statusOrder == 'Hoàn thành' ? 'selected' : ''} ${['Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Hoàn thành</option>
+                                    <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
+
+                                </select>
 
                                 </td>
                                <%--  <td>
@@ -229,41 +220,7 @@
                 </div>
             </div>
         </div>
-        <!-- Edit Modal HTML -->
-     <%--   <div id="editEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="ad_editproServlet" >
-                        <div class="modal-header">
-                            <h4 class="modal-title">Edit Employee</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" value="${p.name }" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Image</label>
-                                <input type="text" class="form-control" value="${p.img }" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input type="number" class="form-control" value="${p.price }" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Available</label>
-                                <input type="number" class="form-control" value="${p.available }" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> --%>
+
         <!-- Delete Modal HTML -->
         <div id="deleteEmployeeModal" class="modal fade">
             <div class="modal-dialog">
@@ -319,9 +276,74 @@
         	}
             </script>
 
-<%--            ajax--%>
             <script>
-                    function updateOrderStatus(orderId, statusOrder) {
+                // Global variable to track if automatic status change has been processed
+                var statusChangeProcessed = {};
+
+                function updateSelectColor(selectElement) {
+                    var selectedColor = selectElement.find(":selected").css("background-color");
+                    selectElement.css("background-color", selectedColor);
+                }
+
+                function handleStatusChange(orderId, status) {
+                    const now = new Date();
+                    const statusChangeTime = now.getTime();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ordersServlet",
+                        data: {
+                            orderId: orderId,
+                            statusOrder: status,
+                            statusChangeTime: statusChangeTime,
+                            ajax: "true"
+                        },
+                        success: function(response) {
+                            if (response.status === "success") {
+                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
+                                selectElement.val(status);
+                                updateSelectColor(selectElement);
+
+                                if (status === "Đang xử lý" && !statusChangeProcessed[orderId]) {
+                                    statusChangeProcessed[orderId] = true; // Mark as processed
+
+                                    // Wait for 2 minutes before automatically updating to 'Hoàn tất xác nhận'
+                                    setTimeout(() => {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "ordersServlet",
+                                            data: {
+                                                orderId: orderId,
+                                                statusOrder: 'Hoàn tất xác nhận',
+                                                ajax: "true"
+                                            },
+                                            success: function(response) {
+                                                if (response.status === "success") {
+                                                    let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
+                                                    selectElement.val('Hoàn tất xác nhận');
+                                                    updateSelectColor(selectElement);
+                                                    alert("Đơn hàng đã được chuyển sang trạng thái 'Hoàn tất xác nhận' sau 2 phút");
+                                                } else {
+                                                    alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
+                                                }
+                                            },
+                                            error: function() {
+                                                alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                                            }
+                                        });
+                                    }, 2 * 60 * 1000); // 2 phút
+                                }
+                            } else {
+                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
+                            }
+                        },
+                        error: function() {
+                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                        }
+                    });
+                }
+
+                function updateOrderStatus(orderId, statusOrder) {
                     $.ajax({
                         type: "POST",
                         url: "ordersServlet",
@@ -332,34 +354,34 @@
                         },
                         success: function(response) {
                             if (response.status === "success") {
-                                alert("Order status updated successfully!");
+                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
+                                selectElement.val(statusOrder);
+                                updateSelectColor(selectElement);
+
+                                if (statusOrder === "Đang xử lý") {
+                                    handleStatusChange(orderId, statusOrder);
+                                }
                             } else {
-                                alert("Failed to update order status. Please try again.");
+                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
                             }
                         },
                         error: function() {
-                            alert("An error occurred while updating the order status.");
+                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
                         }
                     });
                 }
 
-                    $(document).ready(function() {
-                        // Lặp qua mỗi dropdown menu
-                        $("select[name='statusOrder']").each(function() {
-                            // Lấy giá trị đã chọn
-                            var selectedColor = $(this).find(":selected").css("background-color");
-                            // Đặt màu sắc cho dropdown menu
-                            $(this).css("background-color", selectedColor);
-                        });
-
-                        // Xử lý sự kiện khi dropdown menu thay đổi giá trị
-                        $("select[name='statusOrder']").change(function() {
-                            var selectedColor = $(this).find(":selected").css("background-color");
-                            $(this).css("background-color", selectedColor);
-                        });
+                $(document).ready(function() {
+                    $("select[name='statusOrder']").each(function() {
+                        updateSelectColor($(this));
                     });
 
+                    $("select[name='statusOrder']").change(function() {
+                        updateOrderStatus($(this).data("order-id"), $(this).val());
+                    });
+                });
             </script>
+
             <script src="js/manager.js" ></script>
 
           <!-- content-wrapper ends -->
