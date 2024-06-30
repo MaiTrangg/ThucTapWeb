@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -59,7 +60,24 @@
          option[value="Đang giao hàng"] { background-color: #EEC900; }
          option[value="Hoàn thành"] { background-color: #63B8FF; }
          option[value="Đã hủy"] { background-color: #EE3B3B;
+         }
 
+         .btn_detail{
+             background-color: #568ecb;
+             color: white;
+             border: none;
+             padding: 8px 12px;
+             border-radius: 4px;
+             cursor: pointer;
+             transition: background-color 0.3s;
+         }
+
+         .btn_detail:hover {
+             background-color: #0056b3;
+         }
+
+         .btn_detail i {
+             margin-right: 4px;
          }
 
   </style>
@@ -118,6 +136,7 @@
                             <th>Account</th>
                             <th>TotalPrice</th>
                             <th>ExportDate</th>
+                            <th>Action</th>
                             <th>Status</th>
                            <!--  <th>Actions</th> -->
                         </tr>
@@ -141,6 +160,11 @@
                                 </td>
 <%--                                <td>${o.statusOrder}</td>--%>
                                 <td>
+                                    <button class="btn_detail" onclick="">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td>
 
                                 <input type="hidden" name="orderId" value="${o.orderId}">
                                 <select name="statusOrder" data-order-id="${o.orderId}" onchange="updateOrderStatus(${o.orderId}, this.value)">
@@ -153,6 +177,9 @@
                                     <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
 
                                 </select>
+
+                                </td>
+                                <td>
 
                                 </td>
                                <%--  <td>
