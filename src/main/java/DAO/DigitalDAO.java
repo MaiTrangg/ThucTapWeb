@@ -37,7 +37,7 @@ public class DigitalDAO {
                         rs.getString("descriptionP"),
                         rs.getDouble("originalPrice"),
                         rs.getDouble("sellingPrice"),
-                        rs.getInt("quantity"),
+//                        rs.getInt("quantity"),
                         new Category(rs.getString("nameCate"))
                 ));
             }

@@ -25,7 +25,7 @@ public class ProductDAO {
             while (rs.next()) {
 
 
-                Category category = CategoryDAO.getCategoryByID(rs.getInt(8));
+                Category category = CategoryDAO.getCategoryByID(rs.getInt(7));
                 list.add(new Product(
                         rs.getInt(1),
                         rs.getString(2),
@@ -33,7 +33,7 @@ public class ProductDAO {
                         rs.getString(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getInt(7),
+//                        rs.getInt(7),
                         category
                 ));
             }
@@ -101,7 +101,7 @@ public class ProductDAO {
                         rs.getString("descriptionP"),
                         rs.getDouble("originalPrice"),
                         rs.getDouble("sellingPrice"),
-                        rs.getInt("quantity"),
+//                        rs.getInt("quantity"),
                         new Category(rs.getString("nameCate"))
                 ));
             }
@@ -128,7 +128,8 @@ public class ProductDAO {
                         rs.getString(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getInt(7),new Category(rs.getInt(1)));
+//                        rs.getInt(7),
+                        new Category(rs.getInt(1)));
             }
             con.close();
         } catch (SQLException e) {
