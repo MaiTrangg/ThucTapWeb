@@ -18,7 +18,7 @@
 <c:import url="includes/navbar.jsp">
 	<c:param name="currentPage" value="${currentPage}" />
 </c:import>
-<div class="container">
+<div style="margin-top: 200px" class="container">
 		<div class="card w-50 mx-auto my-5">
 			 <!-- <div class="card-header text-center"><p style="font-size: 30px; color: green;"> Is susessful!</p></div>  -->
 			<div class="card-body">
