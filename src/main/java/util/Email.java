@@ -63,10 +63,10 @@ public class Email {
 		pr.put("mail.smtp.starttls.enable", "true");
 		return pr;
 	}
-	public static void main(String[] args) {
-
-		sendEmail("trungg16122003@gmail.com", "haha");
-	}
+//	public static void main(String[] args) {
+//
+//		sendEmail("trungg16122003@gmail.com", "haha");
+//	}
 		
 	
 
