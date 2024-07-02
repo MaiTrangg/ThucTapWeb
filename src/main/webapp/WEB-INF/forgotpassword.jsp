@@ -29,14 +29,14 @@
         <div class="forgot-card">
         <div class="card-header text-center">Nhập địa chỉ email của bạn</div>
         <div class="card-body">
-            <form action="forgotpassword" method="post">
+            <form action="forgotpasswordServerlet" method="post">
                 <div class="form-group">
                     <label>Địa chỉ Email</label>
                     <input type="email" name="forgotpassword-email" class="form-control" placeholder="Nhập email">
                 </div>
 <%--                <p class="error"">${errorFromForgotpassword}</p>--%>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Gửi yêu cầu</button><br>
+                    <button type="submit" class="btn btn-primary" >Gửi yêu cầu</button><br>
                     <a href="login" class="forgot-login"> Đăng nhập tài khoản</a>
                     <a href="register" class="forgot-register"> Tạo tài khoản</a>
                 </div>
@@ -46,9 +46,6 @@
     </div>
 </div>
 
-<c:import url="includes/navbar.jsp">
-    <c:param name="currentPage" value="${currentPage}" />
-</c:import>
 
 <!-- Start Footer Section -->
 <c:import url="includes/footer.jsp"></c:import>
