@@ -130,7 +130,7 @@
 <%--                                                    <span>(${cate.quantity})</span>--%>
 <%--                                                </div>--%>
 <%--                                            </li>--%>
-<%--                                        </c:forEach>--%>
+<%--                                            </c:forEach>--%>
 
                                     <ul class="list-unstyled fruite-categorie">
 <%--                                        <c:forEach var="cate" items="${listCate}">--%>
@@ -470,7 +470,8 @@
 
 </script>
 
-
+<script src="https://cdn.botpress.cloud/webchat/v2/inject.js"></script>
+<script src="https://mediafiles.botpress.cloud/a77464d7-c8b2-4ed1-836d-d9a69c481824/webchat/v2/config.js"></script>
 
 </body>
 </html>
