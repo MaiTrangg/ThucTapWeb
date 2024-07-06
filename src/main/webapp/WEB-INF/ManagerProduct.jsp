@@ -230,7 +230,7 @@
                         <div class="modal-body">					
                             <div class="form-group">
                                 <label>Name</label>
-                                <input name="name" type="text" class="form-control" >
+                                <input name="name" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Image</label>
@@ -244,18 +244,18 @@
                                 <label>available</label>
                                 <input name="available" type="number" class="form-control" required>
 </div>
-                            <%-- <div class="form-group">
+                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea name="description" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Category</label>
                                 <select name="category" class="form-select" aria-label="Default select example">
-                                    <c:forEach begin="1" end="3" var="o">
-                                        <option value="1">Giày Adidas</option>
+                                    <c:forEach  items="${categoryList}" var="cate">
+                                        <option value="${cate.quantity}">${cate.category}</option>
                                     </c:forEach>
                                 </select>
-                            </div> --%>
+                            </div>
 
                         </div> 
                         <div class="modal-footer">
