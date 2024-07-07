@@ -195,6 +195,9 @@ public class ProductDAO {
         }
         return proID;
     }
+    public static void deleteProduct(int idpro){
+        System.out.println("idpro: "+idpro);
+    }
 
 
 }

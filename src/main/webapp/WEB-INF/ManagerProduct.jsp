@@ -31,6 +31,15 @@
         
   <c:import url="includes_ad/header.jsp"></c:import>
   <link href="css/manager.css" rel="stylesheet" />
+<%--    <!-- Bootstrap CSS -->--%>
+<%--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">--%>
+
+<%--    <!-- jQuery -->--%>
+<%--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>--%>
+
+<%--    <!-- Bootstrap JavaScript -->--%>
+<%--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>--%>
+
 </head>
   
   <style>
@@ -96,6 +105,12 @@
          }
          .custom-file{
              width: 36%;
+         }
+         .delete{
+             color: #ef6262;
+         }
+         .edit{
+             color: rgba(238, 238, 69, 0.99);
          }
   </style>
 
@@ -182,7 +197,9 @@
                                 <td> ${ p.sellingPrice } </td>
                                 <td>
                                     <a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
-                                    <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
+<%--                                    <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>--%>
+                                    <a href="#deleteEmployeeModal" class="delete " data-id="${p.productId}" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
+
                                 </td>
                             </tr>
                         </c:forEach>
@@ -271,7 +288,7 @@
         <div id="deleteEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form>
+                    <form method="post">
                         <div class="modal-header">						
                             <h4 class="modal-title">Delete Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -282,12 +299,12 @@
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                           <input type="submit" class="btn btn-danger" value="Delete">
                         </div>
                     </form>
                 </div>
             </div>
-            </div>
+        </div>
             <script src="js/manager.js" ></script>
         
           <!-- content-wrapper ends -->
@@ -326,6 +343,19 @@
         });
 
     </script>
+    //gui idpro cho deleteProductservlet
+    <script>
+        $('#deleteEmployeeModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Nút đã kích hoạt modal
+            var productId = button.data('id'); // Trích xuất thông tin từ thuộc tính data-*
+
+            var modal = $(this);
+            modal.find('.modal-body p').text('Are you sure you want to delete the product with ID: ' + productId + '?');
+            modal.find('form').attr('action', 'ad_deleteproservlet?idpro=' + productId);
+        });
+    </script>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
