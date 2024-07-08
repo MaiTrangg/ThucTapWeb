@@ -387,6 +387,8 @@ public class CustomerDao {
 		return c;
 	}
 
+
+
 	public static void main(String[] args) {
 		Customer c = new Customer("trang", "123");
 //		System.out.println(CustomerDao.GetInstance().checkExistEmail("trungg161203@gmail.com"));
