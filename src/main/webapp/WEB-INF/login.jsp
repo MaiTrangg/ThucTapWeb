@@ -42,7 +42,7 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary" >Đăng nhập</button>
                         <label class="login-loginwith">Đăng nhập với</label><br>
-                        <a href="" class="login-facebook"><i class="fab fa-facebook-f"></i></a>
+
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid
 &redirect_uri=http%3A%2F%2Flocalhost%3A8080%2FLoginGoogleHandler
 &response_type=code
