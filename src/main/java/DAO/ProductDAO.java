@@ -195,8 +195,24 @@ public class ProductDAO {
         }
         return proID;
     }
-    public static void deleteProduct(int idpro){
-        System.out.println("idpro: "+idpro);
+    public static void deleteProduct(int id) {
+        //xóa inventory trước vì dính ràng buộc
+       InventoryDAO.deleteInventory(id);;
+
+        String query ="delete from products where productID = ? ";
+        try {
+//			OrderLineDao.deleteOrderLine(id);
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+
     }
 
 

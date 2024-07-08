@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class InventoryDAO {
     private static Connection con ;
@@ -45,4 +46,72 @@ public class InventoryDAO {
         }
 
     }
+    public static void deleteInventory(int idpro){
+        String query ="delete from inventories where productID = ? ";
+
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, idpro);
+            pst.executeUpdate();
+
+            con.close();
+            ps.close();
+            rs.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+
+
+    }
+
+    //lay so luong cua san pham co ma la idpro
+    public static Inventory getInventoryPro(int idpro){
+        Inventory inventory =null;
+        String query ="select * from inventories where productID = ? ";
+
+        try {
+            con = new JDBCUtil().getConnection();
+             ps = con.prepareStatement(query);
+            ps.setInt(1, idpro);
+           rs = ps.executeQuery();
+
+           if(rs.next()) {
+               inventory = new Inventory(rs.getInt("inventory_id"),
+                       ProductDAO.getProductByID(rs.getInt("productID")),
+                       rs.getInt("quantity"),
+                       rs.getTimestamp("lastUpdated"));
+           }
+
+            con.close();
+            ps.close();
+            rs.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+        return inventory;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getInventoryPro(4));
+    }
+
 }

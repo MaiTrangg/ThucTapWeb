@@ -8,13 +8,15 @@ public class InventoryTransaction {
     private String type;
     private int quantity;
     private Timestamp transactionDate;
+    private String description;
 
-    public InventoryTransaction(int inventoryTransaction_id, Product product, String type, int quantity, Timestamp transactionDate) {
+    public InventoryTransaction(int inventoryTransaction_id, Product product, String type, int quantity, Timestamp transactionDate, String description) {
         this.inventoryTransaction_id = inventoryTransaction_id;
         this.product = product;
         this.type = type;
         this.quantity = quantity;
         this.transactionDate = transactionDate;
+        this.description = description;
     }
 
     public int getInventoryTransaction_id() {
@@ -55,5 +57,13 @@ public class InventoryTransaction {
 
     public void setTransactionDate(Timestamp transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

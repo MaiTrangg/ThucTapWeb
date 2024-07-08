@@ -107,10 +107,16 @@
              width: 36%;
          }
          .delete{
-             color: #ef6262;
+             color: #f17373;
+         }
+         .delete:hover{
+             color: rgba(243, 21, 21, 0.91);
          }
          .edit{
-             color: rgba(238, 238, 69, 0.99);
+             color: rgba(248, 248, 113, 0.99);
+         }
+         .edit:hover{
+             color: rgba(248, 248, 14, 0.91);
          }
   </style>
 
@@ -185,7 +191,7 @@
                             <tr>
                                 <td>
                                     <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="${p.productId}">
                                         <label for="checkbox1"></label>
                                     </span>
                                 </td>
@@ -198,7 +204,7 @@
                                 <td>
                                     <a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
 <%--                                    <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>--%>
-                                    <a href="#deleteEmployeeModal" class="delete " data-id="${p.productId}" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
+                                    <a href="#deleteEmployeeModal" class="delete" id="icon-delete" data-id="${p.productId}" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
 
                                 </td>
                             </tr>
@@ -335,27 +341,94 @@
     <!-- End custom js for this page -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script>
-        $('#productTable').DataTable({
+<script>
+    $(document).ready(function() {
+        var table = $('#productTable').DataTable({
             paging: true,
             searching: true,
             ordering: true
         });
 
-    </script>
-    //gui idpro cho deleteProductservlet
-    <script>
-        $('#deleteEmployeeModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Nút đã kích hoạt modal
-            var productId = button.data('id'); // Trích xuất thông tin từ thuộc tính data-*
+        // Array to store the selected checkboxes
+        var selected = [];
 
-            var modal = $(this);
-            modal.find('.modal-body p').text('Are you sure you want to delete the product with ID: ' + productId + '?');
-            modal.find('form').attr('action', 'ad_deleteproservlet?idpro=' + productId);
+        // Handle click on "Select all" control
+        $('#selectAll').on('click', function() {
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
+            // Add all selected checkboxes to the selected array
+            if (this.checked) {
+                selected = [];
+                $('input[type="checkbox"]', rows).each(function() {
+                    selected.push($(this).val());
+                });
+            } else {
+                selected = [];
+            }
+
+            console.log('Selected values:', selected);
         });
-    </script>
 
+        // Handle click on individual checkbox to maintain "Select all" control state
+        $('#productTable tbody').on('change', 'input[type="checkbox"]', function() {
+            if (!this.checked) {
+                var el = $('#selectAll').get(0);
+                if (el && el.checked && ('indeterminate' in el)) {
+                    el.indeterminate = true;
+                }
 
+                var value = $(this).val();
+                var index = selected.indexOf(value);
+                if (index !== -1) {
+                    selected.splice(index, 1);
+                }
+            } else {
+                var value = $(this).val();
+                if (selected.indexOf(value) === -1) {
+                    selected.push(value);
+                }
+            }
+
+            console.log('Selected values:', selected);
+        });
+        var productId =0;
+        // Handle form submission event for the modal
+        $('#deleteEmployeeModal').on('show.bs.modal', function(event) {
+            var anchor = $(event.relatedTarget);  // Button that triggered the modal
+            var modal = $(this);
+
+            if (anchor.hasClass('delete')) {
+                // Case: deleting a single product
+                 productId = anchor.data('id'); // Extract info from data-* attributes
+                console.log("pro1: "+productId);
+                if (productId) {
+                    modal.find('.modal-body p').text('Are you sure you want to delete the product with ID: ' + productId + '?');
+                    modal.find('form').attr('action', 'ad_deleteproservlet?idpro=' + productId);
+                } else {
+                    modal.find('.modal-body p').text('Please select at least one product to delete.');
+                }
+            } else {
+                // Case: deleting multiple products
+                if (selected.length > 0) {
+                    var idString = selected.join(',');
+                    modal.find('form').attr('action', 'ad_deleteproservlet?idpro=' + idString);
+                    modal.find('.modal-body p').text('Are you sure you want to delete the selected products?');
+                } else {
+                    modal.find('.modal-body p').text('Please select at least one product to delete.');
+                }
+            }
+        });
+
+        $('#deleteEmployeeModal').find('form').on('submit', function(event) {
+            if (selected.length === 0 &&productId===0) {
+                event.preventDefault();
+                alert('Please select at least one product to delete.');
+            }
+        });
+    });
+
+</script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
