@@ -251,7 +251,7 @@ public class CustomerDao {
 		return cus;
 	}
 	
-	public String checkExistEmail(String email) {
+	public  String checkExistEmail(String email) {
 		String re=null;
 		try {
 			con = JDBCUtil.getConnection();
@@ -389,8 +389,10 @@ public class CustomerDao {
 
 	public static void main(String[] args) {
 		Customer c = new Customer("trang", "123");
-
+//		System.out.println(CustomerDao.GetInstance().checkExistEmail("trungg161203@gmail.com"));
 //		System.out.println(CustomerDao.GetInstance().getbyID(c));
+		CustomerDao.GetInstance().updateCode("11","trungg161203@gmail.com");
+
 	}
 
 }

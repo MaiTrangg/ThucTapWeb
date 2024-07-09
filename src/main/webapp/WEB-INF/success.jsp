@@ -1,13 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html>
 <head>
-<c:import url="includes/head.jsp"></c:import>
+	<c:import url="includes/head.jsp"></c:import>
 	<%@page isELIgnored="false" %>
+
 </head>
 <body>
+
+<!-- Spinner Start -->
 <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
 	<div class="spinner-grow text-primary" role="status"></div>
 </div>
@@ -18,25 +20,21 @@
 </c:import>
 <div style="margin-top: 200px" class="container">
 		<div class="card w-50 mx-auto my-5">
-			<div class="card-header text-center">Change Password</div>
+			 <!-- <div class="card-header text-center"><p style="font-size: 30px; color: green;"> Is susessful!</p></div>  -->
 			<div class="card-body">
-				<form action="changePassServlet" method="post">
-					<div class="form-group">
-						<label>Mật khẩu mới</label>
-						<input type="password" name="newpass" class="form-control" placeholder="Enter here" required>
-					</div>
-					<div class="form-group">
-						<label> Nhập lại mật khẩu mới</label>
-						<input type="password" name="confirmnewpass" class="form-control" placeholder="Enter here" required>
-					</div>
-					<p class="error">${errorFromChangePass}</p>
-					 <div class="text-center">
-						<button type="submit" class="btn btn-primary" >Submit</button>
-						<!-- <br> <a href="login.jsp" > login</a>
-						 <a href="register.jsp"  style="margin-left: 20px;"> create an acount</a> -->
-					</div> 
+				<!-- <form action="enterCodeServerlet" method="post"> -->
+					 <div class="form-group text-center" >
 					
-				</form>
+						<img alt="image" src="img/success.gif" style="width: 450px; height: 400px;" >
+					</div>
+					<%-- <p class="errorFromEnterCode">${errorFromForgotpassword}</p> --%>
+					<div class="text-center">
+						<!-- <button type="submit" class="btn btn-primary" >Submit</button> -->
+						<br> <a href="index" >Tiếp Tục Đăng Nhập</a>
+						 <a href="changePass"  style="margin-left: 20px;"> Đổi Mật Khẩu</a>
+					</div>
+					
+				<!-- </form> -->
 			</div>
 		</div>
 	</div>

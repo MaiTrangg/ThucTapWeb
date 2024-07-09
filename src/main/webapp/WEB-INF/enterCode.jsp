@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html>
 <html>
 <head>
 <c:import url="includes/head.jsp"></c:import>
 	<%@page isELIgnored="false" %>
 </head>
 <body>
+<!-- Spinner Start -->
 <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
 	<div class="spinner-grow text-primary" role="status"></div>
 </div>
@@ -16,30 +16,29 @@
 <c:import url="includes/navbar.jsp">
 	<c:param name="currentPage" value="${currentPage}" />
 </c:import>
-<div style="margin-top: 200px" class="container">
-		<div class="card w-50 mx-auto my-5">
-			<div class="card-header text-center">Change Password</div>
+
+
+<div class="forgotpass-container">
+	<div class="forgot-wrapper">
+		<div class="forgot-card">
+			<div class="card-header text-center">Mã Code</div>
 			<div class="card-body">
-				<form action="changePassServlet" method="post">
+				<form action="enterCodeServerlet" method="post">
 					<div class="form-group">
-						<label>Mật khẩu mới</label>
-						<input type="password" name="newpass" class="form-control" placeholder="Enter here" required>
+						<label>Nhập Code ở đây</label>
+						<input type="text" name="code" class="form-control" placeholder="Enter code" required>
 					</div>
-					<div class="form-group">
-						<label> Nhập lại mật khẩu mới</label>
-						<input type="password" name="confirmnewpass" class="form-control" placeholder="Enter here" required>
+					<%--                <p class="error"">${errorFromForgotpassword}</p>--%>
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary" >Gửi</button><br>
+						<a href="login" class="forgot-login"> Đăng nhập tài khoản</a>
+						<a href="register" class="forgot-register"> Tạo tài khoản</a>
 					</div>
-					<p class="error">${errorFromChangePass}</p>
-					 <div class="text-center">
-						<button type="submit" class="btn btn-primary" >Submit</button>
-						<!-- <br> <a href="login.jsp" > login</a>
-						 <a href="register.jsp"  style="margin-left: 20px;"> create an acount</a> -->
-					</div> 
-					
 				</form>
 			</div>
 		</div>
 	</div>
+</div>
 <!-- Start Footer Section -->
 <c:import url="includes/footer.jsp"></c:import>
 <!-- End Footer Section -->
