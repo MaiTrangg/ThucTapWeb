@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.OrderDao;
+import DAO.OrderDetailDAO;
 import Model.Order;
+import Model.OrderDetail;
 
 /**
  * Servlet implementation class ordersServlet
@@ -35,13 +37,31 @@ public class ordersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		List<Order> orders = OrderDao.getAllOrders();
-//		if(orders == null) System.out.println("orders null"); else
-			System.out.println("đã vào ordersServlet "+orders);
-		session.setAttribute("orders", orders);
-		//response.sendRedirect("/WEB-INF/Orders.jsp");
-		request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
+//		HttpSession session = request.getSession();
+//		List<Order> orders = OrderDao.getAllOrders();
+////		if(orders == null) System.out.println("orders null"); else
+//			System.out.println("đã vào ordersServlet "+orders);
+//		session.setAttribute("orders", orders);
+//		//response.sendRedirect("/WEB-INF/Orders.jsp");
+//
+//
+//		request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
+		String action = request.getParameter("action");
+
+		if (action == null || action.equals("listOrders")) {
+			// Lấy danh sách đơn hàng
+			HttpSession session = request.getSession();
+			List<Order> orders = OrderDao.getAllOrders();
+			session.setAttribute("orders", orders);
+			request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
+		} else if (action.equals("viewOrderDetails")) {
+			// Lấy chi tiết đơn hàng
+			String orderIdStr = request.getParameter("orderId");
+			int orderId = Integer.parseInt(orderIdStr);
+			List<OrderDetail> orderDetails = OrderDetailDAO.getOrderDetailsByOrderId(orderId);
+			request.setAttribute("orderDetails", orderDetails);
+			request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
+		}
 
 	}
 

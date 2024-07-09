@@ -202,7 +202,8 @@ public class ProductDAO {
 
     public static void main(String[] args) {
 //        ProductDAO pd = new ProductDAO;
-        Product product = ProductDAO.getProductByID(1);
+        System.out.println(ProductDAO.getAllProduct());
+//        Product product = ProductDAO.getAllProduct()
 //        System.out.println(product.toString());
 /*
         Category c = getCategory(1);
