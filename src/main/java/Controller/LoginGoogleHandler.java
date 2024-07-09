@@ -15,6 +15,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Form;
 
+import DAO.CustomerDao;
+import Model.Customer;
 
 @WebServlet("/LoginGoogleHandler" )
 public class LoginGoogleHandler extends HttpServlet {
