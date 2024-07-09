@@ -34,7 +34,9 @@ public class ad_deleteproservlet extends HttpServlet {
                 Timestamp lastUpdated = new Timestamp(System.currentTimeMillis());
 
                 //ghi lai giao dich kho
-                InventoryTransactionDAO.insertInventoryTransaction(idpro,"Xóa",inventory.getQuantity(),lastUpdated,"Xóa sản phẩm ra khỏi kho: có mã sp: "+idpro+", tên sp: "+inventory.getProduct().getName());
+                InventoryTransactionDAO.insertInventoryTransaction(idpro,"Xóa",inventory.getQuantity(),
+                        lastUpdated,"Xóa sản phẩm ra khỏi kho: có mã sp: "+idpro+", tên sp: "+
+                                inventory.getProduct().getName());
 
                 //xoa san pham ra khoi kho
                 ProductDAO.deleteProduct(idpro);

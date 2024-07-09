@@ -195,6 +195,29 @@ public class ProductDAO {
         }
         return proID;
     }
+
+    public static void updateProduct(Product pro) {
+        String query ="update products set img=?, nameProduct=?, descriptionP=?, originalPrice=?, sellingPrice=?,categoryID=? where productID=? ";
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, pro.getImg());
+            pst.setString(2, pro.getName());
+            pst.setString(3, pro.getDescriptionP());
+            pst.setDouble(4, pro.getOriginalPrice());
+            pst.setDouble(5, pro.getSellingPrice());
+            pst.setDouble(6, pro.getCategory().getQuantity());
+            pst.setInt(7, pro.getProductId());
+            pst.executeUpdate();
+
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+
+    }
     public static void deleteProduct(int id) {
         //xóa inventory trước vì dính ràng buộc
        InventoryDAO.deleteInventory(id);;

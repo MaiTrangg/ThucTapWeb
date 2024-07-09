@@ -46,6 +46,38 @@ public class InventoryDAO {
         }
 
     }
+
+    public static void updateInventory(Inventory inventory){
+        String query = "UPDATE inventories set quantity=?, lastUpdated=? where productID = ?";
+        //update product
+        ProductDAO.updateProduct(inventory.getProduct());
+
+        try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+
+            ps.setDouble(1,inventory.getQuantity());
+            ps.setTimestamp(2,inventory.getLastUpdated());
+            ps.setInt(3,inventory.getProduct().getProductId());
+            ps.executeUpdate();
+
+            con.close();
+            ps.close();
+            rs.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+
+    }
     public static void deleteInventory(int idpro){
         String query ="delete from inventories where productID = ? ";
 
