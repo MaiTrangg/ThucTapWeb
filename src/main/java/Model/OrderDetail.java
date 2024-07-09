@@ -77,9 +77,9 @@ public class OrderDetail {
 		return false;
 	}
 
-	public void updateAvailable() {
-		product.setAvailable(product.getAvailable()-this.quantity);
-	}
+//	public void updateAvailable() {
+//		product.setAvailable(product.getAvailable()-this.quantity);
+//	}
 
 
 	@Override

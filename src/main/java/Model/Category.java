@@ -2,6 +2,7 @@ package Model;
 
 public class Category {
     private String category;
+
     private int quantity;
 
     public Category(String category, int quantity) {

@@ -17,7 +17,8 @@ public class JDBCUtil {
 		    String user = "root";
 
 
-		    String password = "tr21092003";
+		    String password = "123456";
+
 
 
 

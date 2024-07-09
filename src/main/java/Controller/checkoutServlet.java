@@ -80,7 +80,7 @@ public class checkoutServlet extends HttpServlet {
 			//lưu các orderline của khách đặt xuống csdl
 			OrderDetailDAO.insertOrderLine(order_id, ol.getProduct().getProductId(), ol.getQuantity(), ol.getPrice());
 			//update lại số lượng còn lại trong csdl sau khi đặt
-			ol.updateAvailable();
+//			ol.updateAvailable();
 //			ProductDAO.updateProduct(ol.getProduct().getProductId(), ol.getProduct().getName(), ol.getProduct().getImg(), ol.getProduct().getPrice(), ol.getProduct().getAvailable());
 		}
 			//ghi log

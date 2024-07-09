@@ -1,8 +1,5 @@
 package DAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
@@ -25,7 +22,7 @@ public class ProductDAO {
             while (rs.next()) {
 
 
-                Category category = CategoryDAO.getCategoryByID(rs.getInt(8));
+                Category category = CategoryDAO.getCategoryByID(rs.getInt(7));
                 list.add(new Product(
                         rs.getInt(1),
                         rs.getString(2),
@@ -33,7 +30,7 @@ public class ProductDAO {
                         rs.getString(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getInt(7),
+//                        rs.getInt(7),
                         category
                 ));
             }
@@ -101,7 +98,7 @@ public class ProductDAO {
                         rs.getString("descriptionP"),
                         rs.getDouble("originalPrice"),
                         rs.getDouble("sellingPrice"),
-                        rs.getInt("quantity"),
+//                        rs.getInt("quantity"),
                         new Category(rs.getString("nameCate"))
                 ));
             }
@@ -128,7 +125,8 @@ public class ProductDAO {
                         rs.getString(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getInt(7),new Category(rs.getInt(1)));
+//                        rs.getInt(7),
+                        new Category(rs.getInt(1)));
             }
             con.close();
         } catch (SQLException e) {
@@ -148,36 +146,6 @@ public class ProductDAO {
 
             ResultSet rs = preparedStatement.executeQuery();
 
-
-//        }
-//        }
-//
-//    public static Product getProductByID(int id) {
-//        String query ="select * from products where productID = ? ";
-//        Product product = null;
-//        try {
-//            con = new JDBCUtil().getConnection();
-//            PreparedStatement pst = con.prepareStatement(query);
-//            pst.setInt(1, id);
-//            rs = pst.executeQuery();
-//            while(rs.next()) {
-//                Category cate = CategoryDAO.getCategoryByID(rs.getInt("categoryID"));
-//                product= new Product(rs.getInt("productID"),rs.getString("img")
-//                        , rs.getString("nameProduct"),rs.getString("descriptionP")
-//                        ,rs.getDouble("originalPrice"),rs.getDouble("sellingPrice")
-//                        ,rs.getInt("quantity"),cate);
-//            }
-//            con.close();
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
-//            e.printStackTrace();
-//        }
-//        return product;
-//    }
-//
-//
-//
 
             while (rs.next()) {
                 return new Category(rs.getString(1), rs.getInt(2));
@@ -200,35 +168,76 @@ public class ProductDAO {
         return arr;
     }
 
-    public static void main(String[] args) {
-//        ProductDAO pd = new ProductDAO;
-        Product product = ProductDAO.getProductByID(1);
-//        System.out.println(product.toString());
-/*
-        Category c = getCategory(1);
-        if (c != null) {
-            System.out.println(c.toString());
-        } else {
-            System.out.println("Không tìm thấy sản phẩm có categoryID là 1");
 
+    public static int insertProduct(Product pro) {
+        String query ="insert into products(img, nameProduct, descriptionP, originalPrice, sellingPrice,categoryID) values(?,?,?,?,?,?)";
+        int proID=0;
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, pro.getImg());
+//            pst.setDate(2, dateorder);
+            pst.setString(2, pro.getName());
+            pst.setString(3, pro.getDescriptionP());
+            pst.setDouble(4, pro.getOriginalPrice());
+            pst.setDouble(5, pro.getSellingPrice());
+            pst.setDouble(6, pro.getCategory().getQuantity());
+            pst.executeUpdate();
+            ResultSet generatedKeys = pst.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                proID = generatedKeys.getInt(1);
+            }
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
         }
-        return arr;
+        return proID;
     }
 
-//    public static void main(String[] args) {
-////        ProductDAO pd = new ProductDAO;
-//       Product product = ProductDAO.getProductByID(1);
-//        System.out.println(product.toString());
-///*
-//        Category c = getCategory(1);
-//        if (c != null) {
-//            System.out.println(c.toString());
-//        } else {
-//            System.out.println("Không tìm thấy sản phẩm có categoryID là 1");
-//        }
-//*/
-//
-//    }
+    public static void updateProduct(Product pro) {
+        String query ="update products set img=?, nameProduct=?, descriptionP=?, originalPrice=?, sellingPrice=?,categoryID=? where productID=? ";
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, pro.getImg());
+            pst.setString(2, pro.getName());
+            pst.setString(3, pro.getDescriptionP());
+            pst.setDouble(4, pro.getOriginalPrice());
+            pst.setDouble(5, pro.getSellingPrice());
+            pst.setDouble(6, pro.getCategory().getQuantity());
+            pst.setInt(7, pro.getProductId());
+            pst.executeUpdate();
+
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+
     }
+    public static void deleteProduct(int id) {
+        //xóa inventory trước vì dính ràng buộc
+       InventoryDAO.deleteInventory(id);;
+
+        String query ="delete from products where productID = ? ";
+        try {
+//			OrderLineDao.deleteOrderLine(id);
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
 
