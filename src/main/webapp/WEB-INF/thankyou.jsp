@@ -28,6 +28,11 @@
 		<link href="css/style.css" rel="stylesheet">
 		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
 	</head>
+<style>
+	.text-center{
+		margin-top: 120px;
+	}
+</style>
 
 	<body>
 

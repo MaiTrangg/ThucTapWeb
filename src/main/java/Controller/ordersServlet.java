@@ -2,6 +2,8 @@ package Controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,9 +49,7 @@ public class ordersServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html;charset=UTF-8");
 		response.setContentType("application/json;charset=UTF-8");
 
 		String orderIdStr = request.getParameter("orderId");
@@ -59,6 +59,16 @@ public class ordersServlet extends HttpServlet {
 		if (orderIdStr != null && statusOrder != null) {
 			int orderId = Integer.parseInt(orderIdStr);
 			OrderDao.updateOrderStatus(orderId, statusOrder);
+
+			if (statusOrder.equals("Đang xử lý")) {
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						OrderDao.updateOrderStatus(orderId, "Hoàn tất xác nhận");
+					}
+				}, 2 * 60 * 1000); // 2 phút
+			}
 		}
 
 		if ("true".equals(ajax)) {
@@ -67,5 +77,6 @@ public class ordersServlet extends HttpServlet {
 			doGet(request, response);
 		}
 	}
+
 
 }

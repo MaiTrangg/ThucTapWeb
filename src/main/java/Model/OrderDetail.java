@@ -18,11 +18,6 @@ public class OrderDetail {
 	}
 
 
-	@Override
-	public String toString() {
-		return "OrderLine [Product=" + product.toString()+ ", quantity=" + quantity + ", price=" + price + "]";
-	}
-
 	/**
 	 * @return the product
 	 */
@@ -87,6 +82,13 @@ public class OrderDetail {
 	}
 
 
-
+	@Override
+	public String toString() {
+		return "/nOrderDetail{" +
+				"product=" + product.getName() +
+				", quantity=" + quantity +
+				", price=" + price +
+				'}';
+	}
 }
 

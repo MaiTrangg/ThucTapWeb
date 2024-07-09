@@ -32,7 +32,7 @@
 </head>
 
 <style>
-    #sp  img{
+    #sp img {
         width: 200px;
         height: 120px;
     }
@@ -101,8 +101,16 @@
     #logTable tbody td {
         padding: 12px 15px;
         border-bottom: 1px solid #dddddd;
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: normal;
+        max-width: 200px;
+        overflow: hidden;
     }
 
+#logTable_info{
+    margin-bottom: 20px;
+}
     /* DataTables pagination styling */
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         padding: 0.5em 1em;
@@ -161,36 +169,37 @@
             font-weight: bold;
             text-align: left;
         }
-        /*#logTable_info{*/
-        /*    margin: 20px 0;*/
-        /*}*/
-
     }
 
-    .logLevel.INFO{
-        background:#c8c5c5;
+    .logLevel.INFO {
+        background: #c8c5c5;
         border-radius: 5px;
         opacity: 0.89;
         text-align: center;
+        padding: 10px;
     }
-    .logLevel.DANGER{
+    .logLevel.DANGER {
         background: #fc3737;
         border-radius: 5px;
         text-align: center;
+        padding: 10px;
     }
-    .ALERT{
+    .logLevel.ALERT {
         background: #fc7d7d;
         border-radius: 5px;
         text-align: center;
+        padding: 10px;
     }
-    .WARN{
+    .logLevel.WARN {
         background: rgba(252, 252, 105, 0.93);
         border-radius: 5px;
         text-align: center;
+        padding: 10px;
     }
-
-
 </style>
+
+
+
 <body>
 <div class="container-scroller">
     <div class="row p-0 m-0 proBanner" id="proBanner">
@@ -254,7 +263,7 @@
                         <c:forEach items="${listLog}" var="l">
                             <tr>
                                 <td data-label="logTime">${l.logTime}</td>
-                                <td class="logLevel ${l.logLevel} ">${l.logLevel}</td>
+                                <td > <span class="logLevel ${l.logLevel} ">${l.logLevel}</span></td>
                                 <td data-label="beforeMessage">${l.beforeMessage}</td>
                                 <td data-label="afterMessage">${l.afterMessage}</td>
                                 <td data-label="userId">${l.userId}</td>
