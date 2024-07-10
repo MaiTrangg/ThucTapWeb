@@ -36,7 +36,7 @@
                 <div class="navbar-nav mx-auto">
                     <a href="index" class="nav-item nav-link ${currentPage eq 'index' ? 'active' : ''}" >Trang chủ</a>
                     <a href="#" class="nav-item nav-link ${currentPage eq 'shop' ? 'active' : ''}" id="item-shop">Cửa hàng</a>
-                    <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>
+<%--                    <a href="shopDetail" class="nav-item nav-link ${currentPage eq 'shopDetail' ? 'active' : ''}">Chi tiết sản phẩm</a>--%>
                     <div class="nav-item dropdown">
 
 
