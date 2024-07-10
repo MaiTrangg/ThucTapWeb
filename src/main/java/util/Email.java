@@ -43,9 +43,9 @@ public class Email {
 			//người gửi
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail,false));
 			//Tiêu đề email
-			msg.setSubject("XEM MẬT KHẨU Ở ĐÂY");
+			msg.setSubject("XEM MÃ CODE Ở ĐÂY","UTF-8");
 			//nội dung
-			msg.setText("Mật khẩu của bạn là: "+message, "UTF-8");
+			msg.setText("Mã Code của bạn là: "+message, "UTF-8");
 			//gửi mail
 			Transport.send(msg);
 		} catch (MessagingException e) {
