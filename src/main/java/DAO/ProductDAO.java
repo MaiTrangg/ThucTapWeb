@@ -238,6 +238,33 @@ public class ProductDAO {
         }
 
     }
+    public static Product getProductById(int id){
+        String sql = "select * from Products where productID=?";
+        try{
+            Connection con = JDBCUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                return new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+//                        rs.getInt(7),
+                        new Category(rs.getInt(1)));
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getProductById(1));
+    }
 
 
 }

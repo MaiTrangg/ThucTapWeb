@@ -42,8 +42,12 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary" >Đăng nhập</button>
                         <label class="login-loginwith">Đăng nhập với</label><br>
-                        <a href="" class="login-facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="" class="login-google"><i class="fab fa-google"></i></a>
+
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid
+&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2FLoginGoogleHandler
+&response_type=code
+&client_id=392101766314-8h4fal0vgp81limr966ebjjfbap114l7.apps.googleusercontent.com
+&approval_prompt=force" class="login-google"><i class="fab fa-google"></i></a>
                         <br> <a href="register" class="login-register">Tạo tài khoản mới</a>
                         <a href="forgotpassword"  class="login-forgotpass" style="margin-left: 20px;">Quên mật khẩu</a>
 
