@@ -1,12 +1,12 @@
 package Model;
 
 public class Customer {
-    private int user_id;
-    private String username;
-    private String password;
-    private String email;
-    private String numberPhone;
-    private int isAdmin;
+        private int user_id;
+        private String username;
+        private String password;
+        private String email;
+        private String numberPhone;
+        private int isAdmin;
     private String country;
     private String fristName;
     private String lastName;

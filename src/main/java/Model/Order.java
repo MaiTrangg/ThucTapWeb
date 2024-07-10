@@ -17,6 +17,7 @@ public class Order {
 	private double totalMoney ;
 	private String statusOrder;
 	private String noteOrder;
+
 	/**
 	 * @return the dateOrder
 	 */
