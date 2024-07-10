@@ -1,8 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,15 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.CategoryDAO;
+import DAO.InventoryDAO;
 import DAO.ProductDAO;
+import Model.Inventory;
 import Model.Product;
 
 /**
- * Servlet implementation class managerProServerlet
+ * Servlet implementation class loadInforProServlet
  */
-@WebServlet("/managerProServerlet")
-public class managerProServlet extends HttpServlet {
-   
+@WebServlet("/loadInforProServlet")
+public class loadInforProServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public loadInforProServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -27,15 +36,16 @@ public class managerProServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		System.out.println("đã vào managerProServerlet");
 		HttpSession session = request.getSession();
-		List<Product> listNew = ProductDAO.getAllProduct();
-		session.removeAttribute("listP");
-		session.setAttribute("listP", listNew);
+		int idpro = Integer.parseInt(request.getParameter("idpro"));
+		Inventory inventory = InventoryDAO.getInventoryPro(idpro);
+		session.setAttribute("inventory",inventory);
+		session.setAttribute("idpro", idpro);
 		session.setAttribute("categoryList", new CategoryDAO().getListCategory());
-		request.getRequestDispatcher("/WEB-INF/ManagerProduct.jsp").forward(request, response);
-		
+//		response.sendRedirect("ad_editproduct.jsp");
+		request.getRequestDispatcher("/WEB-INF/ad_editproduct.jsp").forward(request, response);
 	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

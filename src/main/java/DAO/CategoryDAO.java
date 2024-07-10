@@ -49,6 +49,39 @@ public class CategoryDAO {
         }
         return category;
     }
+    public List<Category> getListCategory(){
+        String query = "select * from categories";
+        List<Category> list = new ArrayList<>();
+        try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+
+
+            rs = ps.executeQuery();
+            while(rs.next()) list.add(new Category(rs.getString("nameCate"), rs.getInt("categoryID")));
+
+
+            con.close();
+            ps.close();
+            rs.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new CategoryDAO().getListCategory());
+    }
 
 
 

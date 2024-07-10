@@ -52,7 +52,8 @@ public class ordersServlet extends HttpServlet {
 			// Lấy danh sách đơn hàng
 			HttpSession session = request.getSession();
 			List<Order> orders = OrderDao.getAllOrders();
-			session.setAttribute("orders", orders);
+//			session.setAttribute("orders", orders);
+			request.setAttribute("orders", orders);
 			request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
 		} else if (action.equals("viewOrderDetails")) {
 			// Lấy chi tiết đơn hàng
@@ -60,6 +61,9 @@ public class ordersServlet extends HttpServlet {
 			int orderId = Integer.parseInt(orderIdStr);
 			List<OrderDetail> orderDetails = OrderDetailDAO.getOrderDetailsByOrderId(orderId);
 			request.setAttribute("orderDetails", orderDetails);
+			HttpSession session = request.getSession();
+			List<Order> orders = OrderDao.getAllOrders();
+			request.setAttribute("orders", orders);
 			request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
 		}
 

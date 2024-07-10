@@ -123,7 +123,8 @@
                             </div>
                         </div>
                     </div>
-                    <table id="2" class="table table-striped table-hover">
+<%--                    <table id="2" class="table table-striped table-hover">--%>
+                    <table id="orderTable" class="table table-striped table-hover">
                         <thead>
                         <tr>
                             <!-- <th>
@@ -158,11 +159,7 @@
                                 <td>
                                     <p> <fmt:formatDate value="${o.dateOrder}" pattern="dd/MM/yyyy HH:mm:ss" /></p>
                                 </td>
-                                    <%--                                <td>${o.statusOrder}</td>--%>
                                 <td>
-<%--                                    <button class="btn_detail" onclick="">--%>
-<%--                                        <i class="fa fa-eye"></i>--%>
-<%--                                    </button>--%>
                                         <button class="btn_detail" onclick="viewOrderDetails(${o.orderId})">
                                             <i class="fa fa-eye"></i>
                                         </button>
@@ -211,10 +208,12 @@
                         </ul>
                     </div>
                 </div>
-                <a href="index.jsp"><button type="button" class="btn btn-primary">Back to home</button> </a>
                 <!-- ad_addproServlet -->
 
                 <%--            table chi tiet don hang--%>
+                <div class="col-sm-6">
+                    <h2>Order <b>Details</b></h2>
+                </div>
                 <table id="orderDetailTable" class="display table table-striped table-hover">
                     <thead>
                     <tr>
@@ -225,17 +224,21 @@
 
                     </tr>
                     </thead>
-                    <tbody>
-                    <c:forEach items="${orderDetails}" var="detail">
-                        <tr>
-                            <td>${detail.orderDetailId}</td>
-                            <td>${detail.product.productId}</td>
-                            <td>${detail.quantity}</td>
-                            <td>${detail.price}</td>
-                        </tr>
-                    </c:forEach>
+                    <tbody id="orderDetailBody">
+                    <c:if test="${not empty orderDetails}">
+                        <c:forEach items="${orderDetails}" var="detail">
+                            <tr>
+                                <td>${detail.orderDetailId}</td>
+                                <td>${detail.product.productId}</td>
+                                <td>${detail.quantity}</td>
+                                <td>${detail.price}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
                     </tbody>
                 </table>
+
+                <a href="index"><button type="button" class="btn btn-primary">Back to home</button> </a>
             </div>
             <!-- add Modal HTML -->
             <div id="addEmployeeModal" class="modal fade">
@@ -342,6 +345,36 @@
                     selectElement.css("background-color", selectedColor);
                 }
 
+
+                function updateOrderStatus(orderId, statusOrder) {
+                    $.ajax({
+                        type: "POST",
+                        url: "ordersServlet",
+                        data: {
+                            orderId: orderId,
+                            statusOrder: statusOrder,
+                            ajax: "true"
+                        },
+                        success: function(response) {
+                            if (response.status === "success") {
+                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
+                                selectElement.val(statusOrder);
+                                updateSelectColor(selectElement);
+
+                                if (statusOrder === "Đang xử lý") {
+                                    handleStatusChange(orderId, statusOrder);
+                                }
+                            } else {
+                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
+                            }
+                        },
+                        error: function() {
+                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                        }
+                    });
+                }
+
+
                 function handleStatusChange(orderId, status) {
                     const now = new Date();
                     const statusChangeTime = now.getTime();
@@ -389,34 +422,6 @@
                                             }
                                         });
                                     }, 2 * 60 * 1000); // 2 phút
-                                }
-                            } else {
-                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
-                            }
-                        },
-                        error: function() {
-                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
-                        }
-                    });
-                }
-
-                function updateOrderStatus(orderId, statusOrder) {
-                    $.ajax({
-                        type: "POST",
-                        url: "ordersServlet",
-                        data: {
-                            orderId: orderId,
-                            statusOrder: statusOrder,
-                            ajax: "true"
-                        },
-                        success: function(response) {
-                            if (response.status === "success") {
-                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
-                                selectElement.val(statusOrder);
-                                updateSelectColor(selectElement);
-
-                                if (statusOrder === "Đang xử lý") {
-                                    handleStatusChange(orderId, statusOrder);
                                 }
                             } else {
                                 alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");

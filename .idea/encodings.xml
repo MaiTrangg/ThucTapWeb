@@ -2,6 +2,10 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controller/ad_addproServlet.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controller/ad_deleteproservlet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controller/ad_editproServlet.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controller/loadInforProServlet.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>
