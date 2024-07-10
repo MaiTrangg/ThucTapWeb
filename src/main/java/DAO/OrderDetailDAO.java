@@ -149,4 +149,57 @@ public class OrderDetailDAO {
 		}
 		return total;
 	}
+
+	public static List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
+		List<OrderDetail> orderDetails = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM orderDetails WHERE order_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, orderId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int orderDetailId = rs.getInt("orderDetail_id");
+				Product product = ProductDAO.getProductByID(rs.getInt("productID"));
+				int quantity = rs.getInt("quantity");
+				double price = rs.getDouble("price");
+
+				OrderDetail detail = new OrderDetail(orderDetailId, product, quantity, price);
+				orderDetails.add(detail);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return orderDetails;
+	}
+
+
 }

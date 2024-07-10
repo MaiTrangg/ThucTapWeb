@@ -169,6 +169,7 @@ public class ProductDAO {
     }
 
 
+
     public static int insertProduct(Product pro) {
         String query ="insert into products(img, nameProduct, descriptionP, originalPrice, sellingPrice,categoryID) values(?,?,?,?,?,?)";
         int proID=0;
