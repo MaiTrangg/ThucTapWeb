@@ -126,7 +126,7 @@ public class ProductDAO {
                         rs.getDouble(5),
                         rs.getDouble(6),
 //                        rs.getInt(7),
-                        new Category(rs.getInt(1)));
+                       CategoryDAO.getCategoryByID(rs.getInt(7)));
             }
             con.close();
         } catch (SQLException e) {
@@ -236,6 +236,10 @@ public class ProductDAO {
             e.printStackTrace();
         }
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getAllProduct().get(0));
     }
 
 

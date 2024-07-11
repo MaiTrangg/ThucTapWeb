@@ -29,7 +29,7 @@ public class CategoryDAO {
 
             ps.setInt(1,id);
             rs = ps.executeQuery();
-            if(rs.next()) return category = new Category(rs.getString(2));
+            if(rs.next()) return category = new Category(rs.getString(2),id);
 
 
             con.close();

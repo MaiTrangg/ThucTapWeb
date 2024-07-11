@@ -44,7 +44,7 @@
   
   <style>
          #sp  img{
-                width: 200px;
+                width: 150px;
                 height: 120px;
             }
 
@@ -118,6 +118,35 @@
          .edit:hover{
              color: rgba(248, 248, 14, 0.91);
          }
+         /*.export-css{*/
+         /*    background: #44ce42;*/
+         /*    margin-left: 972px;*/
+         /*}*/
+         .export-import {
+             display: flex;
+             justify-content: space-between;
+             align-items: start;
+         }
+
+         .upload-form {
+             flex: 1;
+         }
+
+         .export-css {
+             flex-shrink: 0;
+             margin-left: 20px;
+             background: #44ce42;
+             margin-top: 60px;
+             border: none;
+             border-radius: 4px;
+             padding: 10px;
+             color: white;
+             font-weight: 500;
+
+         }
+
+
+
   </style>
 
 
@@ -179,32 +208,40 @@
                                 </span>
                             </th>
                             <th>ID</th>
-                            <th>Name</th>
                             <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
                             <th>Price</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
+<%--                    list p chinh la danh sach san pham trong kho tuc la inventory--%>
                         <c:forEach items="${listP }" var="p">
+
                             <tr>
                                 <td>
                                     <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="${p.productId}">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="${p.product.productId}">
                                         <label for="checkbox1"></label>
                                     </span>
                                 </td>
-                                <td>${p.productId}</td>
-                                <td> ${p.name} </td>
+                                <td>${p.product.productId}</td>
                                 <td>
-                                    <img src= ${p.img } >
-                                </td> 
-                                <td> ${ p.sellingPrice } </td>
+                                    <img src= ${p.product.img } >
+                                </td>
+                                <td> ${p.product.name} </td>
+                                <td> ${p.product.descriptionP} </td>
+                                <td> ${ p.product.sellingPrice } </td>
+                                <td> ${p.product.category.category} </td>
+                                <td> ${ p.quantity } </td>
                                 <td>
-                                    <a href="loadInforProServlet?idpro=${p.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
+                                    <a href="loadInforProServlet?idpro=${p.product.productId }"  class="edit" ><i class="material-icons"  title="Edit">&#xE254;</i></a>
 <%--                                    <a href="ad_deleteproservlet?idpro=${p.productId }" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>--%>
-                                    <a href="#deleteEmployeeModal" class="delete" id="icon-delete" data-id="${p.productId}" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
+                                    <a href="#deleteEmployeeModal" class="delete" id="icon-delete" data-id="${p.product.productId}" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></a>
 
                                 </td>
                             </tr>
@@ -212,18 +249,23 @@
                     </tbody>
                 </table>
 
-             <div class="container upload-form">
-                 <h2 class="my-4">Upload Excel File</h2>
-                 <form action="upload" method="post" enctype="multipart/form-data">
-                     <div class="form-group">
-                         <label for="file">Select Excel File:</label>
-                         <div class="custom-file">
-                             <input type="file" class="custom-file-input" id="file" name="file" accept=".xls,.xlsx">
-                             <label class="custom-file-label" for="file">Choose file</label>
+             <div class="export-import">
+                 <div class="container upload-form">
+                     <h2 class="my-4">Upload Excel File</h2>
+                     <form action="upload" method="post" enctype="multipart/form-data">
+                         <div class="form-group">
+                             <label for="file">Select Excel File:</label>
+                             <div class="custom-file">
+                                 <input type="file" class="custom-file-input" id="file" name="file" accept=".xls,.xlsx">
+                                 <label class="custom-file-label" for="file">Choose file</label>
+                             </div>
                          </div>
-                     </div>
-                     <button type="submit" class="btn btn-primary setcolorbtn">Upload</button>
-                 </form>
+                         <button type="submit" class="btn btn-primary setcolorbtn">Upload</button>
+                     </form>
+                 </div>
+<%--                 <button onclick="exportTableToExcel('productTable', 'product_data')" class="export-css">Export Table Product To Excel File</button>--%>
+                 <button  id="exportButton"  class="export-css">Export Table Product To Excel File</button>
+
              </div>
 <%--                <div class="clearfix">--%>
 <%--                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>--%>
@@ -266,7 +308,7 @@
                             <div class="form-group">
                                 <label>available</label>
                                 <input name="available" type="number" class="form-control" required>
-</div>
+                                </div>
                              <div class="form-group">
                                 <label>Description</label>
                                 <textarea name="description" class="form-control" required></textarea>
@@ -441,5 +483,76 @@
                 .html(inputFile.files[0].name);
         });
     </script>
+
+<%--  xuat file excel--%>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var table = $('#productTable').DataTable();
+
+            function exportTableToExcel(tableID, filename = '') {
+                var dataType = 'application/vnd.ms-excel';
+                var tableSelect = document.getElementById(tableID);
+
+                // Lấy tiêu đề của bảng
+                var headers = tableSelect.querySelectorAll("thead th");
+                var tableHTML = "<table border='1'><thead><tr>";
+                for (var i = 0; i < headers.length; i++) {
+                    if (headers[i].innerText !== 'Actions') { // Loại bỏ cột "Actions"
+                        tableHTML += "<th>" + headers[i].innerText + "</th>";
+                    }
+                }
+                tableHTML += "</tr></thead><tbody>";
+
+                // Lấy tất cả dữ liệu từ DataTables (bao gồm cả các trang)
+                var allData = table.rows().nodes().toArray();
+
+                // Lặp qua từng dòng dữ liệu và thêm vào chuỗi HTML
+                allData.forEach(function(row) {
+                    var rowData = $(row).children('td').toArray();
+                    tableHTML += "<tr>";
+                    rowData.forEach(function(cell, index) {
+                        if (index != rowData.length - 1) { // Bỏ qua cột "Actions"
+                            var cellData = $(cell).html();
+                            if ($(cell).find('img').length > 0) {
+                                var imgSrc = $(cell).find('img').attr('src');
+                                tableHTML += "<td>" + imgSrc + "</td>"; // Thêm đường dẫn ảnh vào ô
+                            } else {
+                                tableHTML += "<td>" + $(cell).text() + "</td>";
+                            }
+                        }
+                    });
+                    tableHTML += "</tr>";
+                });
+
+                tableHTML += "</tbody></table>";
+
+                // Thay đổi dữ liệu HTML thành chuỗi hợp lệ cho Excel
+                tableHTML = tableHTML.replace(/ /g, '%20');
+
+                // Tạo liên kết tải xuống
+                var downloadLink = document.createElement("a");
+                document.body.appendChild(downloadLink);
+                filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+                if (navigator.msSaveOrOpenBlob) {
+                    var blob = new Blob(['\ufeff', tableHTML], { type: dataType });
+                    navigator.msSaveOrOpenBlob(blob, filename);
+                } else {
+                    downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+                    downloadLink.download = filename;
+                    downloadLink.click();
+                }
+
+                document.body.removeChild(downloadLink); // Xóa liên kết sau khi tải xuống
+            }
+
+            // Gán sự kiện click cho nút xuất Excel
+            $('#exportButton').click(function() {
+                exportTableToExcel('productTable', 'product_data');
+            });
+        });
+    </script>
+
   </body>
 </html>

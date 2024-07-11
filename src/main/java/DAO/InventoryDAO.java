@@ -3,6 +3,7 @@ package DAO;
 import DBConnection.JDBCUtil;
 import Model.Category;
 import Model.Inventory;
+import Model.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,43 @@ public class InventoryDAO {
     private static Connection con ;
     private static PreparedStatement ps = null;
     private static ResultSet rs = null;
+    public static List<Inventory> getAllInventoryPro() {
+        List<Inventory> list = new ArrayList<>();
+        String query = "select * from inventories";
+        try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+
+                Product p = ProductDAO.getProductByID(rs.getInt(2));
+                list.add(new Inventory(
+                        rs.getInt(1),
+                        p,
+                        rs.getInt(3),
+                        rs.getTimestamp(4)
+                ));
+            }
+            con.close();
+
+//            con.close();
+//            ps.close();
+//            rs.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+        return list;
+    }
 
     public static void insertInventory(Inventory inventory){
         String query = "insert into inventories  (productID,quantity, lastUpdated ) values(?,?,?)";
@@ -143,7 +181,10 @@ public class InventoryDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(getInventoryPro(4));
+        System.out.println(getAllInventoryPro().get(0).toString());
+        System.out.println(getAllInventoryPro().get(1));
+        System.out.println(getAllInventoryPro().get(2));
+
     }
 
 }

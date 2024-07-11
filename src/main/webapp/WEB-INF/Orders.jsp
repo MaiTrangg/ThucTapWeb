@@ -191,7 +191,7 @@
                     </tbody>
                 </table>
              <br>
-  <button onclick="exportTableToExcel('2', 'orders_data')">Export Table Data To Excel File</button>
+            <button onclick="exportTableToExcel('2', 'orders_data')">Export Table Data To Excel File</button>
 
                 <div class="clearfix">
                     <br>
