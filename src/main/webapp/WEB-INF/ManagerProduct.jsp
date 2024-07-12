@@ -27,7 +27,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
 
 <!-- Bootstrap JS-->
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>  
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
         
   <c:import url="includes_ad/header.jsp"></c:import>
   <link href="css/manager.css" rel="stylesheet" />
@@ -252,7 +253,7 @@
              <div class="export-import">
                  <div class="container upload-form">
                      <h2 class="my-4">Upload Excel File</h2>
-                     <form action="upload" method="post" enctype="multipart/form-data">
+                     <form action="updateExcelServlet" method="post" enctype="multipart/form-data">
                          <div class="form-group">
                              <label for="file">Select Excel File:</label>
                              <div class="custom-file">
@@ -260,7 +261,8 @@
                                  <label class="custom-file-label" for="file">Choose file</label>
                              </div>
                          </div>
-                         <button type="submit" class="btn btn-primary setcolorbtn">Upload</button>
+<%--                         <a href="updateExcelServlet"><button type="submit" class="btn btn-primary setcolorbtn">Upload</button></a>--%>
+                     <button type="submit" class="btn btn-primary setcolorbtn">Upload</button>
                      </form>
                  </div>
 <%--                 <button onclick="exportTableToExcel('productTable', 'product_data')" class="export-css">Export Table Product To Excel File</button>--%>
@@ -485,74 +487,72 @@
     </script>
 
 <%--  xuat file excel--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             var table = $('#productTable').DataTable();
 
             function exportTableToExcel(tableID, filename = '') {
-                var dataType = 'application/vnd.ms-excel';
-                var tableSelect = document.getElementById(tableID);
+                var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                var wb = XLSX.utils.book_new();
+                var ws_data = [];
+                var headers = [];
 
                 // Lấy tiêu đề của bảng
-                var headers = tableSelect.querySelectorAll("thead th");
-                var tableHTML = "<table border='1'><thead><tr>";
-                for (var i = 0; i < headers.length; i++) {
-                    if (headers[i].innerText !== 'Actions') { // Loại bỏ cột "Actions"
-                        tableHTML += "<th>" + headers[i].innerText + "</th>";
+                $('#productTable thead th').each(function() {
+                    if ($(this).text() !== 'Actions') { // Loại bỏ cột "Actions"
+                        headers.push($(this).text());
                     }
-                }
-                tableHTML += "</tr></thead><tbody>";
+                });
+                ws_data.push(headers);
 
                 // Lấy tất cả dữ liệu từ DataTables (bao gồm cả các trang)
-                var allData = table.rows().nodes().toArray();
-
-                // Lặp qua từng dòng dữ liệu và thêm vào chuỗi HTML
-                allData.forEach(function(row) {
-                    var rowData = $(row).children('td').toArray();
-                    tableHTML += "<tr>";
-                    rowData.forEach(function(cell, index) {
-                        if (index != rowData.length - 1) { // Bỏ qua cột "Actions"
-                            var cellData = $(cell).html();
-                            if ($(cell).find('img').length > 0) {
-                                var imgSrc = $(cell).find('img').attr('src');
-                                tableHTML += "<td>" + imgSrc + "</td>"; // Thêm đường dẫn ảnh vào ô
+                table.rows().every(function() {
+                    var rowData = this.nodes().to$().children('td');
+                    var row = [];
+                    rowData.each(function(index, td) {
+                        if (index !== rowData.length - 1) { // Bỏ qua cột "Actions"
+                            var cellData = $(td).html();
+                            if ($(td).find('img').length > 0) {
+                                var imgSrc = $(td).find('img').attr('src');
+                                row.push(imgSrc); // Thêm đường dẫn ảnh vào ô
                             } else {
-                                tableHTML += "<td>" + $(cell).text() + "</td>";
+                                row.push($(td).text());
                             }
                         }
                     });
-                    tableHTML += "</tr>";
+                    ws_data.push(row);
                 });
 
-                tableHTML += "</tbody></table>";
+                var ws = XLSX.utils.aoa_to_sheet(ws_data);
+                XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-                // Thay đổi dữ liệu HTML thành chuỗi hợp lệ cho Excel
-                tableHTML = tableHTML.replace(/ /g, '%20');
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
-                // Tạo liên kết tải xuống
-                var downloadLink = document.createElement("a");
-                document.body.appendChild(downloadLink);
-                filename = filename ? filename + '.xls' : 'excel_data.xls';
-
-                if (navigator.msSaveOrOpenBlob) {
-                    var blob = new Blob(['\ufeff', tableHTML], { type: dataType });
-                    navigator.msSaveOrOpenBlob(blob, filename);
-                } else {
-                    downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-                    downloadLink.download = filename;
-                    downloadLink.click();
+                function s2ab(s) {
+                    var buf = new ArrayBuffer(s.length);
+                    var view = new Uint8Array(buf);
+                    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
                 }
 
-                document.body.removeChild(downloadLink); // Xóa liên kết sau khi tải xuống
+                var downloadLink = document.createElement("a");
+                document.body.appendChild(downloadLink);
+                filename = filename ? filename + '.xlsx' : 'product_data.xlsx';
+
+                var blob = new Blob([s2ab(wbout)], { type: dataType });
+                var url = URL.createObjectURL(blob);
+                downloadLink.href = url;
+                downloadLink.download = filename;
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
             }
 
-            // Gán sự kiện click cho nút xuất Excel
             $('#exportButton').click(function() {
                 exportTableToExcel('productTable', 'product_data');
             });
         });
     </script>
-
   </body>
 </html>

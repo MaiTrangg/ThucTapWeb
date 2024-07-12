@@ -237,6 +237,12 @@ public class ProductDAO {
         }
 
     }
+    public static boolean checkExistIDPro(int id){
+        for(Product p : getAllProduct()){
+            if(p.getProductId()==id) return true;
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         System.out.println(getAllProduct().get(0));

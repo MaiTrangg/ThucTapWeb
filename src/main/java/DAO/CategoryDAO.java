@@ -2,10 +2,8 @@ package DAO;
 
 import DBConnection.JDBCUtil;
 import Model.Category;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +47,7 @@ public class CategoryDAO {
         }
         return category;
     }
-    public List<Category> getListCategory(){
+    public static List<Category> getListCategory(){
         String query = "select * from categories";
         List<Category> list = new ArrayList<>();
         try {
@@ -77,6 +75,43 @@ public class CategoryDAO {
             }
         }
         return list;
+    }
+
+    /**
+     * lay ra category_id
+     * nếu category đã tồn tại thì lay ra id của nó dựa vào name
+     * nếu category_id không tồn tại thì tạo ra một category dựa vào
+     * name truyền vào lưu xuống DB và return về id của nó
+     * @param name
+     * @return
+     */
+    public static int getIDCategory(String name){
+        for(Category c : getListCategory()){
+            if(c.getCategory().equals(name)) return c.getQuantity();
+        }
+        return insertCategory(name);
+    }
+
+    public static int insertCategory(String name) {
+        String query ="insert into categories (nameCate) values(?)";
+        int category_id=0;
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, name);
+//
+            pst.executeUpdate();
+            ResultSet generatedKeys = pst.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                category_id = generatedKeys.getInt(1);
+            }
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
+        }
+        return category_id;
     }
 
     public static void main(String[] args) {

@@ -180,6 +180,7 @@ public class InventoryDAO {
         return inventory;
     }
 
+
     public static void main(String[] args) {
         System.out.println(getAllInventoryPro().get(0).toString());
         System.out.println(getAllInventoryPro().get(1));
