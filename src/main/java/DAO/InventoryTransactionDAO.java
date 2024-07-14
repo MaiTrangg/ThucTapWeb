@@ -49,7 +49,12 @@ public class InventoryTransactionDAO {
     }
     public static Set<Integer> getIDProductsImportedLast3Months() throws SQLException {
         Set<Integer> list = new HashSet<>();
-        String query = "SELECT DISTINCT productID FROM store.inventorytransactions WHERE type = 'Nhập' and transactionDate >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+        
+        String query = "SELECT DISTINCT i.productID FROM store.inventorytransactions i " +
+                "WHERE i.type = 'Nhập' " +
+                "AND i.transactionDate >= DATE_SUB(NOW(), INTERVAL 3 MONTH) " +
+                "AND i.productID NOT IN (SELECT i1.productID FROM store.inventorytransactions i1 WHERE i1.type = 'Xóa')";
+
         try {
             con = new JDBCUtil().getConnection();
             ps = con.prepareStatement(query);

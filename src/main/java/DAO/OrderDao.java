@@ -164,5 +164,65 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
 
     }
 
+//    public static Order getOrderById(int orderId) {
+//        Connection con = null;
+//        PreparedStatement pst = null;
+//        ResultSet rs = null;
+//        Order order = null;
+//
+//        try {
+//            con = JDBCUtil.getConnection();
+//            String query = "SELECT * FROM orders WHERE order_id = ?";
+//            pst = con.prepareStatement(query);
+//            pst.setInt(1, orderId);
+//            rs = pst.executeQuery();
+//
+//            if (rs.next()) {
+//                // Lấy thông tin cơ bản của đơn hàng từ ResultSet
+//                double totalMoney = rs.getDouble("totalMoney");
+//                Timestamp dateOrder = rs.getTimestamp("dateorder");
+//                String statusOrder = rs.getString("statusOrder");
+//                String noteOrder = rs.getString("noteOrder");
+//
+//                // Giả sử bạn có các phương thức để lấy Transaction và ShippingAddress theo orderId
+//                Transaction transaction = TransactionDAO.getTransactionByOrderId(orderId);
+//                ShippingAddress shippingAddress = ShippingAddressDAO.getShippingAddressByOrderId(orderId);
+//
+//                // Lấy danh sách các sản phẩm trong đơn hàng từ OrderDetailDAO
+//                List<OrderDetail> orderDetails = OrderDetailDAO.ListOrderLines(orderId);
+//
+//                // Tạo đối tượng Order với các thông tin đã lấy được
+//                order = new Order(orderId, transaction, shippingAddress, dateOrder, orderDetails, totalMoney, statusOrder, noteOrder);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            // Đóng ResultSet, PreparedStatement và Connection để giải phóng tài nguyên
+//            if (rs != null) {
+//                try {
+//                    rs.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            if (pst != null) {
+//                try {
+//                    pst.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            if (con != null) {
+//                try {
+//                    con.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        return order;
+//    }
+
 }
 

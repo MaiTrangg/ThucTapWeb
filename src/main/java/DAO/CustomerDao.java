@@ -20,15 +20,20 @@ public class CustomerDao {
 		return new CustomerDao();
 	}
 //	private String query;
-	
+
 
 //	public CustomerDao() {
 //		this.con = JDBCUtil.getConnection();
 //
 //	}
 
+	private Connection getConnection() throws SQLException {
+		if (this.con == null || this.con.isClosed()) {
+			this.con = JDBCUtil.getConnection();
+		}
+		return this.con;
+	}
 
-	
 	public  int insert(Customer t) {
 		// TODO Auto-generated method stub
 		int re=0;
@@ -50,7 +55,29 @@ public class CustomerDao {
 
 		return re;
 	}
-	
+	public Customer getCustomerByEmail(String email) {
+		Customer c = null;
+		try (Connection con = getConnection()) {
+			String query = "SELECT * FROM customers WHERE email = ?";
+			try (PreparedStatement pst = con.prepareStatement(query)) {
+				pst.setString(1, email);
+				try (ResultSet rs = pst.executeQuery()) {
+					if (rs.next()) {
+						c = new Customer(
+								rs.getString("username"),
+								rs.getString("pass"),
+								rs.getString("email"),
+								rs.getString("numberphone"),
+								rs.getInt("isadmin")
+						);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return c;
+	}
 	public  int ad_insertUser(Customer t) {
 		// TODO Auto-generated method stub
 		int re=0;
@@ -72,7 +99,7 @@ public class CustomerDao {
 		return re;
 	}
 
-	
+
 	public int update(String username, int isadmin, String email, String numberphone, String oldUsername, String oldEmail) {
 		int re=0;
 		try {
@@ -109,7 +136,7 @@ public class CustomerDao {
 			pst.setString(1, pass);
 			pst.setString(2, username);
 			pst.setString(3, email );
-			
+
 			re=pst.executeUpdate();
 			System.out.println("re "+re);
 			con.close();
@@ -120,7 +147,7 @@ public class CustomerDao {
 		return re;
 	}
 
-	
+
 	public int delete(String username, String email) {
 		int re=0;
 		try {
@@ -138,7 +165,7 @@ public class CustomerDao {
 		return re;
 	}
 
-	
+
 	public List<Customer> getAll() {
 		// TODO Auto-generated method stub
 		List<Customer> list = new ArrayList<Customer>();
@@ -147,7 +174,7 @@ public class CustomerDao {
 			con = JDBCUtil.getConnection();
 			String query = "select * from customers";
 			PreparedStatement pst = con.prepareStatement(query);
-			
+
 			ResultSet rs= pst.executeQuery();
 			while(rs.next()) {
 				c = new Customer(	rs.getString("username"),
@@ -155,7 +182,7 @@ public class CustomerDao {
 						 rs.getString("email"),
 						 rs.getString("numberphone"),
 						 rs.getInt("isadmin"));
-	
+
 //				Customer c = new Customer(username, password);
 				list.add(c);
 			}
@@ -167,7 +194,7 @@ public class CustomerDao {
 		return list;
 	}
 
-	
+
 	public Customer getbyID(String username, String email) {
 		// TODO Auto-generated method stub
 //		List<Customer> list = new ArrayList<Customer>();
@@ -186,7 +213,7 @@ public class CustomerDao {
 									 rs.getString("email"),
 									 rs.getString("numberphone"),
 									 rs.getInt("isadmin"));
-				
+
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -195,7 +222,7 @@ public class CustomerDao {
 		}
 		return c;
 	}
-	
+
 	public  Customer getbyID(Customer t) {
 		// TODO Auto-generated method stub
 //		List<Customer> list = new ArrayList<Customer>();
@@ -215,7 +242,7 @@ public class CustomerDao {
 						rs.getString("email"),
 						rs.getString("numberphone"),
 						rs.getInt("isadmin"));
-				
+
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -224,10 +251,10 @@ public class CustomerDao {
 		}
 		return c;
 	}
-	
+
 	public Customer checkExistUsername(Customer c){
 		Customer cus = null;
-		
+
 		try {
 			con = JDBCUtil.getConnection();
 			String query = "SELECT * FROM Customers where username=? ";
@@ -247,10 +274,10 @@ public class CustomerDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return cus;
 	}
-	
+
 	public  String checkExistEmail(String email) {
 		String re=null;
 		try {
@@ -266,13 +293,13 @@ public class CustomerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return re;
 	}
-	
+
 	public Customer getCustomer(String email, String code) {
 		Customer cus = null;
-		
+
 		try {
 			con = JDBCUtil.getConnection();
 			String query = "SELECT * FROM Customers where email =? and code =?";
@@ -296,10 +323,10 @@ public class CustomerDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return cus;
 	}
-	
+
 //	public void updateCheckout(String fname, String lname, String country,String phone, String address,String username, String email) {
 //		query = "Update customers set fristname =?, lastname = ?, country = ?, numberphone = ?, address = ? where username =? and email =?";
 //		PreparedStatement pst;
@@ -321,7 +348,7 @@ public class CustomerDao {
 //
 //
 //	}
-	
+
 	public  void updateCode(String email, String code) {
 		String query = "Update customers set code =? where email =? ";
 		PreparedStatement pst;
@@ -330,7 +357,7 @@ public class CustomerDao {
 			pst = con.prepareStatement(query);
 			pst.setString(1, code);
 			pst.setString(2, email);
-			
+
 			pst.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
@@ -338,7 +365,7 @@ public class CustomerDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getcode(String email) {
 		String recode ="";
 		try {
@@ -354,9 +381,9 @@ public class CustomerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
+
+
+
 		return recode;
 	}
 
@@ -386,6 +413,8 @@ public class CustomerDao {
 		}
 		return c;
 	}
+
+
 
 	public static void main(String[] args) {
 		Customer c = new Customer("trang", "123");

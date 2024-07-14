@@ -1,6 +1,8 @@
 package Model;
 
 public class OrderDetail {
+	private int orderDetailId;
+
 	private Product product;
 	private int quantity;
 	private double price;
@@ -17,6 +19,12 @@ public class OrderDetail {
 		this.price = price;
 	}
 
+	public OrderDetail(int orderDetailId, Product product, int quantity, double price) {
+		this.orderDetailId = orderDetailId;
+		this.product = product;
+		this.quantity = quantity;
+		this.price = price;
+	}
 
 	/**
 	 * @return the product
@@ -25,7 +33,13 @@ public class OrderDetail {
 		return product;
 	}
 
+	public int getOrderDetailId() {
+		return orderDetailId;
+	}
 
+	public void setOrderDetailId(int orderDetailId) {
+		this.orderDetailId = orderDetailId;
+	}
 
 	/**
 	 * @param product the product to set
