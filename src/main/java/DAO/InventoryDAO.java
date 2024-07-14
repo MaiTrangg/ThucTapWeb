@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class InventoryDAO {
     private static Connection con ;
@@ -162,10 +160,6 @@ public class InventoryDAO {
                        rs.getTimestamp("lastUpdated"));
            }
 
-            con.close();
-            ps.close();
-            rs.close();
-
         } catch (Exception e) {
             System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
         } finally {
@@ -179,12 +173,27 @@ public class InventoryDAO {
         }
         return inventory;
     }
+    public static List<Inventory> getProductsNotOrderedLast3Months() throws SQLException {
+        Set<Integer> importedProducts = InventoryTransactionDAO.getIDProductsImportedLast3Months();
+        Set<Integer> orderedProducts = OrderDao.getIDProductsOrderedLast3Months();
+        List<Inventory> productNotOrdered = new ArrayList<>();
+
+        importedProducts.removeAll(orderedProducts);
+        for (int productId : importedProducts) {
+            System.out.println(productId);
+            productNotOrdered.add(getInventoryPro(productId));
+        }
+
+        return productNotOrdered;
+    }
 
 
     public static void main(String[] args) {
-        System.out.println(getAllInventoryPro().get(0).toString());
-        System.out.println(getAllInventoryPro().get(1));
-        System.out.println(getAllInventoryPro().get(2));
+//        try {
+//            System.out.println(getProductsImportedLast3Months().size());
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 

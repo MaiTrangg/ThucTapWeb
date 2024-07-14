@@ -109,7 +109,7 @@ public class updateExcelServlet extends HttpServlet {
                 }
 
 
-                System.out.println("Image: " + image);
+                System.out.println("Image: " + imagePath);
                 String name = currentRow.getCell(3).getStringCellValue();
                 System.out.println("name: "+name);
                 String description = currentRow.getCell(4).getStringCellValue();
@@ -132,17 +132,19 @@ public class updateExcelServlet extends HttpServlet {
                 Category c = new Category(category,category_id);
                 Product p = new Product(id,imagePath,name,description,price,price,c);
                 Inventory inventory =null;
+                int newQuantity = 0;
 
                 //check exist id product
                 boolean check = ProductDAO.checkExistIDPro(id);
                 if(check){
                     //thực hiên cộng thêm số lượng sản phẩm nhập với số lượng còn lại trong kho
-                    quantity += InventoryDAO.getInventoryPro(id).getQuantity();
-                    inventory = new Inventory(0,p,quantity,lastUpdated);
+                    newQuantity = quantity+ InventoryDAO.getInventoryPro(id).getQuantity();
+                    inventory = new Inventory(0,p,newQuantity,lastUpdated);
                     InventoryDAO.updateInventory(inventory);
                 }else{
                     int idpro = ProductDAO.insertProduct(p);
                     p.setProductId(idpro);
+                    inventory = new Inventory(0,p,quantity,lastUpdated);
                     InventoryDAO.insertInventory(inventory);
 
                 }

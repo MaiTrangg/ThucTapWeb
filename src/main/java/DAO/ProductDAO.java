@@ -1,11 +1,15 @@
 package DAO;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.sql.SQLException;
+import java.util.Set;
 
 import DBConnection.JDBCUtil;
 import Model.Category;
+import Model.Inventory;
+import Model.InventoryTransaction;
 import Model.Product;
 public class ProductDAO {
     private static Connection con ;
@@ -244,8 +248,44 @@ public class ProductDAO {
         return false;
     }
 
+//    public static List<InventoryTransaction> getTransactionInvenImportedLast3Months() throws SQLException {
+//        <InventoryTransaction> invenTran = new HashSet<>();
+//
+//        String query = "SELECT DISTINCT * FROM inventoryTransactions WHERE type = 'Nhập' and transactionDate >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+//        try {
+//            con = new JDBCUtil().getConnection();
+//            ps = con.prepareStatement(query);
+//            rs = ps.executeQuery();
+//
+//            invenTran.add(new InventoryTransaction(
+//                    rs.getInt(1),
+//                    rs.getInt(2),
+//                    rs.getString(3),
+//                    rs.getInt(4),
+//                    rs.getTimestamp(5),
+//                    rs.getString(6)
+//
+//            ));
+//            con.close();
+//
+//        } catch (SQLException e) {
+//            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+//        } finally {
+//            try {
+//                if (rs != null) rs.close();
+//                if (ps != null) ps.close();
+//                if (con != null) con.close();
+//            } catch (SQLException e) {
+//                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+//            }
+//        }
+//
+//        return invenTran;
+//    }
+
+
     public static void main(String[] args) {
-        System.out.println(getAllProduct().get(0));
+
     }
 
 
