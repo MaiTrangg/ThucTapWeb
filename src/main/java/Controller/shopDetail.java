@@ -17,7 +17,7 @@ public class shopDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pid = request.getParameter("pid");
         System.out.println(pid);
-        Product product = ProductDAO.getProductById(Integer.parseInt(pid));
+        Product product = ProductDAO.getProductByID(Integer.parseInt(pid));
         Category category = CategoryDAO.getCategoryByID(product.getCategory().getQuantity());
         System.out.println("phân loại"+category);
         List<Product> list = ProductDAO.getAllProduct();

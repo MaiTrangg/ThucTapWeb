@@ -31,9 +31,16 @@ public class Category {
         return category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
 
