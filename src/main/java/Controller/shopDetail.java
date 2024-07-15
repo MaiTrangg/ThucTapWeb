@@ -22,7 +22,7 @@ public class shopDetail extends HttpServlet {
         System.out.println("phân loại"+category);
         List<Product> list = ProductDAO.getAllProduct();
         request.setAttribute("category",category);
-        request.setAttribute("product",product);
+        request.setAttribute("pro",product);
         request.setAttribute("list",list);
         request.getRequestDispatcher("/WEB-INF/shopDetail.jsp").forward(request,response);
     }
