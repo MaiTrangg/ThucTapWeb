@@ -1,9 +1,7 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -241,7 +239,10 @@ public class CustomerDao {
 						rs.getString("pass"),
 						rs.getString("email"),
 						rs.getString("numberphone"),
-						rs.getInt("isadmin"));
+						rs.getInt("isadmin"),
+						rs.getInt("failedAttempts"),
+						rs.getTimestamp("lock_time")
+				);
 
 			}
 			con.close();
@@ -327,27 +328,6 @@ public class CustomerDao {
 		return cus;
 	}
 
-//	public void updateCheckout(String fname, String lname, String country,String phone, String address,String username, String email) {
-//		query = "Update customers set fristname =?, lastname = ?, country = ?, numberphone = ?, address = ? where username =? and email =?";
-//		PreparedStatement pst;
-//		try {
-//			pst = con.prepareStatement(query);
-//			pst.setString(1, fname);
-//			pst.setString(2, lname);
-//			pst.setString(3, country);
-//			pst.setString(4, country);
-//			pst.setString(5, address);
-//			pst.setString(6, username);
-//			pst.setString(7, email);
-//
-//			pst.executeUpdate();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//
-//	}
 
 	public  void updateCode(String email, String code) {
 		String query = "Update customers set code =? where email =? ";
@@ -414,6 +394,53 @@ public class CustomerDao {
 		return c;
 	}
 
+	public void resetFailedAttempts(String username)  {
+
+		String query = "UPDATE Customers SET failedAttempts = 0, lock_time = NULL WHERE username = ?";
+		PreparedStatement pst;
+		try {
+			con = JDBCUtil.getConnection();
+			pst = con.prepareStatement(query);
+			pst.setString(1, username);
+			pst.executeUpdate();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void updateFailedAttempts(String user, int failedAttempts) {
+		String query = "UPDATE Customers SET failedAttempts = ? WHERE username = ?";
+		PreparedStatement pst;
+		try {
+			con = JDBCUtil.getConnection();
+			pst = con.prepareStatement(query);
+			pst.setInt(1, failedAttempts);
+			pst.setString(2, user);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void lockAccount(String user) {
+		String query ="UPDATE Customers SET lock_time = ? WHERE username = ?";
+		PreparedStatement pst;
+		try {
+			con = JDBCUtil.getConnection();
+			pst = con.prepareStatement(query);
+			pst.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+			pst.setString(2, user);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 
 
 	public static void main(String[] args) {
@@ -424,5 +451,34 @@ public class CustomerDao {
 
 	}
 
+	public Customer getbyUsername(String username) {
+		Customer c =null;
+		try {
+			con = JDBCUtil.getConnection();
+			String query = "select * from customers where username =? ";
+			PreparedStatement pst = con.prepareStatement(query);
+			pst.setString(1,username );
+
+			ResultSet rs= pst.executeQuery();
+			while(rs.next()) {
+//				username,pass,email,numberphone,isadmin
+				c = new Customer(	rs.getInt("customer_id"),
+						rs.getString("username"),
+						rs.getString("pass"),
+						rs.getString("email"),
+						rs.getString("numberphone"),
+						rs.getInt("isadmin"),
+						rs.getInt("failedAttempts"),
+						rs.getTimestamp("lock_time")
+				);
+
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return c;
+	}
 }
 

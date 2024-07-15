@@ -34,7 +34,7 @@
 </head>
 
 <style>
-    #sp img {
+    img {
         width: 200px;
         height: 120px;
     }

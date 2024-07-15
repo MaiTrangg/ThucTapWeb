@@ -489,6 +489,72 @@
 <%--  xuat file excel--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 
+<%--    <script type="text/javascript">--%>
+<%--        $(document).ready(function() {--%>
+<%--            var table = $('#productTable').DataTable();--%>
+
+<%--            function exportTableToExcel(tableID, filename = '') {--%>
+<%--                var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';--%>
+<%--                var wb = XLSX.utils.book_new();--%>
+<%--                var ws_data = [];--%>
+<%--                var headers = [];--%>
+
+<%--                // Lấy tiêu đề của bảng--%>
+<%--                $('#productTable thead th').each(function() {--%>
+<%--                    if ($(this).text() !== 'Actions') { // Loại bỏ cột "Actions"--%>
+<%--                        headers.push($(this).text());--%>
+<%--                    }--%>
+<%--                });--%>
+<%--                ws_data.push(headers);--%>
+
+<%--                // Lấy tất cả dữ liệu từ DataTables (bao gồm cả các trang)--%>
+<%--                table.rows().every(function() {--%>
+<%--                    var rowData = this.nodes().to$().children('td');--%>
+<%--                    var row = [];--%>
+<%--                    rowData.each(function(index, td) {--%>
+<%--                        if (index !== rowData.length - 1) { // Bỏ qua cột "Actions"--%>
+<%--                            var cellData = $(td).html();--%>
+<%--                            if ($(td).find('img').length > 0) {--%>
+<%--                                var imgSrc = $(td).find('img').attr('src');--%>
+<%--                                row.push(imgSrc); // Thêm đường dẫn ảnh vào ô--%>
+<%--                            } else {--%>
+<%--                                row.push($(td).text());--%>
+<%--                            }--%>
+<%--                        }--%>
+<%--                    });--%>
+<%--                    ws_data.push(row);--%>
+<%--                });--%>
+
+<%--                var ws = XLSX.utils.aoa_to_sheet(ws_data);--%>
+<%--                XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');--%>
+
+<%--                var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });--%>
+
+<%--                function s2ab(s) {--%>
+<%--                    var buf = new ArrayBuffer(s.length);--%>
+<%--                    var view = new Uint8Array(buf);--%>
+<%--                    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;--%>
+<%--                    return buf;--%>
+<%--                }--%>
+
+<%--                var downloadLink = document.createElement("a");--%>
+<%--                document.body.appendChild(downloadLink);--%>
+<%--                filename = filename ? filename + '.xlsx' : 'product_data.xlsx';--%>
+
+<%--                var blob = new Blob([s2ab(wbout)], { type: dataType });--%>
+<%--                var url = URL.createObjectURL(blob);--%>
+<%--                downloadLink.href = url;--%>
+<%--                downloadLink.download = filename;--%>
+<%--                downloadLink.click();--%>
+<%--                document.body.removeChild(downloadLink);--%>
+<%--            }--%>
+
+<%--            $('#exportButton').click(function() {--%>
+<%--                exportTableToExcel('productTable', 'product_data');--%>
+<%--            });--%>
+<%--        });--%>
+<%--    </script>--%>
+
     <script type="text/javascript">
         $(document).ready(function() {
             var table = $('#productTable').DataTable();
@@ -518,7 +584,12 @@
                                 var imgSrc = $(td).find('img').attr('src');
                                 row.push(imgSrc); // Thêm đường dẫn ảnh vào ô
                             } else {
-                                row.push($(td).text());
+                                var textData = $(td).text();
+                                if (headers[index] === 'Quantity' || headers[index] === 'Price' || headers[index] === 'ID') {
+                                    row.push(parseFloat(textData)); // Chuyển đổi sang số
+                                } else {
+                                    row.push(textData);
+                                }
                             }
                         }
                     });
@@ -554,5 +625,6 @@
             });
         });
     </script>
+
   </body>
 </html>

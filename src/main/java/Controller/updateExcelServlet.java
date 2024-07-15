@@ -90,7 +90,7 @@ public class updateExcelServlet extends HttpServlet {
                     continue; // Bỏ qua dòng tiêu đề
                 }
 
-                int id =  Integer.parseInt(currentRow.getCell(1).getStringCellValue());
+                int id = (int)  currentRow.getCell(1).getNumericCellValue();
                 System.out.println("id: "+id);
 
 
@@ -114,7 +114,7 @@ public class updateExcelServlet extends HttpServlet {
                 System.out.println("name: "+name);
                 String description = currentRow.getCell(4).getStringCellValue();
                 System.out.println("description: "+description);
-                double price = Double.parseDouble(currentRow.getCell(5).getStringCellValue());
+                double price = currentRow.getCell(5).getNumericCellValue();
                 System.out.println("price: "+price);
                 String category = currentRow.getCell(6).getStringCellValue();
                 System.out.println("category: "+category);
