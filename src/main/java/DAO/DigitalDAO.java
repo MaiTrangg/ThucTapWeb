@@ -15,37 +15,51 @@ public class DigitalDAO {
     private static  PreparedStatement ps = null;
     private static ResultSet rs = null;
 
-
     public static List<Product> getProductByName(String name) {
-        ArrayList<Product> list2 = new ArrayList<Product>();
+        List<Product> productList = new ArrayList<>();
         String query = "SELECT p.productID, p.img, p.nameProduct, p.descriptionP, " +
-                "p.originalPrice, p.sellingPrice, p.quantity, c.nameCate " +
-                "FROM products p " +
-                "INNER JOIN categories c ON p.categoryID = c.categoryID " +
+                "p.originalPrice, p.sellingPrice, c.nameCate " +
+                "FROM store.products p " +
+                "INNER JOIN store.categories c ON p.categoryID = c.categoryID " +
                 "WHERE BINARY p.nameProduct LIKE ?";
+
         try {
             con = new JDBCUtil().getConnection();
+
             ps = con.prepareStatement(query);
             ps.setString(1, "%" + name + "%");
-            System.out.println(query);
             rs = ps.executeQuery();
-            while(rs.next()) {
-                list2.add(new Product(
+
+            while (rs.next()) {
+                Product product = new Product(
                         rs.getInt("productID"),
                         rs.getString("img"),
                         rs.getString("nameProduct"),
                         rs.getString("descriptionP"),
                         rs.getDouble("originalPrice"),
                         rs.getDouble("sellingPrice"),
-//                        rs.getInt("quantity"),
                         new Category(rs.getString("nameCate"))
-                ));
+                );
+                productList.add(product);
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return productList;
+    }
+
+    // Close resources
+    private static void close() {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return list2;
     }
 
     public static void main(String[] args) {

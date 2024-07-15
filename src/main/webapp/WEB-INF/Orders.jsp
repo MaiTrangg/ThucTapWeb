@@ -58,7 +58,7 @@
     option[value="Hoàn tất xác nhận"] { background-color: #00EE76; }
     option[value="Đóng gói"] { background-color: #EECFA1; }
     option[value="Đang giao hàng"] { background-color: #EEC900; }
-    option[value="Hoàn thành"] { background-color: #63B8FF; }
+    option[value="Giao hàng thành công"] { background-color: #63B8FF; }
     option[value="Đã hủy"] { background-color: #EE3B3B;
     }
 
@@ -168,12 +168,12 @@
 
                                     <input type="hidden" name="orderId" value="${o.orderId}">
                                     <select name="statusOrder" data-order-id="${o.orderId}" onchange="updateOrderStatus(${o.orderId}, this.value)">
-                                        <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''} ${['Đang xử lý', 'Hoàn tất xác nhận', 'Đóng gói', 'Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Chờ xác nhận</option>
-                                        <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''} ${['Hoàn tất xác nhận', 'Đóng gói', 'Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đang xử lý</option>
-                                        <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''} ${['Đóng gói', 'Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Hoàn tất xác nhận</option>
-                                        <option value="Đóng gói" ${o.statusOrder == 'Đóng gói' ? 'selected' : ''} ${['Đang giao hàng', 'Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đóng gói</option>
-                                        <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''} ${['Hoàn thành', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đang giao hàng</option>
-                                        <option value="Hoàn thành" ${o.statusOrder == 'Hoàn thành' ? 'selected' : ''} ${['Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Hoàn thành</option>
+                                        <option value="Chờ xác nhận" ${o.statusOrder == 'Chờ xác nhận' ? 'selected' : ''} ${['Đang xử lý', 'Hoàn tất xác nhận', 'Đóng gói', 'Đang giao hàng', 'Giao hàng thành công', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Chờ xác nhận</option>
+                                        <option value="Đang xử lý" ${o.statusOrder == 'Đang xử lý' ? 'selected' : ''} ${['Hoàn tất xác nhận', 'Đóng gói', 'Đang giao hàng', 'Giao hàng thành công', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đang xử lý</option>
+                                        <option value="Hoàn tất xác nhận" ${o.statusOrder == 'Hoàn tất xác nhận' ? 'selected' : ''} ${['Đóng gói', 'Đang giao hàng', 'Giao hàng thành công', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Hoàn tất xác nhận</option>
+                                        <option value="Đóng gói" ${o.statusOrder == 'Đóng gói' ? 'selected' : ''} ${['Đang giao hàng', 'HGiao hàng thành công', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đóng gói</option>
+                                        <option value="Đang giao hàng" ${o.statusOrder == 'Đang giao hàng' ? 'selected' : ''} ${['Giao hàng thành công', 'Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Đang giao hàng</option>
+                                        <option value="Giao hàng thành công" ${o.statusOrder == 'Giao hàng thành công' ? 'selected' : ''} ${['Đã hủy'].indexOf(o.statusOrder) >= 0 ? 'disabled' : ''}>Giao hàng thành công</option>
                                         <option value="Đã hủy" ${o.statusOrder == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
 
                                     </select>
@@ -332,6 +332,118 @@
                 }
             </script>
 
+<%--            <script>--%>
+<%--                function viewOrderDetails(orderId) {--%>
+<%--                    window.location.href = 'ordersServlet?action=viewOrderDetails&orderId=' + orderId;--%>
+<%--                }--%>
+
+<%--                // Global variable to track if automatic status change has been processed--%>
+<%--                var statusChangeProcessed = {};--%>
+
+<%--                function updateSelectColor(selectElement) {--%>
+<%--                    var selectedColor = selectElement.find(":selected").css("background-color");--%>
+<%--                    selectElement.css("background-color", selectedColor);--%>
+<%--                }--%>
+
+
+<%--                function updateOrderStatus(orderId, statusOrder) {--%>
+<%--                    $.ajax({--%>
+<%--                        type: "POST",--%>
+<%--                        url: "ordersServlet",--%>
+<%--                        data: {--%>
+<%--                            orderId: orderId,--%>
+<%--                            statusOrder: statusOrder,--%>
+<%--                            ajax: "true"--%>
+<%--                        },--%>
+<%--                        success: function(response) {--%>
+<%--                            if (response.status === "success") {--%>
+<%--                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");--%>
+<%--                                selectElement.val(statusOrder);--%>
+<%--                                updateSelectColor(selectElement);--%>
+
+<%--                                if (statusOrder === "Đang xử lý") {--%>
+<%--                                    handleStatusChange(orderId, statusOrder);--%>
+<%--                                }--%>
+<%--                            } else {--%>
+<%--                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");--%>
+<%--                            }--%>
+<%--                        },--%>
+<%--                        error: function() {--%>
+<%--                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");--%>
+<%--                        }--%>
+<%--                    });--%>
+<%--                }--%>
+
+
+<%--                function handleStatusChange(orderId, status) {--%>
+<%--                    const now = new Date();--%>
+<%--                    const statusChangeTime = now.getTime();--%>
+
+<%--                    $.ajax({--%>
+<%--                        type: "POST",--%>
+<%--                        url: "ordersServlet",--%>
+<%--                        data: {--%>
+<%--                            orderId: orderId,--%>
+<%--                            statusOrder: status,--%>
+<%--                            statusChangeTime: statusChangeTime,--%>
+<%--                            ajax: "true"--%>
+<%--                        },--%>
+<%--                        success: function(response) {--%>
+<%--                            if (response.status === "success") {--%>
+<%--                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");--%>
+<%--                                selectElement.val(status);--%>
+<%--                                updateSelectColor(selectElement);--%>
+
+<%--                                if (status === "Đang xử lý" && !statusChangeProcessed[orderId]) {--%>
+<%--                                    statusChangeProcessed[orderId] = true; // Mark as processed--%>
+
+<%--                                    // Wait for 2 minutes before automatically updating to 'Hoàn tất xác nhận'--%>
+<%--                                    setTimeout(() => {--%>
+<%--                                        $.ajax({--%>
+<%--                                            type: "POST",--%>
+<%--                                            url: "ordersServlet",--%>
+<%--                                            data: {--%>
+<%--                                                orderId: orderId,--%>
+<%--                                                statusOrder: 'Hoàn tất xác nhận',--%>
+<%--                                                ajax: "true"--%>
+<%--                                            },--%>
+<%--                                            success: function(response) {--%>
+<%--                                                if (response.status === "success") {--%>
+<%--                                                    let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");--%>
+<%--                                                    selectElement.val('Hoàn tất xác nhận');--%>
+<%--                                                    updateSelectColor(selectElement);--%>
+<%--                                                    alert("Đơn hàng đã được chuyển sang trạng thái 'Hoàn tất xác nhận' sau 2 phút");--%>
+<%--                                                } else {--%>
+<%--                                                    alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");--%>
+<%--                                                }--%>
+<%--                                            },--%>
+<%--                                            error: function() {--%>
+<%--                                                alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");--%>
+<%--                                            }--%>
+<%--                                        }); --%>
+<%--                                    }, 2 * 60 * 1000); // 2 phút--%>
+<%--                                }--%>
+<%--                            } else {--%>
+<%--                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");--%>
+<%--                            }--%>
+<%--                        },--%>
+<%--                        error: function() {--%>
+<%--                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");--%>
+<%--                        }--%>
+<%--                    });--%>
+<%--                }--%>
+
+<%--                $(document).ready(function() {--%>
+<%--                    $("select[name='statusOrder']").each(function() {--%>
+<%--                        updateSelectColor($(this));--%>
+<%--                    });--%>
+
+<%--                    $("select[name='statusOrder']").change(function() {--%>
+<%--                        updateOrderStatus($(this).data("order-id"), $(this).val());--%>
+<%--                    });--%>
+<%--                });--%>
+<%--            </script>--%>
+
             <script>
                 function viewOrderDetails(orderId) {
                     window.location.href = 'ordersServlet?action=viewOrderDetails&orderId=' + orderId;
@@ -344,7 +456,6 @@
                     var selectedColor = selectElement.find(":selected").css("background-color");
                     selectElement.css("background-color", selectedColor);
                 }
-
 
                 function updateOrderStatus(orderId, statusOrder) {
                     $.ajax({
@@ -361,7 +472,7 @@
                                 selectElement.val(statusOrder);
                                 updateSelectColor(selectElement);
 
-                                if (statusOrder === "Đang xử lý") {
+                                if (statusOrder === "Đang xử lý" || statusOrder === "Đang giao hàng") {
                                     handleStatusChange(orderId, statusOrder);
                                 }
                             } else {
@@ -373,7 +484,6 @@
                         }
                     });
                 }
-
 
                 function handleStatusChange(orderId, status) {
                     const now = new Date();
@@ -389,6 +499,7 @@
                             ajax: "true"
                         },
                         success: function(response) {
+                            console.log(response.status);
                             if (response.status === "success") {
                                 let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
                                 selectElement.val(status);
@@ -422,6 +533,58 @@
                                             }
                                         });
                                     }, 2 * 60 * 1000); // 2 phút
+                                } else if (status === "Đang giao hàng" && !statusChangeProcessed[orderId]) {
+                                    statusChangeProcessed[orderId] = true; // Mark as processed
+
+                                    // Check if the address is urban or suburban
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "ordersServlet",
+                                        data: {
+                                            action: "getShippingAddress",
+                                            orderId: orderId,
+                                            ajax: "true"
+                                        },
+                                        success: function(response) {
+                                            console.log("Response from getShippingAddress:", response);
+                                            if (response.status === "success") {
+                                                const isUrban = response.isUrban;
+                                                const delay = isUrban ? 1 * 60 * 1000 : 2 * 60 * 1000; // 1 minute for urban, 2 minutes for suburban
+
+                                                // Wait before automatically updating to 'Giao hàng thành công'
+                                                setTimeout(() => {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "ordersServlet",
+                                                        data: {
+                                                            orderId: orderId,
+                                                            statusOrder: 'Giao hàng thành công',
+                                                            ajax: "true"
+                                                        },
+                                                        success: function(response) {
+                                                            console.log("Response from updateOrderStatus:", response);
+                                                            if (response.status === "success") {
+                                                                let selectElement = $("select[name='statusOrder'][data-order-id='" + orderId + "']");
+                                                                selectElement.val('Giao hàng thành công');
+                                                                updateSelectColor(selectElement);
+                                                                alert("Đơn hàng đã được chuyển sang trạng thái 'Giao hàng thành công' sau " + (delay / 60000) + " phút");
+                                                            } else {
+                                                                alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
+                                                            }
+                                                        },
+                                                        error: function() {
+                                                            alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+                                                        }
+                                                    });
+                                                }, delay);
+                                            } else {
+                                                alert("Không thể xác định được khu vực giao hàng.");
+                                            }
+                                        },
+                                        error: function() {
+                                            alert("Có lỗi xảy ra khi xác định khu vực giao hàng.");
+                                        }
+                                    });
                                 }
                             } else {
                                 alert("Cập nhật trạng thái đơn hàng thất bại. Vui lòng thử lại.");
@@ -443,6 +606,10 @@
                     });
                 });
             </script>
+
+
+
+
 
             <script src="js/manager.js" ></script>
 
