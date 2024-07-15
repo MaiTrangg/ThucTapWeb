@@ -1,5 +1,7 @@
 package Model;
 
+import java.sql.Timestamp;
+
 public class Customer {
         private int user_id;
         private String username;
@@ -7,63 +9,37 @@ public class Customer {
         private String email;
         private String numberPhone;
         private int isAdmin;
-    private String country;
-    private String fristName;
-    private String lastName;
-    private String address;
+        private  int failedAttempts;
+        private Timestamp lock_time;
 
 
+    public Customer(int user_id, String username, String password, String email, String numberPhone, int isAdmin, int failedAttempts, Timestamp lock_time) {
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.numberPhone = numberPhone;
+        this.isAdmin = isAdmin;
+        this.failedAttempts = failedAttempts;
+        this.lock_time = lock_time;
+    }
 
+    public int getFailedAttempts() {
+        return failedAttempts;
+    }
 
-    /**
-     * @return the country
-     */
-    public String getCountry() {
-        return country;
+    public void setFailedAttempts(int failedAttempts) {
+        this.failedAttempts = failedAttempts;
     }
-    /**
-     * @param country the country to set
-     */
-    public void setCountry(String country) {
-        this.country = country;
+
+    public Timestamp getLock_time() {
+        return lock_time;
     }
-    /**
-     * @return the fristName
-     */
-    public String getFristName() {
-        return fristName;
+
+    public void setLock_time(Timestamp lock_time) {
+        this.lock_time = lock_time;
     }
-    /**
-     * @param fristName the fristName to set
-     */
-    public void setFristName(String fristName) {
-        this.fristName = fristName;
-    }
-    /**
-     * @return the lastName
-     */
-    public String getLastName() {
-        return lastName;
-    }
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    /**
-     * @return the address
-     */
-    public String getAddress() {
-        return address;
-    }
-    /**
-     * @param address the address to set
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    //	private detailCustomer DetailCustomer;
+
     /**
      * @param username
      * @param password
@@ -119,6 +95,7 @@ public class Customer {
     public Customer() {
 
     }
+
 
 
 
