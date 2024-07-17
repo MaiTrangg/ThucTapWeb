@@ -12,6 +12,8 @@ import java.util.List;
 
 @WebServlet(name = "managerInvenServlet", value = "/managerInvenServlet")
 public class managerInvenServlet extends HttpServlet {
+    private final int MAX_STOCK = 150;
+    private final int MIN_STOCK = 30;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -19,7 +21,10 @@ public class managerInvenServlet extends HttpServlet {
         HttpSession session = request.getSession();
         try {
             List<Inventory> listProNotOrdered =  InventoryDAO.getProductsNotOrderedLast3Months();
+            List<Inventory> listNeedImported =  InventoryDAO.getProductsNeedImported( MIN_STOCK, MAX_STOCK);
+
             session.setAttribute("listProNotOrdered", listProNotOrdered);
+            session.setAttribute("listNeedImported", listNeedImported);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

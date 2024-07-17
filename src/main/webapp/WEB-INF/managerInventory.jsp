@@ -6,42 +6,135 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap CRUD Data Table with Tabs</title>
+<%--    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">--%>
+<%--    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">--%>
+<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--%>
+<%--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">--%>
+<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--%>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--%>
+<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>--%>
+<%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>--%>
+<%--    <link href="style.css" rel="stylesheet" />--%>
+<%--    <!-- DataTables CSS -->--%>
+<%--    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">--%>
+    <!-- Font và Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">
 
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- link modal -->
     <!-- Bootstrap CSS -->
-    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- CSS tùy chỉnh -->
+    <link href="style.css" rel="stylesheet" />
 
     <!-- jQuery -->
-    <%--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>--%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!--  Popper.js -->
-    <%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>--%>
+    <!-- Popper.js (cần thiết cho Bootstrap 4) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <title>Bootstrap Tabs Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap JS-->
-    <%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>--%>
 
-    <c:import url="includes_ad/header.jsp"></c:import>
-    <link href="style.css" rel="stylesheet" />
+
 </head>
 
 <style>
-    img {
-        width: 200px;
-        height: 120px;
+    /* Main container styling */
+    .main {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
     }
-    /* DataTable Styling */
-    #logTable_wrapper {
-        width: 100%;
-        margin: 20px 0;
+
+    /* Sidebar styling */
+    .sidebar {
+        width: 250px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        position: fixed;
+        height: 100vh;
+    }
+
+    /* Main panel styling */
+    .main-panel {
+        margin-left: 250px;
+        padding: 20px;
+        flex: 1;
+        margin-top: 50px;
+    }
+
+    /* Tabs styling */
+    .nav-tabs {
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+    }
+
+    .nav-tabs .nav-item .nav-link {
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+        padding: 10px 15px;
+        color: #495057;
+        font-weight: 600;
+    }
+
+    .nav-tabs .nav-item .nav-link.active {
+        color: #44ce42;
+        background-color: #fff;
+        border-color: #ddd #ddd #fff;
+    }
+
+    /* Tab content styling */
+    .tab-content {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 0 0 4px 4px;
+        background-color: #fff;
+    }
+
+    /* Table styling within tabs */
+    .table-wrapper {
+        margin-top: 20px;
+    }
+
+    .table-title h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    /* Styling the DataTables pagination buttons */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.5em 1em;
+        margin-left: 2px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        color: white;
+        background-color: #44ce42;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        /*color: white !important;*/
+        border: 1px solid transparent;
+        background-color: #1d8c1bf2 !important;
+    }
+    #productTable_info{
+        margin-bottom: 20px;
+    }
+
+
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+        outline: none;
+        background-color: #1d8c1bf2;
+        color: white;
     }
 
     #logTable {
@@ -49,279 +142,234 @@
         border-collapse: collapse;
         font-size: 16px;
         text-align: left;
-        color: rgba(0, 0, 0, 0.71);
     }
 
-    #logTable thead th {
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
-        font-weight: bold;
-        padding: 12px 15px;
-        cursor: pointer;
-        position: relative;
+
+
+    img {
+        max-width: 80px;
+        height: 80px;
+        border-radius: 10px;
     }
 
-    #logTable thead th.sorting::after,
-    #logTable thead th.sorting_asc::after,
-    #logTable thead th.sorting_desc::after {
-        content: '';
-        position: absolute;
-        right: 10px;
-        border: 4px solid transparent;
-        border-width: 4px 4px 0 4px;
+    /* Button styling */
+    .btn-primary {
+        background-color:  #44ce42;
+        border-color:  #44ce42;
     }
 
-    #logTable thead th.sorting::after {
-        border-top-color: #ffffff;
-        border-bottom: none;
-        top: 50%;
-        margin-top: -2px;
-    }
-
-    #logTable thead th.sorting_asc::after {
-        border-bottom-color: #ffffff;
-        top: 50%;
-        margin-top: -6px;
-    }
-
-    #logTable thead th.sorting_desc::after {
-        border-top-color: #ffffff;
-        top: 50%;
-        margin-top: 4px;
-    }
-
-    #logTable tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-        /*background-color: #009879;*/
-    }
-
-    #logTable tbody tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    #logTable tbody td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #dddddd;
-        word-wrap: break-word;
-        word-break: break-all;
-        white-space: normal;
-        max-width: 200px;
-        overflow: hidden;
-    }
-
-    #logTable_info{
-        margin-bottom: 20px;
-    }
-    /* DataTables pagination styling */
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        padding: 0.5em 1em;
-        margin-left: 2px;
-        border-radius: 3px;
-        border: 1px solid transparent;
-        background: #009879;
-        color: white;
-        cursor: pointer;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-        background: #007d68;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-        background: #007d68;
-        color: white;
-    }
-
-    .dataTables_wrapper .dataTables_length,
-    .dataTables_wrapper .dataTables_filter {
-        margin-bottom: 20px;
-    }
-
-    /* Responsive Table */
-    @media (max-width: 600px) {
-        #logTable thead {
-            display: none;
-        }
-
-        #logTable,
-        #logTable tbody,
-        #logTable tr,
-        #logTable td {
-            display: block;
-            width: 100%;
-        }
-
-        #logTable tr {
-            margin-bottom: 15px;
-        }
-
-        #logTable td {
-            text-align: right;
-            padding-left: 50%;
-            position: relative;
-        }
-
-        #logTable td::before {
-            content: attr(data-label);
-            position: absolute;
-            left: 0;
-            width: 50%;
-            padding-left: 15px;
-            font-weight: bold;
-            text-align: left;
-        }
-    }
-
-    .logLevel.INFO {
-        background: #c8c5c5;
-        border-radius: 5px;
-        opacity: 0.89;
-        text-align: center;
-        padding: 10px;
-    }
-    .logLevel.DANGER {
-        background: #fc3737;
-        border-radius: 5px;
-        text-align: center;
-        padding: 10px;
-    }
-    .logLevel.ALERT {
-        background: #fc7d7d;
-        border-radius: 5px;
-        text-align: center;
-        padding: 10px;
-    }
-    .logLevel.WARN {
-        background: rgba(252, 252, 105, 0.93);
-        border-radius: 5px;
-        text-align: center;
-        padding: 10px;
+    .btn-primary:hover {
+        background-color: #44ce42;
+        border-color: #1d8c1bf2;
     }
 </style>
 
-
-
 <body>
 <div class="container-scroller">
-    <div class="row p-0 m-0 proBanner" id="proBanner">
-        <div class="col-md-12 p-0 m-0">
-            <div class="card-body card-body-padding d-flex align-items-center justify-content-between">
-                <div class="ps-lg-1">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <p class="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with this template!</p>
-                        <a href="https://www.bootstrapdash.com/product/connect-plus-bootstrap-admin-template/?utm_source=organic&utm_medium=banner&utm_campaign=buynow_demo" target="_blank" class="btn me-2 buy-now-btn border-0">Get Pro</a>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    <a href="https://www.bootstrapdash.com/product/connect-plus-bootstrap-admin-template/"><i class="mdi mdi-home me-3 text-white"></i></a>
-                    <button id="bannerClose" class="btn border-0 p-0">
-                        <i class="mdi mdi-close text-white me-0"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- partial:partials/_navbar.html -->
+    <!-- Navigation and Header -->
+    <c:import url="includes_ad/header.jsp"></c:import>
+
+    <!-- Navigation and Sidebar -->
     <c:import url="includes_ad/navbar.jsp"></c:import>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_sidebar.html -->
-        <c:set var="currentPage" value="managerInventory" />
+    <c:set var="currentPage" value="managerInventory" />
+    <div class="main">
         <c:import url="includes_ad/sidebar.jsp">
             <c:param name="currentPage" value="${currentPage}" />
         </c:import>
-        <%--  <c:import url="includes_ad/sidebar.jsp"></c:import> --%>
-        <!-- partial -->
 
+        <!-- Main Content -->
         <div class="main-panel">
             <div class="container" id="sp">
-                <div class="table-wrapper">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2>Manage <b>Inventory</b></h2>
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h2 style="margin-bottom: 20px">Danh sách sản phẩm không có đơn trong 3 tháng gần nhất</h2>
+                                    </div>
+                                </div>
                             </div>
-                            <%--                            <div class="col-sm-6">--%>
-                            <%--                                <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>--%>
-                            <%--                                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>--%>
-                            <%--                            </div>--%>
+                            <table id="ProNotOrder" class="display">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${listProNotOrdered }" var="p">
+                                    <tr>
+                                        <td>${p.product.productId}</td>
+                                        <td>
+                                            <img src="${p.product.img}">
+                                        </td>
+                                        <td>${p.product.name}</td>
+                                        <td>${p.product.descriptionP}</td>
+                                        <td>${p.product.sellingPrice}</td>
+                                        <td>${p.product.category.category}</td>
+                                        <td>${p.quantity}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
-                    <table id="logTable">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Quantity</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${listProNotOrdered }" var="p">
-
-                            <tr>
-                                <td>${p.product.productId}</td>
-                                <td>
-                                    <img src= ${p.product.img } >
-                                </td>
-                                <td> ${p.product.name} </td>
-                                <td> ${p.product.descriptionP} </td>
-                                <td> ${ p.product.sellingPrice } </td>
-                                <td> ${p.product.category.category} </td>
-                                <td> ${ p.quantity } </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h2 style="margin-bottom: 20px">Danh sách sản phẩm cần nhập</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="needImported" class="display">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>NeedImported</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${listNeedImported }" var="p">
+                                    <tr>
+                                        <td>${p.product.productId}</td>
+                                        <td>
+                                            <img src="${p.product.img}">
+                                        </td>
+                                        <td>${p.product.name}</td>
+                                        <td>${p.product.descriptionP}</td>
+                                        <td>${p.product.sellingPrice}</td>
+                                        <td>${p.product.category.category}</td>
+                                        <td>${p.quantity}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button  id="exportButton"  class="export-css">Export Table Product To Excel File</button>
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <!-- Content for Contact tab -->
+                        <h3>Contact</h3>
+                        <p>Content for the Contact tab goes here.</p>
+                    </div>
                 </div>
-                <a href="index"><button type="button" class="btn btn-primary">Back to home</button> </a>
-                <!-- ad_addproServlet -->
+                <a href="index"><button type="button" class="btn btn-primary">Back to home</button></a>
             </div>
-
-            <%--            <script src="js/manager.js" ></script>--%>
-
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
+            <!-- Footer -->
             <c:import url="includes_ad/footer.jsp"></c:import>
-            <!-- partial -->
         </div>
-        <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-</div>
-<!-- container-scroller -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-<script>
-    $('#logTable').DataTable({
-        paging: true,
-        searching: true,
-        ordering: true
-    });
 
+    </div>
+</div>
+
+
+
+<!-- Include JavaScript files -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#ProNotOrder').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true
+        });
+        $('#needImported').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true
+        });
+    });
 </script>
 
-<!-- plugins:js -->
-<script src="assets/vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page -->
-<script src="assets/vendors/chart.js/Chart.min.js"></script>
-<script src="assets/vendors/jquery-circle-progress/js/circle-progress.min.js"></script>
-<script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
-<!-- End plugin js for this page -->
-<!-- inject:js -->
-<script src="assets/js/off-canvas.js"></script>
-<script src="assets/js/hoverable-collapse.js"></script>
-<script src="assets/js/misc.js"></script>
-<!-- endinject -->
-<!-- Custom js for this page -->
-<script src="assets/js/dashboard.js"></script>
-<!-- End custom js for this page -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        function exportTableToExcel(tableID, filename = '') {
+            var table = $('#' + tableID).DataTable();
+            var wb = XLSX.utils.book_new();
+            var ws_data = [];
+            var headers = [];
+
+            // Lấy tiêu đề của bảng
+            $('#' + tableID + ' thead th').each(function() {
+                headers.push($(this).text());
+            });
+            ws_data.push(headers);
+
+            // Lấy tất cả dữ liệu từ DataTables
+            table.rows({search: 'applied'}).every(function() {
+                var rowData = this.nodes().to$().find('td');
+                var row = [];
+                rowData.each(function(index, td) {
+                    if (index === 1) { // Nếu là cột ảnh
+                        var img = $(td).find('img').attr('src');
+                        row.push(img);
+                    } else {
+                        var text = $(td).text();
+                        row.push(text);
+                    }
+                });
+                ws_data.push(row);
+            });
+
+            var ws = XLSX.utils.aoa_to_sheet(ws_data);
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            var downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            filename = filename ? filename + '.xlsx' : 'product_data.xlsx';
+
+            var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+            var url = URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = filename;
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        $('#exportButton').click(function() {
+            exportTableToExcel('needImported', 'product_data');
+        });
+    });
+</script>
+
+
 </body>
 </html>

@@ -186,7 +186,41 @@ public class InventoryDAO {
 
         return productNotOrdered;
     }
+    public static List<Inventory> getProductsNeedImported(int min_stock, int max_stock) throws SQLException {
+        List<Inventory> list = new ArrayList<>();
+        String query = "select *, (?- quantity) as slCanNhap from inventories where quantity < ?  ";
+        try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1,max_stock);
+            ps.setInt(2,min_stock);
+            rs = ps.executeQuery();
+            while (rs.next()) {
 
+
+                Product p = ProductDAO.getProductByID(rs.getInt(2));
+                list.add(new Inventory(
+                        rs.getInt(1),
+                        p,
+                        rs.getInt("slCanNhap"),
+                        rs.getTimestamp(4)
+                ));
+            }
+            con.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
 //        try {
@@ -194,6 +228,11 @@ public class InventoryDAO {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
+        try {
+            System.out.println(getProductsNeedImported(150,30));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
