@@ -68,6 +68,7 @@
                                 <p class="card-text">Max Discount Value: ${coupon.maxDiscountValue}</p>
                                 <p class="card-text">Min Total Value: ${coupon.minTotalValue}</p>
                                 <form method="post" action="${pageContext.request.contextPath}/CouponServlet">
+                                    <input type="hidden" name="customer_id" value="${customer.user_id}">
                                     <input type="hidden" name="coupon_id" value="${coupon.id}">
                                     <button class="btn btn-primary" type="submit">Use Coupon</button>
                                 </form>
