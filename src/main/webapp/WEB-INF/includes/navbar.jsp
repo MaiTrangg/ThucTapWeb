@@ -55,7 +55,7 @@
                             <%-- <a href="404.html" class="dropdown-item">404 Page</a> --%>
                         </div>
                     </div>
-                    <a href="contact" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Liên hệ</a>
+                    <a href="CouponServlet" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Mã Giảm Giá</a>
                     <c:if test="${sessionScope.customer.isAdmin == 1}">
                         <a href="./index_adServlet">
                             <b>Quản lý</b>
