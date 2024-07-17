@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import DAO.OrderDao;
 import DAO.OrderDetailDAO;
+import DAO.ShippingAddressDAO;
 import Model.Order;
 import Model.OrderDetail;
+import Model.ShippingAddress;
 
 /**
  * Servlet implementation class ordersServlet
@@ -37,20 +40,11 @@ public class ordersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		HttpSession session = request.getSession();
-//		List<Order> orders = OrderDao.getAllOrders();
-////		if(orders == null) System.out.println("orders null"); else
-//			System.out.println("đã vào ordersServlet "+orders);
-//		session.setAttribute("orders", orders);
-//		//response.sendRedirect("/WEB-INF/Orders.jsp");
-//
-//
-//		request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
 		String action = request.getParameter("action");
 
 		if (action == null || action.equals("listOrders")) {
 			// Lấy danh sách đơn hàng
-			HttpSession session = request.getSession();
+//			HttpSession session = request.getSession();
 			List<Order> orders = OrderDao.getAllOrders();
 //			session.setAttribute("orders", orders);
 			request.setAttribute("orders", orders);
@@ -61,10 +55,19 @@ public class ordersServlet extends HttpServlet {
 			int orderId = Integer.parseInt(orderIdStr);
 			List<OrderDetail> orderDetails = OrderDetailDAO.getOrderDetailsByOrderId(orderId);
 			request.setAttribute("orderDetails", orderDetails);
-			HttpSession session = request.getSession();
+//			HttpSession session = request.getSession();
 			List<Order> orders = OrderDao.getAllOrders();
 			request.setAttribute("orders", orders);
 			request.getRequestDispatcher("WEB-INF/Orders.jsp").forward(request, response);
+		} else if (action.equals("getShippingAddress")) {
+			String orderIdStr = request.getParameter("orderId");
+			int orderId = Integer.parseInt(orderIdStr);
+			ShippingAddress address = ShippingAddressDAO.getShippingAddressByOrderId(orderId);
+			boolean isUrban = isUrbanProvince(address.getProvince());
+
+			response.setContentType("application/json;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write("{\"status\": \"success\", \"isUrban\": " + isUrban + "}");
 		}
 
 	}
@@ -85,6 +88,7 @@ public class ordersServlet extends HttpServlet {
 			OrderDao.updateOrderStatus(orderId, statusOrder);
 
 			if (statusOrder.equals("Đang xử lý")) {
+				// Chuyển từ "Đang xử lý" sang "Hoàn tất xác nhận" sau 2 phút
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
 					@Override
@@ -92,6 +96,20 @@ public class ordersServlet extends HttpServlet {
 						OrderDao.updateOrderStatus(orderId, "Hoàn tất xác nhận");
 					}
 				}, 2 * 60 * 1000); // 2 phút
+
+			} else if (statusOrder.equals("Đang giao hàng")) {
+				// Lấy địa chỉ giao hàng và kiểm tra khu vực
+				ShippingAddress address = ShippingAddressDAO.getShippingAddressByOrderId(orderId);
+				boolean isUrban = isUrbanProvince(address.getProvince());
+				int delay = isUrban ? 1 * 60 * 1000 : 2 * 60 * 1000; // 1 phút cho nội thành, 2 phút cho ngoại thành
+
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						OrderDao.updateOrderStatus(orderId, "Giao hàng thành công");
+					}
+				}, delay);
 			}
 		}
 
@@ -100,6 +118,18 @@ public class ordersServlet extends HttpServlet {
 		} else {
 			doGet(request, response);
 		}
+	}
+
+
+	private boolean isUrbanProvince(String province) {
+		// Danh sách các tỉnh nội tỉnh
+		String[] urbanProvinces = {"Hà Nội", "Hồ Chí Minh", "Đà Nẵng"};
+		for (String urban : urbanProvinces) {
+			if (urban.equals(province)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 
