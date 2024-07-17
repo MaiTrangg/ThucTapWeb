@@ -62,6 +62,18 @@
         position: fixed;
         height: 100vh;
     }
+    .export-css {
+        flex-shrink: 0;
+        margin-left: 20px;
+        background: #44ce42;
+        margin-top: 60px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        color: white;
+        font-weight: 500;
+
+    }
 
     /* Main panel styling */
     .main-panel {
@@ -162,6 +174,16 @@
         background-color: #44ce42;
         border-color: #1d8c1bf2;
     }
+    .Xóa{
+        color: #ea2b2b;
+    }
+    .Nhập{
+        color: #1cf81c;
+    }
+    .Xuất{
+        color: #1a70ef;
+    }
+
 </style>
 
 <body>
@@ -183,13 +205,13 @@
                 <!-- Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                        <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Sản phẩm không có đơn</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                        <a class="nav-link " id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"> Sản phẩm cần nhập hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Giao dịch kho</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -273,9 +295,45 @@
                         <button  id="exportButton"  class="export-css">Export Table Product To Excel File</button>
                     </div>
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        <!-- Content for Contact tab -->
-                        <h3>Contact</h3>
-                        <p>Content for the Contact tab goes here.</p>
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h2 style="margin-bottom: 20px">Giao dịch kho trong 3 tháng gần nhất</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="inventoryTran" class="display">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ID Product</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Quantity</th>
+                                    <th>TransactionDate</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${listInventoryTran }" var="p">
+                                    <tr>
+                                        <td>${p.inventoryTransaction_id}</td>
+                                        <td>${p.product.productId}</td>
+                                        <td>
+                                            <img src="${p.product.img}">
+                                        </td>
+                                        <td>${p.product.name}</td>
+                                        <td><b class="${p.type}">${p.type}</b></td>
+                                        <td>${p.quantity}</td>
+                                        <td>${p.transactionDate}</td>
+                                        <td>${p.description}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <a href="index"><button type="button" class="btn btn-primary">Back to home</button></a>
@@ -286,7 +344,6 @@
 
     </div>
 </div>
-
 
 
 <!-- Include JavaScript files -->
@@ -303,6 +360,12 @@
             ordering: true
         });
         $('#needImported').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true
+        });
+
+        $('#inventoryTran').DataTable({
             paging: true,
             searching: true,
             ordering: true
@@ -334,7 +397,12 @@
                         row.push(img);
                     } else {
                         var text = $(td).text();
-                        row.push(text);
+                        // Chuyển đổi cột ID, Price, NeedImported thành số
+                        if (headers[index] === 'ID' || headers[index] === 'Price' || headers[index] === 'NeedImported') {
+                            row.push(parseFloat(text));
+                        } else {
+                            row.push(text);
+                        }
                     }
                 });
                 ws_data.push(row);
@@ -369,6 +437,7 @@
         });
     });
 </script>
+
 
 
 </body>

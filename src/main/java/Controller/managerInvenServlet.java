@@ -1,7 +1,9 @@
 package Controller;
 
 import DAO.InventoryDAO;
+import DAO.InventoryTransactionDAO;
 import Model.Inventory;
+import Model.InventoryTransaction;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,9 +24,12 @@ public class managerInvenServlet extends HttpServlet {
         try {
             List<Inventory> listProNotOrdered =  InventoryDAO.getProductsNotOrderedLast3Months();
             List<Inventory> listNeedImported =  InventoryDAO.getProductsNeedImported( MIN_STOCK, MAX_STOCK);
+            List<InventoryTransaction> listInventoryTran = InventoryTransactionDAO.getAllTransactionLast3Months();
 
             session.setAttribute("listProNotOrdered", listProNotOrdered);
             session.setAttribute("listNeedImported", listNeedImported);
+            session.setAttribute("listInventoryTran", listInventoryTran);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
