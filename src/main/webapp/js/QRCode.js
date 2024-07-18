@@ -31,11 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Ng?n ch?n hành vi m?c ??nh c?a nút "Place Order"
 
         if (selectedPaymentMethod === 'QR') {
-            // Hi?n th? modal ch?a mã QR
-            // var modal = document.getElementById('qrModal');
-            // modal.style.display = 'flex';
-
-            // G?i hàm ?? t?o mã QR (ví d? generateQRCode() ho?c thêm mã QRcode.js)
             generateQRCode();
         } else if (selectedPaymentMethod === 'COD') {
             // G?i form ??n checkoutServlet
@@ -78,13 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = 'hidden';
     }
 
-            // ?n scrollbar trên body
-
-    // });
-
-    // X? lý ?óng modal khi click vào nút ?óng (x)
-
-
     // X? lý ?óng modal khi click ra ngoài modal
     window.onclick = function (event) {
         var modal = document.getElementById('qrModal');
@@ -105,25 +93,41 @@ async function checkPay(total, content) {
     try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbwrxIK2QO8awi06Fmaq8EpB2sG6S619zVHvk48oGAf3WjvU2QdfxFSK-e8EtM5Bcw/exec');
         const data = await response.json();
+        console.log('Received data:', data);
 
         if (initialDataLength === 0) {
             initialDataLength = data.data.length; // L?u chi?u dài ban ??u
             console.log(`Giá tr? data.data.length lúc ban ??u: ${initialDataLength}`);
         }
 
-        const lastPay = data.data[data.data.length - 1];
-        const lastTotal = lastPay['Giá tr?'];
-        const lastContent = lastPay['Mô t?'];
-        console.log(lastTotal, lastContent);
+        // const lastPay = data.data[data.data.length - 1];
+        // const lastTotal = lastPay['Giá tr?'];
+        // const lastContent = lastPay['Mô t?'];
+        // console.log(lastTotal, lastContent);
+        // L?y giao d?ch m?i nh?t
+        const latestTransaction = data.data[data.data.length - 1];
+        const { "Mã GD": transactionId, "Mô t?": description, "Giá tr?": amount, "Ngày di?n ra": date, "S? tài kho?n": accountNumber } = latestTransaction;
+
 
         // Ki?m tra n?u s? l??ng giao d?ch ?ã t?ng lên
         if (data.data.length > initialDataLength) {
             console.log(`Giá tr? data.data.length khi ?ã chuy?n kho?n thành công: ${data.data.length}`);
             if (!isSuccess) {
-                alert('Thanh toán thành công');
+                // alert('Thanh toán thành công');
                 // document.getElementById('payment').value = '3'; // ??t ph??ng th?c thanh toán thành 3
-                document.getElementById('checkout-form').submit(); // G?i form
-                isSuccess = true; // ?ánh d?u r?ng thông báo ?ã ???c g?i
+                // document.getElementById('checkout-form').submit(); // G?i form
+                // isSuccess = true; // ?ánh d?u r?ng thông báo ?ã ???c g?i
+                // G?i thông tin giao d?ch qua form
+                const checkoutForm = document.getElementById('checkout-form');
+                checkoutForm.querySelector('input[name="transactionId"]').value = transactionId;
+                checkoutForm.querySelector('input[name="description"]').value = description;
+                checkoutForm.querySelector('input[name="amount"]').value = amount;
+                checkoutForm.querySelector('input[name="date"]').value = date;
+                checkoutForm.querySelector('input[name="accountNumber"]').value = accountNumber;
+
+                // Submit form
+                checkoutForm.submit();
+                isSuccess = true; // ?ánh d?u thông báo ?ã g?i
             }
             return true;
         } else {

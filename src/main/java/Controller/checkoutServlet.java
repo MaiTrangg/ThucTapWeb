@@ -49,6 +49,9 @@ public class checkoutServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String noteOrder = request.getParameter("noteOrder");
 
+		//lay ra thong tin payment
+
+
 		if (tinh.equals("-1") || quan.equals("-1") || phuong.equals("-1")) {
 			String errorFromCheckoutServlet = "Please, select address!";
 			session.setAttribute("errorFromCheckoutServlet", errorFromCheckoutServlet);
@@ -87,8 +90,6 @@ public class checkoutServlet extends HttpServlet {
 			ILog log = new LogDao();
 
 			log.info("Chưa hoàn tất đơn hàng","Đặt hàng thành công Đơn hàng: "+o.printOrder(),cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
-
-
 			session.removeAttribute("order");
 			request.getRequestDispatcher("/WEB-INF/thankyou.jsp").forward(request, response);
 		}

@@ -288,6 +288,11 @@
                                                         <label class="form-check-label" for="paymentCOD">Thanh toán khi nhận hàng</label>
                                                     </div>
                                                 </div>
+                                                <input type="hidden" name="transactionId">
+                                                <input type="hidden" name="description">
+                                                <input type="hidden" name="amount">
+                                                <input type="hidden" name="date">
+                                                <input type="hidden" name="accountNumber">
 
                                                 <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                                                     <button type="submit" id="placeOrderButton" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
