@@ -80,7 +80,7 @@
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Fresh fruits shop</h1>
+        <h1 class="mb-4">Box Bites</h1>
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -160,7 +160,7 @@
                                     <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" >
                                 <div class="mb-3">
                                     <h4>Additional</h4>
                                     <div class="mb-2">
