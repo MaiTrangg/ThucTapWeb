@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <body>
 <!-- Spinner Start -->
@@ -75,7 +74,7 @@
                                 <form id="couponForm${coupon.id}" method="post" action="${pageContext.request.contextPath}/CouponServlet" class="d-flex justify-content-center" onsubmit="saveCoupon(event, ${coupon.id})">
                                     <input type="hidden" name="customer_id" value="${customer.user_id}">
                                     <input type="hidden" name="coupon_id" value="${coupon.id}">
-                                    <button class="btn btn-primary" type="submit" >Lưu mã</button>
+                                    <button class="btn btn-primary" type="submit">Lưu Mã</button>
                                 </form>
                             </div>
                         </div>
