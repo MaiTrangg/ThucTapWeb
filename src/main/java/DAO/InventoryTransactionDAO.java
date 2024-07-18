@@ -1,10 +1,7 @@
 package DAO;
 
 import DBConnection.JDBCUtil;
-import Model.Category;
-import Model.Inventory;
-import Model.InventoryTransaction;
-import Model.Product;
+import Model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -118,6 +115,18 @@ public class InventoryTransactionDAO {
             }
         }
         return list;
+    }
+
+    public static void updateStock(int orderId){
+        List<OrderDetail> od = OrderDetailDAO.getOrderDetailsByOrderId(orderId);
+        Inventory in = null;
+        for(OrderDetail ord : od){
+            in = InventoryDAO.getInventoryPro(ord.getProduct().getProductId());
+            in.setQuantity(in.getQuantity() - ord.getQuantity());
+            InventoryDAO.updateInventory(in);
+            Timestamp lastUpdated = new Timestamp(System.currentTimeMillis());
+            insertInventoryTransaction(ord.getProduct().getProductId(), "Xuất", ord.getQuantity(), lastUpdated, "Đã giao đơn hàng " + orderId);
+        }
     }
 
 
