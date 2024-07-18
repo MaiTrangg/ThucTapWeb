@@ -20,6 +20,7 @@
                 <a href="#" class="text-white"><small class="text-white mx-2">Chính sách bảo mật</small>/</a>
                 <a href="#" class="text-white"><small class="text-white mx-2">Điều khoản sử dụng</small>/</a>
                 <a href="#" class="text-white"><small class="text-white ms-2">Bán hàng và Hoàn trả</small></a>
+
             </div>
         </div>
     </div>
@@ -57,8 +58,8 @@
                     </div>
                     <a href="CouponServlet" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Mã Giảm Giá</a>
                     <c:if test="${sessionScope.customer.isAdmin == 1}">
-                        <a href="./index_adServlet">
-                            <b>Quản lý</b>
+                        <a href="./index_adServlet" class="nav-item nav-link">
+                            <b style="color: #fff; background: #ffb524; border-radius: 8px; padding: 8px 10px; margin-left: 15px;">Quản lý</b>
                         </a>
                     </c:if>
 

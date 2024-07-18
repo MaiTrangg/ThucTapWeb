@@ -1,7 +1,9 @@
 package DAO;
 
 import DBConnection.JDBCUtil;
+import Model.Category;
 import Model.Inventory;
+import Model.InventoryTransaction;
 import Model.Product;
 
 import java.sql.*;
@@ -81,14 +83,51 @@ public class InventoryTransactionDAO {
         return list;
     }
 
-    public static void main(String[] args) {
+    public static List<InventoryTransaction> getAllTransactionLast3Months() {
+        List<InventoryTransaction> list = new ArrayList<>();
+        String query = "select * from inventorytransactions where transactionDate >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
         try {
-            for(int i :getIDProductsImportedLast3Months()){
-                System.out.println(i);
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            Product p =null;
+            while (rs.next()) {
+
+                p = ProductDAO.getProductByID(rs.getInt(2));
+
+                list.add(new InventoryTransaction(
+                        rs.getInt(1),
+                        p,
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getTimestamp(5),
+                        rs.getString(6)
+                ));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            con.close();
+
+        } catch (Exception e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
         }
+        return list;
+    }
+
+
+
+    public static void main(String[] args) {
+//        try {
+//            for(InventoryTransaction i :getAllTransactionLast3Months()){
+//                System.out.println(i);
+//            }
+//        }
     }
 
 }

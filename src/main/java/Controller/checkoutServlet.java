@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import DAO.*;
 import Model.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class checkoutServlet
@@ -49,6 +52,48 @@ public class checkoutServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String noteOrder = request.getParameter("noteOrder");
 
+		//lay ra thong tin payment
+//		String paymentId = request.getParameter("transactionId");
+//		System.out.println("paymentId: "+paymentId);
+//		String description = request.getParameter("description");
+//		System.out.println("description: "+description);
+//		double amount = Double.parseDouble(request.getParameter("amount"));
+//		System.out.println("amount: "+amount);
+//		Timestamp date = Timestamp.valueOf(request.getParameter("date"));
+//		System.out.println("date: "+date);
+//		String accountNumber = request.getParameter("accountNumber");
+//		System.out.println("accountNumber: "+accountNumber);
+//		String payment = request.getParameter("payment");
+//		System.out.println(payment);
+
+
+		// Đọc dữ liệu JSON từ request body
+//		StringBuilder sb = new StringBuilder();
+//		BufferedReader reader = request.getReader();
+//		String line;
+//		while ((line = reader.readLine()) != null) {
+//			sb.append(line);
+//		}
+//		String json = sb.toString();
+//
+//		// Chuyển đổi JSON thành đối tượng Java
+//		Gson gson = new Gson();
+//		JsonObject payload = gson.fromJson(json, JsonObject.class);
+//
+//		// Lấy các trường từ payload
+//		String paymentId = payload.get("transactionId").getAsString();
+//		System.out.println("paymentId: "+paymentId);
+//		String description = payload.get("description").getAsString();
+//		System.out.println("description: "+description);
+//		double amount = payload.get("amount").getAsDouble();
+//		System.out.println("amount: "+amount);
+//		Timestamp date = Timestamp.valueOf(payload.get("date").getAsString());
+//		String accountNumber = payload.get("accountNumber").getAsString();
+//		String payment = payload.get("payment").getAsString();
+
+
+
+
 		if (tinh.equals("-1") || quan.equals("-1") || phuong.equals("-1")) {
 			String errorFromCheckoutServlet = "Please, select address!";
 			session.setAttribute("errorFromCheckoutServlet", errorFromCheckoutServlet);
@@ -83,12 +128,17 @@ public class checkoutServlet extends HttpServlet {
 //			ol.updateAvailable();
 //			ProductDAO.updateProduct(ol.getProduct().getProductId(), ol.getProduct().getName(), ol.getProduct().getImg(), ol.getProduct().getPrice(), ol.getProduct().getAvailable());
 		}
+
+//		if(payment.equals("QR")){
+//			//luu thong tin payment
+//			Payment pay = new Payment(paymentId, o,description,amount,date,accountNumber);
+//			PaymentDAO.insertPayment(pay);
+//
+//		}
 			//ghi log
 			ILog log = new LogDao();
 
 			log.info("Chưa hoàn tất đơn hàng","Đặt hàng thành công Đơn hàng: "+o.printOrder(),cus.getUsername(),request.getSession().getId(),request.getRemoteAddr());
-
-
 			session.removeAttribute("order");
 			request.getRequestDispatcher("/WEB-INF/thankyou.jsp").forward(request, response);
 		}

@@ -12,6 +12,106 @@
 <head>
     <c:import url="includes/head.jsp"></c:import>
 </head>
+<style>
+    /*.qr-code {*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*}*/
+    /*.qr-modal {*/
+    /*    display: none;*/
+    /*    position: fixed;*/
+    /*    z-index: 1;*/
+    /*    left: 0;*/
+    /*    top: 0;*/
+    /*    width: 100%;*/
+    /*    height: 100%;*/
+    /*    overflow: auto;*/
+    /*    background-color: rgb(0, 0, 0);*/
+    /*    background-color: rgba(0, 0, 0, 0.4);*/
+    /*}*/
+    /*.qrModal-content {*/
+    /*    !*background-color: #fefefe;*!*/
+    /*    margin: 100px auto; !* Cách phía trên 100px và tự động căn giữa ngang *!*/
+    /*    padding: 20px;*/
+    /*    !*border: 1px solid #888;*!*/
+    /*    width: 40%;*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*}*/
+    /*.close {*/
+    /*    color: #aaa;*/
+    /*    float: right;*/
+    /*    font-size: 28px;*/
+    /*    font-weight: bold;*/
+    /*}*/
+    /*.close:hover,*/
+    /*.close:focus {*/
+    /*    color: black;*/
+    /*    text-decoration: none;*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+
+    .qr-modal {
+        display: none;
+        position: fixed;
+        top: 7px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .qrModal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    .qrModal-content img {
+        width: 400px;
+        height: 500px;
+        margin-top: 19px;
+        margin-left: 0px;
+        border: 5px solid #4CAF50; /* Màu xanh lá cây */
+        border-radius: 10px; /* Bo góc */
+    }
+    .close {
+        position: absolute;
+        top: 0px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #aaa;
+    }
+    .close:hover {
+        color: #000;
+    }
+
+
+    .btn {
+        border-radius: 10px; /* Điều chỉnh giá trị này theo mong muốn */
+    }
+
+    .form-check-input {
+        border-radius: 50%; /* Làm tròn nút radio */
+        width: 20px; /* Tăng kích thước nút radio */
+        height: 20px;
+        border: 2px solid #007bff; /* Thay đổi màu viền */
+    }
+
+    .form-check-label {
+        margin-left: 10px; /* Khoảng cách giữa radio và label */
+        font-size: 16px; /* Tăng kích thước chữ */
+    }
+
+    .form-item .w-20 select {
+        border-radius: 10px; /* Làm tròn các thẻ select */
+    }
+</style>
 <body>
 
 <!-- Spinner Start -->
@@ -57,185 +157,184 @@
 
 
 <!-- Checkout Page Start -->
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <h1 class="mb-4">Billing details</h1>
-        <form action="checkoutServlet" method="post">
-            <div class="row g-5">
-                <div class="col-md-12 col-lg-6 col-xl-7">
+                            <div class="container-fluid py-5">
+                                <div class="container py-5">
+                                    <h1 class="mb-4">Billing details</h1>
+                                    <form id="checkout-form" action="checkoutServlet" method="post">
+                                        <div class="row g-5">
+                                            <div class="col-md-12 col-lg-6 col-xl-7">
 
-                    <div class="form-item">
-                        <label class="form-label my-3">Họ và tên<sup>*</sup></label>
-                        <input type="text" class="form-control" name="fullName" required>
-                    </div>
-<%--                    <div class="row">--%>
-<%--                        <div class="col-md-12 col-lg-6">--%>
-<%--                            <div class="form-item w-100">--%>
-<%--                                <label class="form-label my-3">First Name<sup>*</sup></label>--%>
-<%--                                <input type="text" class="form-control">--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="col-md-12 col-lg-6">--%>
-<%--                            <div class="form-item w-100">--%>
-<%--                                <label class="form-label my-3">Last Name<sup>*</sup></label>--%>
-<%--                                <input type="text" class="form-control">--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                                                <div class="form-item">
+                                                    <label class="form-label my-3">Họ và tên<sup>*</sup></label>
+                                                    <input type="text" class="form-control" name="fullName" required>
+                                                </div>
 
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12">
-                            <div class="form-item d-flex justify-content-between align-items-center css-province">
-                                <div class="w-30">
-                                    <label class="form-label my-3">Địa chỉ<sup>*</sup></label>
-                                </div>
-                                <div class="w-20">
-                                    <select  id="tinh" name="tinh" required>
-                                        <option value="-1">Tỉnh Thành</option>
-                                    </select>
-                                </div>
-                                <div class="w-20">
-                                    <select  id="quan" name="quan" required>
-                                        <option value="-1">Quận Huyện</option>
-                                    </select>
-                                </div>
-                                <div class="w-20">
-                                    <select  id="phuong" name="phuong" required>
-                                        <option value="-1">Phường Xã</option>
-                                    </select>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="form-item d-flex justify-content-between align-items-center css-province">
+                                                            <div class="w-30">
+                                                                <label class="form-label my-3">Địa chỉ<sup>*</sup></label>
+                                                            </div>
+                                                            <div class="w-20">
+                                                                <select  id="tinh" name="tinh" required>
+                                                                    <option value="-1">Tỉnh Thành</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="w-20">
+                                                                <select  id="quan" name="quan" required>
+                                                                    <option value="-1">Quận Huyện</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="w-20">
+                                                                <select  id="phuong" name="phuong" required>
+                                                                    <option value="-1">Phường Xã</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-item">
+                                                    <textarea name="noteAddress" class="form-control" spellcheck="false" cols="30" rows="5" placeholder="Tên đường, tòa nhà, số nhà" required></textarea>
+                                                </div>
+                                                <div class="form-item">
+                                                    <label class="form-label my-3">Email <sup>*</sup></label>
+                                                    <input type="email" class="form-control" name="email">
+                                                </div>
+                                                <div class="form-item">
+                                                    <label class="form-label my-3">Số điện thoại<sup>*</sup></label>
+                                                    <input type="tel" class="form-control" name="numberPhone">
+                                                </div>
+
+                                                <div class="form-item my-3">
+                                                    <textarea name="noteOrder" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú cho đơn hàng"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-6 col-xl-5">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">Products</th>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Price</th>
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Total</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <c:forEach items="${order.orderDetails}" var="o">
+                                                            <c:if test="${empty order}">
+                                                                <p>No items in order.</p>
+                                                            </c:if>
+
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    <div class="d-flex align-items-center mt-2">
+                                                                        <img src="${o.product.img}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                                    </div>
+                                                                </th>
+                                                                <td class="py-5">${o.product.name}</td>
+                                                                <td class="py-5">${o.product.sellingPrice}</td>
+                                                                <td class="py-5">${o.quantity}</td>
+                                                                <td class="py-5">${o.price}</td>
+                                                            </tr>
+                                                        </c:forEach>
+
+                                                        <tr>
+                                                            <th scope="row">
+                                                            </th>
+                                                            <td class="py-5"></td>
+                                                            <td class="py-5"></td>
+                                                            <td class="py-5">
+                                                                <p class="mb-0 text-dark py-3">Subtotal</p>
+                                                            </td>
+                                                            <td class="py-5">
+                                                                <div class="py-3 border-bottom border-top">
+                                                                    <p  id="totalAmount"  data-total="${order.total()}"  class="mb-0 text-dark">${order.total()}</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">
+                                                            </th>
+                                                            <td class="py-5">
+                                                                <p class="mb-0 text-dark py-4">Shipping</p>
+                                                            </td>
+                                                            <td colspan="3" class="py-5">
+                                                                <div class="form-check text-start">
+                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-1" name="Shipping-1" value="Shipping">
+                                                                    <label class="form-check-label" for="Shipping-1">Free Shipping</label>
+                                                                </div>
+                                                                <div class="form-check text-start">
+                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">
+                                                                    <label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>
+                                                                </div>
+                                                                <div class="form-check text-start">
+                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">
+                                                                    <label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">
+                                                            </th>
+                                                            <td class="py-5">
+                                                                <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
+                                                            </td>
+                                                            <td class="py-5"></td>
+                                                            <td class="py-5"></td>
+                                                            <td class="py-5">
+                                                                <div class="py-3 border-bottom border-top">
+                                                                    <p class="mb-0 text-dark">$135.00</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="form-item my-4">
+                                                    <p class="mb-0 text-dark text-uppercase py-3">Payment Method</p>
+                                                    <div class="form-check text-start">
+                                                        <input type="radio" class="form-check-input bg-primary border-0" id="paymentQR" name="paymentMethod" value="QR" checked>
+                                                        <label class="form-check-label" for="paymentQR">Thanh toán bằng mã QR</label>
+                                                    </div>
+                                                    <div class="form-check text-start">
+                                                        <input type="radio" class="form-check-input bg-primary border-0" id="paymentCOD" name="paymentMethod" value="COD">
+                                                        <label class="form-check-label" for="paymentCOD">Thanh toán khi nhận hàng</label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                                                    <button type="submit" id="placeOrderButton" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-item">
-                        <textarea name="noteAddress" class="form-control" spellcheck="false" cols="30" rows="5" placeholder="Tên đường, tòa nhà, số nhà" required></textarea>
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3">Email <sup>*</sup></label>
-                        <input type="email" class="form-control" name="email">
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3">Số điện thoại<sup>*</sup></label>
-                        <input type="tel" class="form-control" name="numberPhone">
-                    </div>
-<%--                    <div class="form-item">--%>
-<%--                        <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>--%>
-<%--                        <input type="text" class="form-control">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-item">--%>
-<%--                        <label class="form-label my-3">Mobile<sup>*</sup></label>--%>
-<%--                        <input type="tel" class="form-control">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-item">--%>
-<%--                        <label class="form-label my-3">Email Address<sup>*</sup></label>--%>
-<%--                        <input type="email" class="form-control">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-check my-3">--%>
-<%--                        <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts" value="Accounts">--%>
-<%--                        <label class="form-check-label" for="Account-1">Create an account?</label>--%>
-<%--                    </div>--%>
-<%--                    <hr>--%>
-<%--                    <div class="form-check my-3">--%>
-<%--                        <input class="form-check-input" type="checkbox" id="Address-1" name="Address" value="Address">--%>
-<%--                        <label class="form-check-label" for="Address-1">Ship to a different address?</label>--%>
-<%--                    </div>--%>
-                    <div class="form-item my-3">
-                        <textarea name="noteOrder" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú cho đơn hàng"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-6 col-xl-5">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Products</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${order.orderDetails}" var="o">
-                                <c:if test="${empty order}">
-                                    <p>No items in order.</p>
-                                </c:if>
-
-                                <tr>
-                                    <th scope="row">
-                                        <div class="d-flex align-items-center mt-2">
-                                            <img src="${o.product.img}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                        </div>
-                                    </th>
-                                    <td class="py-5">${o.product.name}</td>
-                                    <td class="py-5">${o.product.sellingPrice}</td>
-                                    <td class="py-5">${o.quantity}</td>
-                                    <td class="py-5">${o.price}</td>
-                                </tr>
-                            </c:forEach>
-
-                            <tr>
-                                <th scope="row">
-                                </th>
-                                <td class="py-5"></td>
-                                <td class="py-5"></td>
-                                <td class="py-5">
-                                    <p class="mb-0 text-dark py-3">Subtotal</p>
-                                </td>
-                                <td class="py-5">
-                                    <div class="py-3 border-bottom border-top">
-                                        <p class="mb-0 text-dark">${order.total()}</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                </th>
-                                <td class="py-5">
-                                    <p class="mb-0 text-dark py-4">Shipping</p>
-                                </td>
-                                <td colspan="3" class="py-5">
-                                    <div class="form-check text-start">
-                                        <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-1" name="Shipping-1" value="Shipping">
-                                        <label class="form-check-label" for="Shipping-1">Free Shipping</label>
-                                    </div>
-                                    <div class="form-check text-start">
-                                        <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">
-                                        <label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>
-                                    </div>
-                                    <div class="form-check text-start">
-                                        <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">
-                                        <label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                </th>
-                                <td class="py-5">
-                                    <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
-                                </td>
-                                <td class="py-5"></td>
-                                <td class="py-5"></td>
-                                <td class="py-5">
-                                    <div class="py-3 border-bottom border-top">
-                                        <p class="mb-0 text-dark">$135.00</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+<%--<div id="qrModal" class="qr-modal">--%>
+<%--    <div class="qrModal-content">--%>
+<%--        <img style="width: 400px;height: 500px;margin-top: 30px;margin-left: 80px" id="QRCODE-Img" src="" alt="QR Code">--%>
+<%--    </div>--%>
+<%--</div>--%>
+<div id="qrModal" class="qr-modal">
+    <div class="qrModal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <img id="QRCODE-Img" src="" alt="QR Code">
     </div>
 </div>
+
+
+
+
+
+
+
+
+
 <!-- Checkout Page End -->
 
 <!-- Start Footer Section -->
@@ -320,6 +419,29 @@
         });
     });
 </script>
+
+<script src="./js/QRCode.js"></script>
+<script>
+    // document.getElementById('placeOrderButton').addEventListener('click', function() {
+    //     const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    //
+    //     if (selectedPaymentMethod === 'QR') {
+    //         // Hiển thị modal chứa mã QR
+    //         // var modal = document.getElementById('qrModal');
+    //         // modal.style.display = 'flex';
+    //
+    //         // Gọi hàm để tạo mã QR (ví dụ generateQRCode() hoặc thêm mã QRcode.js)
+    //         generateQRCode();
+    //     } else if (selectedPaymentMethod === 'COD') {
+    //         // Gửi form đến checkoutServlet
+    //         document.getElementById('checkout-form').submit();
+    //     }
+    // });
+</script>
+
+
+
+
 
 </body>
 </html>

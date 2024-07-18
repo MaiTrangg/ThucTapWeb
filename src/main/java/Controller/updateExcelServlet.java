@@ -73,113 +73,215 @@ public class updateExcelServlet extends HttpServlet {
        doGet(request,response);
     }
 
+//    private void processExcelFile(InputStream inp, HttpServletRequest request) throws IOException, InvalidFormatException, SQLException {
+//        System.out.println("uuuuuuuuuuuuuuu");
+//        Workbook workbook = WorkbookFactory.create(inp);
+//        System.out.println("workbook: "+workbook);
+//        Sheet sheet = workbook.getSheetAt(0);
+//
+//        Timestamp lastUpdated = new Timestamp(System.currentTimeMillis());
+//        System.out.println("iiiiiiiiiiiii");
+//            Iterator<Row> iterator = sheet.iterator();
+//        System.out.println("next: "+iterator.hasNext());
+//            while (iterator.hasNext()) {
+//                System.out.println("huhu");
+//                Row currentRow = iterator.next();
+//                if (currentRow.getRowNum() == 0) {
+//                    continue; // Bỏ qua dòng tiêu đề
+//                }
+//                int id ;
+//                Cell cell = currentRow.getCell(0);
+//                if (cell == null || cell.getCellType() == CellType.BLANK) {
+//                    id =0;
+//                }else{
+//                    id =(int) cell.getNumericCellValue();
+//                }
+//
+//                System.out.println("id: "+id);
+//
+//
+//
+//                Cell imageCell = currentRow.getCell(1);
+////                String image = "";
+////                String imagePath="";
+////                if (imageCell.getHyperlink() != null) {
+////                    image = imageCell.getHyperlink().getAddress();
+////                    imagePath=saveImageIfNotExist(image,request);
+////
+////                } else
+//
+////                Cell imageCell = currentRow.getCell(1);
+//                String imagePath = "chua co anh";
+//                if (imageCell != null && imageCell.getCellType() == CellType.STRING) {
+//                    imagePath = imageCell.getStringCellValue();
+//                }
+//                System.out.println("Image: " + imagePath);
+//
+//
+//                System.out.println("Image: " + imagePath);
+//                String name = currentRow.getCell(2).getStringCellValue();
+//                System.out.println("name: "+name);
+//                String description = currentRow.getCell(3).getStringCellValue();
+//                System.out.println("description: "+description);
+//                double price = currentRow.getCell(4).getNumericCellValue();
+//                System.out.println("price: "+price);
+//                String category = currentRow.getCell(5).getStringCellValue();
+//                System.out.println("category: "+category);
+//                int quantity = (int) currentRow.getCell(6).getNumericCellValue();
+//                System.out.println("quantity: "+quantity);
+//
+//                // Kiểm tra và lưu ảnh
+////                String imagePath = saveImageIfNotExist(image, request);
+////                System.out.println("imagePath: "+imagePath);
+//
+//                //kiem tra xem category co thay doi khong
+//                int category_id = CategoryDAO.getIDCategory(category);
+//
+//                //khởi tạo inventorypro
+//                Category c = new Category(category,category_id);
+//                Product p = new Product(id,imagePath,name,description,price,price,c);
+//                Inventory inventory =null;
+//                int newQuantity = 0;
+//
+//                //check exist id product
+//                boolean check = ProductDAO.checkExistIDPro(id);
+//                if(check){
+//                    //thực hiên cộng thêm số lượng sản phẩm nhập với số lượng còn lại trong kho
+//                    newQuantity = quantity+ InventoryDAO.getInventoryPro(id).getQuantity();
+//                    inventory = new Inventory(0,p,newQuantity,lastUpdated);
+//                    InventoryDAO.updateInventory(inventory);
+//                }else{
+//                    int idpro = ProductDAO.insertProduct(p);
+//                    p.setProductId(idpro);
+//                    inventory = new Inventory(0,p,quantity,lastUpdated);
+//                    InventoryDAO.insertInventory(inventory);
+//
+//                }
+//                // ghi lai giao dich nhap kho
+//                InventoryTransactionDAO.insertInventoryTransaction(p.getProductId(),"Nhập",quantity,lastUpdated,"Thêm sản phẩm vào kho: có mã sp: "+p.getProductId()+", tên: "+p.getName());
+//
+//
+//            }
+//    }
+
+
     private void processExcelFile(InputStream inp, HttpServletRequest request) throws IOException, InvalidFormatException, SQLException {
-        System.out.println("uuuuuuuuuuuuuuu");
-        Workbook workbook = WorkbookFactory.create(inp);
-        System.out.println("workbook: "+workbook);
+        if (inp == null) {
+            System.out.println("InputStream is null.");
+            return;
+        }
+
+        Workbook workbook = null;
+        try {
+            workbook = WorkbookFactory.create(inp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to create workbook. Ensure the file is a valid Excel file.");
+            return;
+        }
+
+        if (workbook == null) {
+            System.out.println("Workbook is null.");
+            return;
+        }
+
         Sheet sheet = workbook.getSheetAt(0);
+        if (sheet == null) {
+            System.out.println("Sheet is null.");
+            return;
+        }
 
         Timestamp lastUpdated = new Timestamp(System.currentTimeMillis());
-        System.out.println("iiiiiiiiiiiii");
-            Iterator<Row> iterator = sheet.iterator();
-        System.out.println("next: "+iterator.hasNext());
-            while (iterator.hasNext()) {
-                System.out.println("huhu");
-                Row currentRow = iterator.next();
-                if (currentRow.getRowNum() == 0) {
-                    continue; // Bỏ qua dòng tiêu đề
-                }
+        Iterator<Row> iterator = sheet.iterator();
 
-                int id = (int)  currentRow.getCell(1).getNumericCellValue();
-                System.out.println("id: "+id);
-
-
-
-                Cell imageCell = currentRow.getCell(2);
-                String image = "";
-                String imagePath="";
-                if (imageCell.getHyperlink() != null) {
-                    image = imageCell.getHyperlink().getAddress();
-                    imagePath=saveImageIfNotExist(image,request);
-
-                } else if (imageCell.getCellType() == CellType.STRING) {
-                    imagePath = imageCell.getStringCellValue();
-                } else {
-                    System.out.println("Image cell is not a string or does not contain a hyperlink");
-                }
-
-
-                System.out.println("Image: " + imagePath);
-                String name = currentRow.getCell(3).getStringCellValue();
-                System.out.println("name: "+name);
-                String description = currentRow.getCell(4).getStringCellValue();
-                System.out.println("description: "+description);
-                double price = currentRow.getCell(5).getNumericCellValue();
-                System.out.println("price: "+price);
-                String category = currentRow.getCell(6).getStringCellValue();
-                System.out.println("category: "+category);
-                int quantity = (int) currentRow.getCell(7).getNumericCellValue();
-                System.out.println("quantity: "+quantity);
-
-                // Kiểm tra và lưu ảnh
-//                String imagePath = saveImageIfNotExist(image, request);
-//                System.out.println("imagePath: "+imagePath);
-
-                //kiem tra xem category co thay doi khong
-                int category_id = CategoryDAO.getIDCategory(category);
-
-                //khởi tạo inventorypro
-                Category c = new Category(category,category_id);
-                Product p = new Product(id,imagePath,name,description,price,price,c);
-                Inventory inventory =null;
-                int newQuantity = 0;
-
-                //check exist id product
-                boolean check = ProductDAO.checkExistIDPro(id);
-                if(check){
-                    //thực hiên cộng thêm số lượng sản phẩm nhập với số lượng còn lại trong kho
-                    newQuantity = quantity+ InventoryDAO.getInventoryPro(id).getQuantity();
-                    inventory = new Inventory(0,p,newQuantity,lastUpdated);
-                    InventoryDAO.updateInventory(inventory);
-                }else{
-                    int idpro = ProductDAO.insertProduct(p);
-                    p.setProductId(idpro);
-                    inventory = new Inventory(0,p,quantity,lastUpdated);
-                    InventoryDAO.insertInventory(inventory);
-
-                }
-                // ghi lai giao dich nhap kho
-                InventoryTransactionDAO.insertInventoryTransaction(p.getProductId(),"Nhập",quantity,lastUpdated,"Thêm sản phẩm vào kho: có mã sp: "+p.getProductId()+", tên: "+p.getName());
-
-
+        while (iterator.hasNext()) {
+            Row currentRow = iterator.next();
+            if (currentRow.getRowNum() == 0) {
+                continue; // Bỏ qua dòng tiêu đề
             }
+
+            int id = 0;
+            Cell cell = currentRow.getCell(0);
+            if (cell != null && cell.getCellType() != CellType.BLANK) {
+                id = (int) cell.getNumericCellValue();
+            }
+            System.out.println("id: " + id);
+
+            Cell imageCell = currentRow.getCell(1);
+            String imagePath = "chua co anh";
+            if (imageCell != null && imageCell.getCellType() == CellType.STRING) {
+                imagePath = imageCell.getStringCellValue();
+            }
+            System.out.println("Image: " + imagePath);
+
+            String name = currentRow.getCell(2).getStringCellValue();
+            System.out.println("name: " + name);
+
+            String description = currentRow.getCell(3).getStringCellValue();
+            System.out.println("description: " + description);
+
+            double price = currentRow.getCell(4).getNumericCellValue();
+            System.out.println("price: " + price);
+
+            String category = currentRow.getCell(5).getStringCellValue();
+            System.out.println("category: " + category);
+
+            int quantity = (int) currentRow.getCell(6).getNumericCellValue();
+            System.out.println("quantity: " + quantity);
+
+            // Kiểm tra và lưu ảnh
+            int category_id = CategoryDAO.getIDCategory(category);
+
+            // Khởi tạo inventorypro
+            Category c = new Category(category, category_id);
+            Product p = new Product(id, imagePath, name, description, price, price, c);
+            Inventory inventory = null;
+            int newQuantity = 0;
+
+            // Check exist id product
+            boolean check = ProductDAO.checkExistIDPro(id);
+            if (check) {
+                newQuantity = quantity + InventoryDAO.getInventoryPro(id).getQuantity();
+                inventory = new Inventory(0, p, newQuantity, lastUpdated);
+                InventoryDAO.updateInventory(inventory);
+            } else {
+                int idpro = ProductDAO.insertProduct(p);
+                p.setProductId(idpro);
+                inventory = new Inventory(0, p, quantity, lastUpdated);
+                InventoryDAO.insertInventory(inventory);
+            }
+
+            // Ghi lại giao dịch nhập kho
+            InventoryTransactionDAO.insertInventoryTransaction(p.getProductId(), "Nhập", quantity, lastUpdated, "Thêm sản phẩm vào kho: có mã sp: " + p.getProductId() + ", tên: " + p.getName());
+        }
     }
 
 
-    private String saveImageIfNotExist(String imageUrl, HttpServletRequest request) throws IOException {
-        if (imageUrl == null || imageUrl.isEmpty()) {
-            System.err.println("Image URL is null or empty");
-            return null; // Hoặc xử lý theo cách khác
-        }
 
-        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-        String filePath = request.getServletContext().getRealPath("/img/") + fileName;
-
-        File file = new File(filePath);
-        if (!file.exists()) {
-            try (InputStream in = new URL(imageUrl).openStream()) {
-                Files.copy(in, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Image saved: " + filePath);
-            } catch (IOException e) {
-                System.err.println("Error saving image: " + e.getMessage());
-                throw e; // Ném lại lỗi để xử lý bên ngoài nếu cần
-            }
-        } else {
-            System.out.println("Image already exists: " + filePath);
-        }
-
-        return "img/" + fileName; // Trả về đường dẫn tương đối
-    }
+//    private String saveImageIfNotExist(String imageUrl, HttpServletRequest request) throws IOException {
+//        if (imageUrl == null || imageUrl.isEmpty()) {
+//            System.err.println("Image URL is null or empty");
+//            return null; // Hoặc xử lý theo cách khác
+//        }
+//
+//        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+//        String filePath = request.getServletContext().getRealPath("/img/") + fileName;
+//
+//        File file = new File(filePath);
+//        if (!file.exists()) {
+//            try (InputStream in = new URL(imageUrl).openStream()) {
+//                Files.copy(in, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+//                System.out.println("Image saved: " + filePath);
+//            } catch (IOException e) {
+//                System.err.println("Error saving image: " + e.getMessage());
+//                throw e; // Ném lại lỗi để xử lý bên ngoài nếu cần
+//            }
+//        } else {
+//            System.out.println("Image already exists: " + filePath);
+//        }
+//
+//        return "img/" + fileName; // Trả về đường dẫn tương đối
+//    }
 
 
 

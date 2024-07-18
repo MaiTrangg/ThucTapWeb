@@ -8,6 +8,7 @@ public class Inventory {
     private int quantity;
     private Timestamp lastUpdated;
 
+
     public Inventory(int inventoryId, Product product, int quantity, Timestamp lastUpdated) {
         this.inventoryId = inventoryId;
         this.product = product;

@@ -89,7 +89,7 @@
                                 <td><fmt:formatNumber value="${ord.totalMoney}" pattern="#,##0'đ'" /></td>
                                 <td>${ord.noteOrder}</td>
                                 <td><button class="btn btn-primary" style="background-color: #FF6A6A">Hủy</button></td>
-<%--                                <td><a href="orderDetails?orderId=${ord.orderId}" class="btn btn-primary">View Details</a></td>--%>
+                                    <%--                                <td><a href="orderDetails?orderId=${ord.orderId}" class="btn btn-primary">View Details</a></td>--%>
                                 <td><button class="btn btn-primary view-details-btn" data-order-id="${ord.orderId}">View Details</button></td>
                             </tr>
                         </c:forEach>
