@@ -33,6 +33,11 @@
     h-70{
         height: 70%;
     }
+    .w-100{
+        width: 66% !important;
+        margin-left: 43px;
+        margin-top: 40px;
+    }
 
 
 
@@ -89,7 +94,7 @@
                 <div class="row g-4">
                     <div class="col-xl-3">
                         <div class="input-group w-100 mx-auto d-flex">
-                            <form action="searchServlet" method="get">
+                            <form action="searchServlet" method="get" style="display: flex;">
                                 <input type="search" class="form-control" id="inputModalSearch"
                                        name="search" placeholder="Search ..." list="datalist1">
                                 <datalist id="datalist1">
@@ -265,7 +270,7 @@
 
                         <div class="row g-4 justify-content-center" id="content-pro" >
                             <c:forEach var="pro" items="${listP}">
-                                <div id="show-pro" style="padding: 20px" class="col-md-6 col-lg-6 col-xl-4" >
+                                <div id="show-pro" style="padding: 20px; height: 500px" class="col-md-6 col-lg-6 col-xl-4" >
                                     <div class="rounded position-relative fruite-item ">
                                         <div class="fruite-img">
                                             <a href="./shopDetail?pid=${pro.productId}" ><img src="${pro.img}"  class="img-fluid w-100 rounded-top " alt=""></a>
