@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <body>
 <!-- Spinner Start -->
@@ -72,11 +71,16 @@
                                 <p class="card-text">Giảm: ${coupon.discountValue} %</p>
                                 <p class="card-text">Tối đa: ${coupon.maxDiscountValue} $</p>
                                 <p class="card-text">Đơn tối thiểu: ${coupon.minTotalValue} $</p>
-                                <form id="couponForm${coupon.id}" method="post" action="${pageContext.request.contextPath}/CouponServlet" class="d-flex justify-content-center" onsubmit="saveCoupon(event, ${coupon.id})">
+                                <form id="couponForm${coupon.coupon_id}" method="post" action="${pageContext.request.contextPath}/CouponServlet" class="d-flex justify-content-center" onsubmit="saveCoupon(event, ${coupon.coupon_id})">
                                     <input type="hidden" name="customer_id" value="${customer.user_id}">
-                                    <input type="hidden" name="coupon_id" value="${coupon.id}">
-                                    <button class="btn btn-primary" type="submit" >Lưu mã</button>
+                                    <input type="hidden" name="coupon_id" value="${coupon.coupon_id}">
+                                    <button class="btn btn-primary" type="submit">Lưu Mã</button>
                                 </form>
+                                <c:if test="${savedCoupons.contains(coupon.coupon_id)}">
+                                    <script>
+                                        updateCouponButton(${coupon.coupon_id});
+                                    </script>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -112,6 +116,8 @@
 <script src="js/main.js"></script>
 
 <script>
+    var savedCoupons = [];  // Mảng lưu trạng thái đã lưu của từng mã giảm giá
+
     function saveCoupon(event, couponId) {
         event.preventDefault();
         var form = $('#couponForm' + couponId);
@@ -121,14 +127,27 @@
             data: form.serialize(),
             success: function(response) {
                 alert('Coupon saved successfully!');
-                // Optionally, you can update the UI or show a message to the user
+                savedCoupons.push(couponId);  // Thêm couponId vào mảng đã lưu
+
+                // Cập nhật nút và thông báo
+                updateCouponButton(couponId);
             },
             error: function() {
                 alert('Error saving coupon.');
             }
         });
     }
+
+    // Hàm cập nhật nút và thông báo
+    function updateCouponButton(couponId) {
+        var form = $('#couponForm' + couponId);
+        var button = form.find('button[type="submit"]');
+        button.prop('disabled', true);  // Vô hiệu hóa nút
+        button.text('Đã Lưu');  // Thay đổi văn bản của nút
+        button.removeClass('btn-primary').addClass('btn-secondary');  // Thay đổi lớp để màu sắc khác nhau (tùy chọn)
+    }
 </script>
+
 
 </body>
 </html>

@@ -19,14 +19,17 @@ public class CouponServlet extends HttpServlet {
         CouponDAO couponDAO = new CouponDAO();
         List<Coupon> couponList = couponDAO.getAllCoupons();
         request.setAttribute("couponList", couponList);
+
         HttpSession session = request.getSession();
         Customer cus = (Customer) session.getAttribute("customer");
         request.setAttribute("customer",cus);
+
         System.out.println(cus);
         request.getRequestDispatcher("/WEB-INF/coupon.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         int customerId = Integer.parseInt(request.getParameter("customer_id"));
         int couponId = Integer.parseInt(request.getParameter("coupon_id"));
 
@@ -34,20 +37,19 @@ public class CouponServlet extends HttpServlet {
         boolean hasUsed = couponDAO.hasUserUsedCoupon(customerId, couponId);
 
         if (hasUsed) {
-            request.setAttribute("message", "Bạn đã sài mã này.");
+            request.setAttribute("message", "Bạn đã sài mã này");
         } else {
             couponDAO.recordCouponUsage(customerId, couponId);
-            request.setAttribute("message", "Lưu mã thành công.");
+            request.setAttribute("message", "Lưu mã thành công");
 
             HttpSession session = request.getSession();
             Coupon savedCoupon = couponDAO.getCouponById(couponId);  // Get the saved coupon details
             session.setAttribute("savedCoupon", savedCoupon);  // Save the coupon in the session
-
         }
 
         List<Coupon> couponList = couponDAO.getAllCoupons();
         request.setAttribute("couponList", couponList);
         request.getRequestDispatcher("/WEB-INF/coupon.jsp").forward(request, response);
     }
-
 }
+

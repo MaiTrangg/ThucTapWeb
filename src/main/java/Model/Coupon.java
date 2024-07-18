@@ -3,7 +3,7 @@ package Model;
 import java.math.BigDecimal;
 
 public class Coupon {
-    private int id;
+    private int coupon_id;
     private String code;
     private String discountType;
     private BigDecimal discountValue;
@@ -27,12 +27,20 @@ public class Coupon {
 //    }
 // Getters and setters
 
-    public int getId() {
-        return id;
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+
+    public int getCoupon_id() {
+        return coupon_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCoupon_id(int coupon_id) {
+        this.coupon_id = coupon_id;
     }
 
     public String getCode() {
@@ -73,5 +81,17 @@ public class Coupon {
 
     public void setMinTotalValue(BigDecimal minTotalValue) {
         this.minTotalValue = minTotalValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "coupon_id=" + coupon_id +
+                ", code='" + code + '\'' +
+                ", discountType='" + discountType + '\'' +
+                ", discountValue=" + discountValue +
+                ", maxDiscountValue=" + maxDiscountValue +
+                ", minTotalValue=" + minTotalValue +
+                '}';
     }
 }
