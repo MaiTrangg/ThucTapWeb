@@ -51,7 +51,7 @@
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
                             <a href="cart" class="dropdown-item ${currentPage eq 'cart' ? 'active' : ''}">Giỏ hàng</a>
                             <a href="checkout" class="dropdown-item ${currentPage eq 'checkout' ? 'active' : ''}">Thanh toán</a>
-                            <a href="testimonial" class="dropdown-item ${currentPage eq 'testimonial' ? 'active' : ''}">Đánh giá</a>
+<%--                            <a href="testimonial" class="dropdown-item ${currentPage eq 'testimonial' ? 'active' : ''}">Đánh giá</a>--%>
                             <%-- <a href="404.html" class="dropdown-item">404 Page</a> --%>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                                 Chào ${customer.username}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>
+<%--                                <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>--%>
                                 <li><a class="dropdown-item" href="userOrdersServlet">Đơn hàng của tôi</a></li>
                                 <li><a class="dropdown-item" href="changePass">Đổi mật khẩu</a></li>
                                 <li><a class="dropdown-item" href="logoutServlet">Đăng xuất</a></li>
