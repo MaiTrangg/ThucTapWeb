@@ -4,9 +4,17 @@ let MY_BANK = {
 };
 
 function parseCurrency(currency) {
-    // L?y t?t c? các s? t? chu?i và gi? nguyên d?u ch?m
-    return currency.replace(/[^\d]/g, '');
+    // L?y t?t c? các s? t? chu?i, gi? l?i d?u ch?m ??u tiên và b? t?t c? các s? sau d?u ch?m
+    let cleaned = currency.replace(/[^\d.]/g, ''); // Gi? l?i s? và d?u ch?m
+    let dotIndex = cleaned.indexOf('.'); // Tìm v? trí c?a d?u ch?m ??u tiên
+
+    if (dotIndex !== -1) {
+        cleaned = cleaned.substring(0, dotIndex); // L?y ph?n chu?i tr??c d?u ch?m
+    }
+
+    return cleaned;
 }
+
 
 function getFormattedNumberString(number) {
     return new Intl.NumberFormat('vi-VN').format(number).replace(/,/g, '.');
@@ -18,41 +26,61 @@ let initialDataLength = 0; // Variable to store the initial length of data.data
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    $('#payment').change(function (e) {
-        if ($(this).val() === '3') {
-            var modal = document.getElementById('qrModal');
-            var img = document.getElementById('QRCODE-Img');
-            var paidPrice = parseCurrency(document.getElementById('totalCost').textContent); // L?y giá tr? t? #totalCost
-            var paidContent = "Chuyen Khoan"; // L?y giá tr? t? #nameConsignee
-            if(!checkPhone() || !checkNote() || !checkUsername()){
+    document.getElementById('placeOrderButton').addEventListener('click', function(event) {
+        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        event.preventDefault(); // Ng?n ch?n hành vi m?c ??nh c?a nút "Place Order"
 
-            }
+        if (selectedPaymentMethod === 'QR') {
+            // Hi?n th? modal ch?a mã QR
+            // var modal = document.getElementById('qrModal');
+            // modal.style.display = 'flex';
 
-            // Hi?n th? modal
-            modal.style.display = 'flex';
-
-            // ??t ???ng d?n QR code
-            var qrUrl = `https://img.vietqr.io/image/vietinbank-104873782654-compact2.jpg?amount=${paidPrice}&addInfo=${paidContent}&accountName=${paidContent}`;
-            img.src = qrUrl;
-
-
-            let checkInterval; // Bi?n toàn c?c ?? l?u ID c?a setInterval
-
-            setTimeout(() => {
-                checkInterval = setInterval(async () => {
-                    const isPaid = await checkPay(paidPrice, paidContent);
-                    if (isPaid) {
-                        clearInterval(checkInterval); // D?ng ki?m tra khi thanh toán thành công
-                    }
-                }, 1000);
-            }, 20000);
-
-            // ?n scrollbar trên body
-            document.body.style.overflow = 'hidden';
-
-            // ?n scrollbar trên body
+            // G?i hàm ?? t?o mã QR (ví d? generateQRCode() ho?c thêm mã QRcode.js)
+            generateQRCode();
+        } else if (selectedPaymentMethod === 'COD') {
+            // G?i form ??n checkoutServlet
+            document.getElementById('checkout-form').submit();
         }
     });
+        // if ($(this).val() === '3') {
+    // document.getElementById('qr').addEventListener("click", function (e){
+
+    function generateQRCode() {
+        var modal = document.getElementById('qrModal');
+        var img = document.getElementById('QRCODE-Img');
+        var paidPrice = parseCurrency(document.getElementById('totalAmount').textContent); // L?y giá tr? t? #totalCost
+        // var paidPrice = parseCurrency(totalAmount);
+        var paidContent = "Chuyen Khoan"; // L?y giá tr? t? #nameConsignee
+        // if(!checkPhone() || !checkNote() || !checkUsername()){
+        //
+        // }
+
+        // Hi?n th? modal
+        modal.style.display = 'flex';
+
+        // ??t ???ng d?n QR code
+        var qrUrl = `https://img.vietqr.io/image/vietinbank-104873782654-compact2.jpg?amount=${paidPrice}&addInfo=${paidContent}&accountName=${paidContent}`;
+        img.src = qrUrl;
+
+
+        let checkInterval; // Bi?n toàn c?c ?? l?u ID c?a setInterval
+
+        setTimeout(() => {
+            checkInterval = setInterval(async () => {
+                const isPaid = await checkPay(paidPrice, paidContent);
+                if (isPaid) {
+                    clearInterval(checkInterval); // D?ng ki?m tra khi thanh toán thành công
+                }
+            }, 1000);
+        }, 20000);
+
+        // ?n scrollbar trên body
+        document.body.style.overflow = 'hidden';
+    }
+
+            // ?n scrollbar trên body
+
+    // });
 
     // X? lý ?óng modal khi click vào nút ?óng (x)
 
@@ -75,7 +103,7 @@ async function checkPay(total, content) {
     }
 
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxpBIa6h525abwSBq3VdWg-ZAoVgf1EplAeJY4vquXIP2CvA1PNqood1nG9uGsXGSo0bQ/exec');
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwrxIK2QO8awi06Fmaq8EpB2sG6S619zVHvk48oGAf3WjvU2QdfxFSK-e8EtM5Bcw/exec');
         const data = await response.json();
 
         if (initialDataLength === 0) {
@@ -93,8 +121,8 @@ async function checkPay(total, content) {
             console.log(`Giá tr? data.data.length khi ?ã chuy?n kho?n thành công: ${data.data.length}`);
             if (!isSuccess) {
                 alert('Thanh toán thành công');
-                document.getElementById('payment').value = '3'; // ??t ph??ng th?c thanh toán thành 3
-                document.getElementById('checkoutform').submit(); // G?i form
+                // document.getElementById('payment').value = '3'; // ??t ph??ng th?c thanh toán thành 3
+                document.getElementById('checkout-form').submit(); // G?i form
                 isSuccess = true; // ?ánh d?u r?ng thông báo ?ã ???c g?i
             }
             return true;
@@ -105,6 +133,8 @@ async function checkPay(total, content) {
         console.error('ERROR', error);
         return false;
     }
+
+
 }
 
 

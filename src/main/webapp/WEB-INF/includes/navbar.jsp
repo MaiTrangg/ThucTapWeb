@@ -20,6 +20,7 @@
                 <a href="#" class="text-white"><small class="text-white mx-2">Chính sách bảo mật</small>/</a>
                 <a href="#" class="text-white"><small class="text-white mx-2">Điều khoản sử dụng</small>/</a>
                 <a href="#" class="text-white"><small class="text-white ms-2">Bán hàng và Hoàn trả</small></a>
+
             </div>
         </div>
     </div>
@@ -83,7 +84,8 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>
-                                <li><a class="dropdown-item" href="orders">Đơn hàng của tôi</a></li>
+                                <li><a class="dropdown-item" href="userOrdersServlet">Đơn hàng của tôi</a></li>
+<%--                                <li><a class="dropdown-item" href="orders">Đơn hàng của tôi</a></li>--%>
                                 <li><a class="dropdown-item" href="changePass">Đổi mật khẩu</a></li>
                                 <li><a class="dropdown-item" href="logoutServlet">Đăng xuất</a></li>
                             </ul>
