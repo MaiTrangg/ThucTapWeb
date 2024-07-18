@@ -125,8 +125,13 @@
             </table>
         </div>
         <div class="mt-5">
-            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+            <select class="border-0 border-bottom rounded me-5 py-3 mb-4" name="couponCode" id="couponCode">
+                <option value="" disabled selected>Select a coupon</option>
+                <c:forEach items="${listCoupon}" var="coupon">
+                    <option value="${coupon.code}">${coupon.code}</option>
+                </c:forEach>
+            </select>
+            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button" id="applyCoupon">Apply Coupon</button>
         </div>
         <div class="row g-4 justify-content-end">
             <div class="col-8"></div>
@@ -139,15 +144,14 @@
                             <p class="mb-0" id="totalPrice-first">${order.total()}</p>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Shipping</h5>
+                            <h5 class="mb-0 me-4">Discount:</h5>
                             <div class="">
-                                <p class="mb-0">Flat rate: $3.00</p>
+                                <p class="mb-0" id="discountAmount">0.00</p>
                             </div>
                         </div>
-                        <p class="mb-0 text-end">Shipping to Ukraine.</p>
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                        <h5 class="mb-0 ps-4 me-4">Total</h5>
+                        <h5 class="mb-0 ps-4 me-4">Total:</h5>
                         <p class="mb-0 pe-4" id="totalPrice-after">${order.total()}</p>
                     </div>
                     <a href="checkLoginServlet"><button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button></a>
@@ -161,24 +165,6 @@
 <!-- Start Footer Section -->
 <c:import url="includes/footer.jsp"></c:import>
 <!-- End Footer Section -->
-
-<!-- Copyright Start -->
-<div class="container-fluid copyright bg-dark py-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-            </div>
-            <div class="col-md-6 my-auto text-center text-md-end text-white">
-                <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Copyright End -->
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
@@ -292,6 +278,38 @@
         };
     });
 </script>
+<script>
+    $(document).ready(function() {
+        // Handle apply coupon
+        $('#applyCoupon').click(function() {
+            var couponCode = $('#couponCode').val();
+            if (!couponCode) {
+                alert('Please select a coupon');
+                return;
+            }
 
+            $.ajax({
+                type: 'POST',
+                url: '/applyCouponServlet',
+                data: {
+                    couponCode: couponCode
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update the discount and total price in the cart
+                        $('#discountAmount').text(response.discountAmount.toFixed(2));
+                        $('#totalPrice-after').text(response.newTotalPrice.toFixed(2));
+                    } else {
+                        alert('Failed to apply coupon: ' + response.message);
+                    }
+                },
+                error: function(xhr, error) {
+                    console.error('Error applying coupon:', error);
+                }
+            });
+        });
+    });
+
+</script>
 </body>
 </html>

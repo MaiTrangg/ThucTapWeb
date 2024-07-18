@@ -54,9 +54,9 @@ public class ad_addproServlet extends HttpServlet {
 			int availablepro = Integer.parseInt(request.getParameter("available"));
 			double pricepro = Double.parseDouble(request.getParameter("price"));
 
-			Part part = request.getPart("image");
+			Part part = request.getPart("img");
 
-			String realPath = request.getServletContext().getRealPath("/images");
+			String realPath = request.getServletContext().getRealPath("/img");
 			String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 
 			File directory = new File(realPath);
@@ -71,7 +71,7 @@ public class ad_addproServlet extends HttpServlet {
 			System.out.println("aa");
 
 			// Lưu đường dẫn ảnh vào cơ sở dữ liệu
-			Product pro = new Product(0, "images/" + File.separator + filename,
+			Product pro = new Product(0, "img/" + File.separator + filename,
 					namepro, descriptionpro, pricepro, pricepro,new Category(categorypro));
 			Timestamp lastUpdated = new Timestamp(System.currentTimeMillis());
 			int proID = new ProductDAO().insertProduct(pro);

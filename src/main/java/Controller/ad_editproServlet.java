@@ -87,7 +87,7 @@ public class ad_editproServlet extends HttpServlet {
             Part part = request.getPart("img");
             System.out.println(part+" part");
             
-            String realPath = request.getServletContext().getRealPath("/images");
+            String realPath = request.getServletContext().getRealPath("/img");
             String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 
             File directory = new File(realPath);
@@ -105,7 +105,7 @@ public class ad_editproServlet extends HttpServlet {
 //            ProductDao.insertProduct(namepro, "images/" + filename, pricepro, availablepro);
             System.out.println(filename+" filename");
             //tạo product mới từ thông tin người dùng cung cấp
-            Product newPro = new Product(idpro,  "images/" +File.separator+ filename,
+            Product newPro = new Product(idpro,  "img/" +File.separator+ filename,
                     namepro, descriptionP,pricepro,pricepro ,new Category(idcate));
             Timestamp lastUpdated = new Timestamp(System.currentTimeMillis());
             Inventory inventory = new Inventory(0, newPro, availablepro,lastUpdated);

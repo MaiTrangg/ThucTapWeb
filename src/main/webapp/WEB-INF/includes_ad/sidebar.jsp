@@ -54,6 +54,13 @@
         <span class="menu-title">Logs</span>
       </a>
     </li>
+
+    <li class="nav-item ${currentPage eq 'managerInvnetory' ? 'active' : ''}">
+      <a class="nav-link" href="managerInvenServlet">
+        <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+        <span class="menu-title">Manager Inventory</span>
+      </a>
+    </li>
    <!--  <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
         <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>

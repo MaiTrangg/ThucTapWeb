@@ -1,5 +1,7 @@
 package Model;
 
+import DAO.ProductDAO;
+
 public class Product {
 	private int productId;
 	private String img;
@@ -19,6 +21,12 @@ public class Product {
 		this.sellingPrice = sellingPrice;
 //		this.available = available;
 		this.category = category;
+	}
+
+	public Product(int productId, String img, String name) {
+		this.productId = productId;
+		this.img = img;
+		this.name = name;
 	}
 
 	public void setProductId(int productId) {
@@ -49,7 +57,30 @@ public class Product {
 		return sellingPrice;
 	}
 
-//	public int getAvailable() {
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescriptionP(String descriptionP) {
+		this.descriptionP = descriptionP;
+	}
+
+	public void setOriginalPrice(double originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
+	public void setSellingPrice(double sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	//	public int getAvailable() {
 //		return available;
 //	}
 
@@ -75,6 +106,7 @@ public class Product {
 		return category;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -92,4 +124,7 @@ public class Product {
 //	public void setAvailable(int available) {
 //		this.available = available;
 //	}
+public static void main(String[] args) {
+
+}
 }
