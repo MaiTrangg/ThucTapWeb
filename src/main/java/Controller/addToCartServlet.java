@@ -14,10 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import DAO.LogDao;
 import DAO.ProductDAO;
-import Model.ILog;
-import Model.OrderDetail;
-import Model.Order;
-import Model.Product;
+import DAO.CouponDAO;
+import Model.*;
 
 /**
  * Servlet implementation class addToCartServlet
@@ -39,6 +37,10 @@ public class addToCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		List<Coupon> listCoupon = CouponDAO.getCoupons();
+		System.out.println(listCoupon);
+		request.setAttribute("listCoupon",listCoupon);
+
 		System.out.println("da vao servlet addtocart");
 		HttpSession session = request.getSession();
 		int idpro = Integer.parseInt(request.getParameter("idpro"));
@@ -88,6 +90,7 @@ public class addToCartServlet extends HttpServlet {
 
 			request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
 		}
+
 	}
 
 	/**

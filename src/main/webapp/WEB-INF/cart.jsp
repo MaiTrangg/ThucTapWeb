@@ -128,7 +128,7 @@
 <%--            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="${savedCoupon.code}" />--%>
             <select class="border-0 border-bottom rounded me-5 py-3 mb-4" name="couponCode">
                 <option value="" disabled selected>Select a coupon</option>
-                <c:forEach items="${sessionScope.savedCoupons}" var="coupon">
+                <c:forEach items="${listCoupon}" var="coupon">
                     <option value="${coupon.code}">${coupon.code}</option>
                 </c:forEach>
             </select>
