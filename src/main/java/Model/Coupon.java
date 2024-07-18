@@ -1,16 +1,16 @@
 package Model;
 
-import java.math.BigDecimal;
+//import java.math.Double;
 
 public class Coupon {
     private int coupon_id;
     private String code;
     private String discountType;
-    private BigDecimal discountValue;
-    private BigDecimal maxDiscountValue;
-    private BigDecimal minTotalValue;
+    private Double discountValue;
+    private Double maxDiscountValue;
+    private Double minTotalValue;
 
-    public Coupon( String code, String discountType, BigDecimal discountValue, BigDecimal maxDiscountValue, BigDecimal minTotalValue) {
+    public Coupon( String code, String discountType, Double discountValue, Double maxDiscountValue, Double minTotalValue) {
         //this.id = id;
         this.code = code;
         this.discountType = discountType;
@@ -23,7 +23,7 @@ public class Coupon {
 
     }
 
-//    public Coupon(String discount40, String percentage, BigDecimal bigDecimal, BigDecimal bigDecimal1, BigDecimal bigDecimal2) {
+//    public Coupon(String discount40, String percentage, Double Double, Double Double1, Double Double2) {
 //    }
 // Getters and setters
 
@@ -59,27 +59,27 @@ public class Coupon {
         this.discountType = discountType;
     }
 
-    public BigDecimal getDiscountValue() {
+    public Double getDiscountValue() {
         return discountValue;
     }
 
-    public void setDiscountValue(BigDecimal discountValue) {
+    public void setDiscountValue(Double discountValue) {
         this.discountValue = discountValue;
     }
 
-    public BigDecimal getMaxDiscountValue() {
+    public Double getMaxDiscountValue() {
         return maxDiscountValue;
     }
 
-    public void setMaxDiscountValue(BigDecimal maxDiscountValue) {
+    public void setMaxDiscountValue(Double maxDiscountValue) {
         this.maxDiscountValue = maxDiscountValue;
     }
 
-    public BigDecimal getMinTotalValue() {
+    public Double getMinTotalValue() {
         return minTotalValue;
     }
 
-    public void setMinTotalValue(BigDecimal minTotalValue) {
+    public void setMinTotalValue(Double minTotalValue) {
         this.minTotalValue = minTotalValue;
     }
 

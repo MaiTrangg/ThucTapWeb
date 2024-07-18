@@ -13,6 +13,8 @@ import Model.Customer;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Form;
+import util.MaHoa;
+import util.UniqueStringGenerator;
 
 @WebServlet("/LoginGoogleHandler")
 public class LoginGoogleHandler extends HttpServlet {
@@ -39,7 +41,8 @@ public class LoginGoogleHandler extends HttpServlet {
 				customer.setUsername(user.getName());
 				customer.setEmail(user.getEmail());
 				customer.setNumberPhone("");  // Assuming number phone is not available from Google info
-				customer.setPassword(""); // Password should be handled securely if required
+				String pass = MaHoa.toSHA1(UniqueStringGenerator.generateRandomPassword());
+				customer.setPassword(pass);// Password should be handled securely if required
 
 				customerDao.insert(customer);
 			}
