@@ -36,14 +36,45 @@ public class ShippingAddressDAO {
 
         }
     // Lấy shipping address theo order_id
+//    public static ShippingAddress getShippingAddressByOrderId(int order_id) {
+//        String query = "SELECT * FROM shippingaddresses WHERE order_id = ?";
+//        ShippingAddress shippingAddress = null;
+//        try {
+//            con = new JDBCUtil().getConnection();
+//            PreparedStatement pst = con.prepareStatement(query);
+//            pst.setInt(1, order_id);
+//            rs = pst.executeQuery();
+//            if (rs.next()) {
+//                Integer shippingAddressId = rs.getInt("shippingAddress_id");
+//                String province = rs.getString("province");
+//                String district = rs.getString("district");
+//                String commune = rs.getString("commune");
+//                String country = rs.getString("country");
+//                String noteAddress = rs.getString("noteAddress");
+//                shippingAddress = new ShippingAddress(shippingAddressId ,province, district, commune, country, noteAddress);
+//            }
+//            con.close();
+//            pst.close();
+//        } catch (SQLException e) {
+//            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+//            e.printStackTrace();
+//        }
+//        return shippingAddress;
+//    }
+
     public static ShippingAddress getShippingAddressByOrderId(int order_id) {
         String query = "SELECT * FROM shippingaddresses WHERE order_id = ?";
         ShippingAddress shippingAddress = null;
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
         try {
             con = new JDBCUtil().getConnection();
-            PreparedStatement pst = con.prepareStatement(query);
+            pst = con.prepareStatement(query);
             pst.setInt(1, order_id);
             rs = pst.executeQuery();
+
             if (rs.next()) {
                 Integer shippingAddressId = rs.getInt("shippingAddress_id");
                 String province = rs.getString("province");
@@ -51,14 +82,33 @@ public class ShippingAddressDAO {
                 String commune = rs.getString("commune");
                 String country = rs.getString("country");
                 String noteAddress = rs.getString("noteAddress");
-                shippingAddress = new ShippingAddress(shippingAddressId ,province, district, commune, country, noteAddress);
+                shippingAddress = new ShippingAddress(shippingAddressId, province, district, commune, country, noteAddress);
+                System.out.println("Shipping address found: " + shippingAddress.toString());
+            } else {
+                System.out.println("No shipping address found for order_id: " + order_id);
             }
-            con.close();
-            pst.close();
         } catch (SQLException e) {
             System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return shippingAddress;
     }
+
+
+
+    public static void main(String[] args) {
+        ShippingAddressDAO s = new ShippingAddressDAO();
+        System.out.println(s.getShippingAddressByOrderId(2));
+    }
+
+
+
 }

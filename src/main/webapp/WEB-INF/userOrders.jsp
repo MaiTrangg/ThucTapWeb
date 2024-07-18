@@ -1,4 +1,5 @@
-<%--
+<%@ page import="Model.Order" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Thanh Truc
   Date: 17-Jul-24
@@ -66,42 +67,59 @@
                         <p class="mb-4">Danh sách các đơn hàng gần đây của bạn.</p>
                     </div>
                 </div>
-<%--                <div class="col-12">--%>
+                <div class="col-12">
                     <table class="table table-bordered">
                         <thead>
-                        <c:if test="${showOrders==null}">
-                                null
-                        </c:if>
-
                         <tr>
                             <th>Order ID</th>
                             <th>Ngày đặt hàng</th>
                             <th>Trạng thái đơn</th>
                             <th>Tổng cộng</th>
                             <th>Ghi chú</th>
-                            <th>Chi tiết đơn</th>
+                            <th>Hủy đơn</th>
+                            <th>Chi tiết</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="r" items="${showOrders}">
+                        <c:forEach var="ord" items="${showOrders}">
                             <tr>
-                                <td>${r.orderId}</td>
-                                <fmt:formatDate value="${r.dateOrder}" pattern="dd/MM/yyyy HH:mm:ss" />
-                                <td>${r.status}</td>
-                                <td>${r.noteOrder}</td>
-                                <td>${r.total}</td>
-                                <td></td>
-<%--                                <td><a href="orderDetails?orderId=${order.id}" class="btn btn-primary">View Details</a></td>--%>
+                                <td>${ord.orderId}</td>
+                                <td><fmt:formatDate value="${ord.dateOrder}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                <td>${ord.statusOrder}</td>
+                                <td><fmt:formatNumber value="${ord.totalMoney}" pattern="#,##0'đ'" /></td>
+                                <td>${ord.noteOrder}</td>
+                                <td><button class="btn btn-primary" style="background-color: #FF6A6A">Hủy</button></td>
+                                    <%--                                <td><a href="orderDetails?orderId=${ord.orderId}" class="btn btn-primary">View Details</a></td>--%>
+                                <td><button class="btn btn-primary view-details-btn" data-order-id="${ord.orderId}">View Details</button></td>
                             </tr>
                         </c:forEach>
+                        <c:if test="${empty showOrders}">
+                            <tr>
+                                <td colspan="6" class="text-center">No orders found.</td>
+                            </tr>
+                        </c:if>
                         </tbody>
                     </table>
-<%--                </div>--%>
+                </div>
             </div>
+            <!-- Container for order details -->
+            <div id="order-details-container" class="mt-5"></div>
         </div>
     </div>
 </div>
 <!-- Orders End -->
+
+<script>
+    $(document).ready(function() {
+        $('.view-details-btn').click(function() {
+            var orderId = $(this).data('order-id');
+            $.get('userOrdersServlet', { orderId: orderId }, function(data) {
+                $('#order-details-container').html(data);
+            });
+        });
+    });
+</script>
+
 
 <!-- Start Footer Section -->
 <c:import url="includes/footer.jsp"></c:import>

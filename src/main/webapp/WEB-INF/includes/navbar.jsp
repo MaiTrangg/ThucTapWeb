@@ -56,7 +56,7 @@
                             <%-- <a href="404.html" class="dropdown-item">404 Page</a> --%>
                         </div>
                     </div>
-                    <a href="contact" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Liên hệ</a>
+                    <a href="CouponServlet" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Mã Giảm Giá</a>
                     <c:if test="${sessionScope.customer.isAdmin == 1}">
                         <a href="./index_adServlet" class="nav-item nav-link">
                             <b style="color: #fff; background: #ffb524; border-radius: 8px; padding: 8px 10px; margin-left: 15px;">Quản lý</b>
@@ -80,12 +80,11 @@
                     <c:if test="${customer != null}">
                         <div class="my-auto dropdown">
                             <a class="dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                chao ${customer.username}
+                                Chào ${customer.username}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>
                                 <li><a class="dropdown-item" href="userOrdersServlet">Đơn hàng của tôi</a></li>
-<%--                                <li><a class="dropdown-item" href="orders">Đơn hàng của tôi</a></li>--%>
                                 <li><a class="dropdown-item" href="changePass">Đổi mật khẩu</a></li>
                                 <li><a class="dropdown-item" href="logoutServlet">Đăng xuất</a></li>
                             </ul>
