@@ -19,14 +19,17 @@ public class CouponServlet extends HttpServlet {
         CouponDAO couponDAO = new CouponDAO();
         List<Coupon> couponList = couponDAO.getAllCoupons();
         request.setAttribute("couponList", couponList);
+
         HttpSession session = request.getSession();
         Customer cus = (Customer) session.getAttribute("customer");
         request.setAttribute("customer",cus);
+
         System.out.println(cus);
         request.getRequestDispatcher("/WEB-INF/coupon.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         int customerId = Integer.parseInt(request.getParameter("customer_id"));
         int couponId = Integer.parseInt(request.getParameter("coupon_id"));
 
