@@ -13,43 +13,84 @@
     <c:import url="includes/head.jsp"></c:import>
 </head>
 <style>
-    .qr-code {
-        display: flex;
-        align-items: center;
-    }
+    /*.qr-code {*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*}*/
+    /*.qr-modal {*/
+    /*    display: none;*/
+    /*    position: fixed;*/
+    /*    z-index: 1;*/
+    /*    left: 0;*/
+    /*    top: 0;*/
+    /*    width: 100%;*/
+    /*    height: 100%;*/
+    /*    overflow: auto;*/
+    /*    background-color: rgb(0, 0, 0);*/
+    /*    background-color: rgba(0, 0, 0, 0.4);*/
+    /*}*/
+    /*.qrModal-content {*/
+    /*    !*background-color: #fefefe;*!*/
+    /*    margin: 100px auto; !* Cách phía trên 100px và tự động căn giữa ngang *!*/
+    /*    padding: 20px;*/
+    /*    !*border: 1px solid #888;*!*/
+    /*    width: 40%;*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*}*/
+    /*.close {*/
+    /*    color: #aaa;*/
+    /*    float: right;*/
+    /*    font-size: 28px;*/
+    /*    font-weight: bold;*/
+    /*}*/
+    /*.close:hover,*/
+    /*.close:focus {*/
+    /*    color: black;*/
+    /*    text-decoration: none;*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+
     .qr-modal {
         display: none;
         position: fixed;
-        z-index: 1;
+        top: 7px;
         left: 0;
-        top: 0;
         width: 100%;
         height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-    .qrModal-content {
-        /*background-color: #fefefe;*/
-        margin: 100px auto; /* Cách phía trên 100px và tự động căn giữa ngang */
-        padding: 20px;
-        /*border: 1px solid #888;*/
-        width: 40%;
-        display: flex;
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
         align-items: center;
     }
+    .qrModal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    .qrModal-content img {
+        width: 400px;
+        height: 500px;
+        margin-top: 19px;
+        margin-left: 0px;
+        border: 5px solid #4CAF50; /* Màu xanh lá cây */
+        border-radius: 10px; /* Bo góc */
+    }
     .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
+        position: absolute;
+        top: 0px;
+        right: 15px;
+        font-size: 24px;
         cursor: pointer;
+        color: #aaa;
     }
+    .close:hover {
+        color: #000;
+    }
+
 
     .btn {
         border-radius: 10px; /* Điều chỉnh giá trị này theo mong muốn */
@@ -71,31 +112,6 @@
         border-radius: 10px; /* Làm tròn các thẻ select */
     }
 </style>
-<%--<style>--%>
-<%--    .qr-modal {--%>
-<%--        position: fixed;--%>
-<%--        top: 0;--%>
-<%--        left: 0;--%>
-<%--        width: 100%;--%>
-<%--        height: 100%;--%>
-<%--        background: rgba(0, 0, 0, 0.5);--%>
-<%--        display: flex;--%>
-<%--        align-items: center;--%>
-<%--        justify-content: center;--%>
-<%--        z-index: 1000;--%>
-<%--    }--%>
-<%--    .qrModal-content {--%>
-<%--        background: #fff;--%>
-<%--        padding: 20px;--%>
-<%--        border-radius: 10px;--%>
-<%--        position: relative;--%>
-<%--    }--%>
-<%--    #closeModal {--%>
-<%--        position: absolute;--%>
-<%--        top: 10px;--%>
-<%--        right: 10px;--%>
-<%--    }--%>
-<%--    </style>--%>
 <body>
 
 <!-- Spinner Start -->
@@ -288,11 +304,7 @@
                                                         <label class="form-check-label" for="paymentCOD">Thanh toán khi nhận hàng</label>
                                                     </div>
                                                 </div>
-                                                <input type="hidden" name="transactionId">
-                                                <input type="hidden" name="description">
-                                                <input type="hidden" name="amount">
-                                                <input type="hidden" name="date">
-                                                <input type="hidden" name="accountNumber">
+
 
                                                 <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                                                     <button type="submit" id="placeOrderButton" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
@@ -301,20 +313,21 @@
                                             </div>
                                         </div>
                                     </form>
-<%--                                    <button id="qr" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">QR CODE</button>--%>
                                 </div>
                             </div>
-<%--                            <div id="qrModal" class="qr-modal">--%>
-<%--                                <div class="qrModal-content">--%>
-
-<%--                                    <img style="width: 400px;height: 500px;margin-top: 30px;margin-left: 80px" id="QRCODE-Img" src="" alt="QR Code">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
+<%--<div id="qrModal" class="qr-modal">--%>
+<%--    <div class="qrModal-content">--%>
+<%--        <img style="width: 400px;height: 500px;margin-top: 30px;margin-left: 80px" id="QRCODE-Img" src="" alt="QR Code">--%>
+<%--    </div>--%>
+<%--</div>--%>
 <div id="qrModal" class="qr-modal">
     <div class="qrModal-content">
-        <img style="width: 400px;height: 500px;margin-top: 30px;margin-left: 80px" id="QRCODE-Img" src="" alt="QR Code">
+        <span class="close" id="closeModal">&times;</span>
+        <img id="QRCODE-Img" src="" alt="QR Code">
     </div>
 </div>
+
+
 
 
 

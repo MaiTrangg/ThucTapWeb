@@ -58,8 +58,8 @@
                     </div>
                     <a href="contact" class="nav-item nav-link ${currentPage eq 'contact' ? 'active' : ''}">Liên hệ</a>
                     <c:if test="${sessionScope.customer.isAdmin == 1}">
-                        <a href="./index_adServlet">
-                            <b>Quản lý</b>
+                        <a href="./index_adServlet" class="nav-item nav-link">
+                            <b style="color: #fff; background: #ffb524; border-radius: 8px; padding: 8px 10px; margin-left: 15px;">Quản lý</b>
                         </a>
                     </c:if>
 
