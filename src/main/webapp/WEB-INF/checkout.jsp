@@ -255,41 +255,41 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                            </th>
-                                                            <td class="py-5">
-                                                                <p class="mb-0 text-dark py-4">Shipping</p>
-                                                            </td>
-                                                            <td colspan="3" class="py-5">
-                                                                <div class="form-check text-start">
-                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-1" name="Shipping-1" value="Shipping">
-                                                                    <label class="form-check-label" for="Shipping-1">Free Shipping</label>
-                                                                </div>
-                                                                <div class="form-check text-start">
-                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">
-                                                                    <label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>
-                                                                </div>
-                                                                <div class="form-check text-start">
-                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">
-                                                                    <label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                            </th>
-                                                            <td class="py-5">
-                                                                <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
-                                                            </td>
-                                                            <td class="py-5"></td>
-                                                            <td class="py-5"></td>
-                                                            <td class="py-5">
-                                                                <div class="py-3 border-bottom border-top">
-                                                                    <p class="mb-0 text-dark">$135.00</p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+<%--                                                        <tr>--%>
+<%--                                                            <th scope="row">--%>
+<%--                                                            </th>--%>
+<%--&lt;%&ndash;                                                            <td class="py-5">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                <p class="mb-0 text-dark py-4">Shipping</p>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            </td>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <td colspan="3" class="py-5">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                <div class="form-check text-start">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-1" name="Shipping-1" value="Shipping">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    <label class="form-check-label" for="Shipping-1">Free Shipping</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                <div class="form-check text-start">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    <label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                <div class="form-check text-start">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    <label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            </td>&ndash;%&gt;--%>
+<%--                                                        </tr>--%>
+<%--                                                        <tr>--%>
+<%--                                                            <th scope="row">--%>
+<%--                                                            </th>--%>
+<%--                                                            <td class="py-5">--%>
+<%--                                                                <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>--%>
+<%--                                                            </td>--%>
+<%--                                                            <td class="py-5"></td>--%>
+<%--                                                            <td class="py-5"></td>--%>
+<%--                                                            <td class="py-5">--%>
+<%--                                                                <div class="py-3 border-bottom border-top">--%>
+<%--                                                                    <p class="mb-0 text-dark">$135.00</p>--%>
+<%--                                                                </div>--%>
+<%--                                                            </td>--%>
+<%--                                                        </tr>--%>
                                                         </tbody>
                                                     </table>
                                                 </div>
