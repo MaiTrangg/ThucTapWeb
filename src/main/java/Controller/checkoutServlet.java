@@ -135,6 +135,7 @@ public class checkoutServlet extends HttpServlet {
 //			PaymentDAO.insertPayment(pay);
 //
 //		}
+			InventoryTransactionDAO.updateStock(order_id);
 			//ghi log
 			ILog log = new LogDao();
 

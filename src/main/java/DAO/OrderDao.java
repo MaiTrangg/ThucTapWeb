@@ -89,35 +89,53 @@ public class OrderDao {
         return orders;
     }
 
-    public static void updateOrderStatus(int orderId, String statusOrder) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = new JDBCUtil().getConnection();
-            String sql = "UPDATE orders SET statusOrder = ? WHERE order_id = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, statusOrder);
-            ps.setInt(2, orderId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+//    public static void updateOrderStatus(int orderId, String statusOrder) {
+//
+//        try (Connection con = new JDBCUtil().getConnection();
+//             PreparedStatement pst = con.prepareStatement(query)) {{
+//
+//            String sql = "UPDATE orders SET statusOrder = ? WHERE order_id = ?";
+//            ps = con.prepareStatement(sql);
+//            ps.setString(1, statusOrder);
+//            ps.setInt(2, orderId);
+//            ps.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (ps != null) {
+//                try {
+//                    ps.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            if (con != null) {
+//                try {
+//                    con.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+public static void updateOrderStatus(int orderId, String statusOrder) {
+    String sql = "UPDATE orders SET statusOrder = ? WHERE order_id = ?";
+    try (Connection con = new JDBCUtil().getConnection();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+
+        pst.setString(1, statusOrder);
+        pst.setInt(2, orderId);
+        int rowsAffected = pst.executeUpdate();
+        if (rowsAffected == 0) {
+            System.err.println("Không cập nhật được đơn hàng với ID: " + orderId);
         }
+
+    } catch (SQLException e) {
+        System.err.println("Lỗi khi cập nhật trạng thái đơn hàng: " + e.getMessage());
     }
+}
+
+
 
 
 //    public static List<Order> getOrdersByCustomerId(int customerId) {

@@ -113,33 +113,64 @@ public class ProductDAO {
         }
         return list;
     }
+//    public static Product getProductByID(int id) {
+//        String query ="select * from products where productID = ? ";
+//        Product product = null;
+//        try {
+//            con = new JDBCUtil().getConnection();
+//            PreparedStatement pst = con.prepareStatement(query);
+//            pst.setInt(1, id);
+//            ResultSet rs = pst.executeQuery();
+//            while(rs.next()) {
+//                product= new Product(
+//                        rs.getInt(1),
+//                        rs.getString(2),
+//                        rs.getString(3),
+//                        rs.getString(4),
+//                        rs.getDouble(5),
+//                        rs.getDouble(6),
+////                        rs.getInt(7),
+//                       CategoryDAO.getCategoryByID(rs.getInt(7)));
+//            }
+//            con.close();
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+//            e.printStackTrace();
+//        }
+//        return product;
+//    }
+
     public static Product getProductByID(int id) {
-        String query ="select * from products where productID = ? ";
+        String query = "SELECT * FROM products WHERE productID = ?";
         Product product = null;
-        try {
-            con = new JDBCUtil().getConnection();
-            PreparedStatement pst = con.prepareStatement(query);
+        try (Connection con = new JDBCUtil().getConnection();
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            // Gán tham số cho câu lệnh SQL
             pst.setInt(1, id);
-            rs = pst.executeQuery();
-            while(rs.next()) {
-                product= new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-//                        rs.getInt(7),
-                       CategoryDAO.getCategoryByID(rs.getInt(7)));
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    // Lấy dữ liệu từ ResultSet
+                    product = new Product(
+                            rs.getInt("productID"),
+                            rs.getString("img"),
+                            rs.getString("nameProduct"),
+                            rs.getString("descriptionP"),
+                            rs.getDouble("originalPrice"),
+                            rs.getDouble("sellingPrice"),
+                            CategoryDAO.getCategoryByID(rs.getInt("categoryID")) // Sử dụng tên cột
+                    );
+                }
             }
-            con.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
             e.printStackTrace();
         }
         return product;
     }
+
     public static Category getCategory( int cid){
         try {
             Connection connection = JDBCUtil.getConnection();
