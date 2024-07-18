@@ -39,6 +39,7 @@ public class checkLoginServlet extends HttpServlet {
 
 			request.getRequestDispatcher("/WEB-INF/checkout.jsp").forward(request, response);
 		}
+
 	}
 
 	/**
@@ -47,6 +48,7 @@ public class checkLoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+
 	}
 
 }

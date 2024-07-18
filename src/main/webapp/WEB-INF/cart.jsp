@@ -125,7 +125,13 @@
             </table>
         </div>
         <div class="mt-5">
-            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
+<%--            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="${savedCoupon.code}" />--%>
+            <select class="border-0 border-bottom rounded me-5 py-3 mb-4" name="couponCode">
+                <option value="" disabled selected>Select a coupon</option>
+                <c:forEach items="${sessionScope.savedCoupons}" var="coupon">
+                    <option value="${coupon.code}">${coupon.code}</option>
+                </c:forEach>
+            </select>
             <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
         </div>
         <div class="row g-4 justify-content-end">
