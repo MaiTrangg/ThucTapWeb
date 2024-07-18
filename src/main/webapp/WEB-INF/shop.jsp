@@ -15,6 +15,8 @@
 
 </head>
 <style>
+    /* General styles */
+
     .highlighted {
         color: var(--bs-secondary);; /* Màu chữ của liên kết được highlight */
     }
@@ -31,6 +33,7 @@
     h-70{
         height: 70%;
     }
+
 
 
 </style>
@@ -263,10 +266,10 @@
 
                         <div class="row g-4 justify-content-center" id="content-pro" >
                             <c:forEach var="pro" items="${listP}">
-                                <div id="show-pro" class="col-md-6 col-lg-6 col-xl-4" >
+                                <div id="show-pro" style="padding: 20px" class="col-md-6 col-lg-6 col-xl-4" >
                                     <div class="rounded position-relative fruite-item ">
                                         <div class="fruite-img">
-                                            <a href="./shopDetail?pid=${pro.productId}"><img src="${pro.img}" class="img-fluid w-100 rounded-top " alt=""></a>
+                                            <a href="./shopDetail?pid=${pro.productId}" ><img src="${pro.img}"  class="img-fluid w-100 rounded-top " alt=""></a>
 
                                         </div>
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Food</div>
