@@ -1,6 +1,6 @@
 package DAO;
 
-import java.math.BigDecimal;
+//import java.math.Double;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +19,9 @@ public class CouponDAO {
 
             ps.setString(1, coupon.getCode());
             ps.setString(2, coupon.getDiscountType());
-            ps.setBigDecimal(3, coupon.getDiscountValue());
-            ps.setBigDecimal(4, coupon.getMaxDiscountValue());
-            ps.setBigDecimal(5, coupon.getMinTotalValue());
+            ps.setDouble(3, coupon.getDiscountValue());
+            ps.setDouble(4, coupon.getMaxDiscountValue());
+            ps.setDouble(5, coupon.getMinTotalValue());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -42,9 +42,9 @@ public class CouponDAO {
                 coupon.setCoupon_id(rs.getInt("coupon_id"));
                 coupon.setCode(rs.getString("code"));
                 coupon.setDiscountType(rs.getString("discount_type"));
-                coupon.setDiscountValue(rs.getBigDecimal("discount_value"));
-                coupon.setMaxDiscountValue(rs.getBigDecimal("max_discount_value"));
-                coupon.setMinTotalValue(rs.getBigDecimal("min_total_value"));
+                coupon.setDiscountValue(rs.getDouble("discount_value"));
+                coupon.setMaxDiscountValue(rs.getDouble("max_discount_value"));
+                coupon.setMinTotalValue(rs.getDouble("min_total_value"));
                 coupons.add(coupon);
             }
         } catch (SQLException e) {
@@ -95,9 +95,9 @@ public class CouponDAO {
                     coupon.setCoupon_id(resultSet.getInt("coupon_id"));
                     coupon.setCode(resultSet.getString("code"));
                     coupon.setDiscountType(resultSet.getString("discount_type"));
-                    coupon.setDiscountValue(resultSet.getBigDecimal("discount_value"));
-                    coupon.setMaxDiscountValue(resultSet.getBigDecimal("max_discount_value"));
-                    coupon.setMinTotalValue(resultSet.getBigDecimal("min_total_value"));
+                    coupon.setDiscountValue(resultSet.getDouble("discount_value"));
+                    coupon.setMaxDiscountValue(resultSet.getDouble("max_discount_value"));
+                    coupon.setMinTotalValue(resultSet.getDouble("min_total_value"));
                 }
             }
         } catch (SQLException e) {
@@ -120,9 +120,9 @@ public class CouponDAO {
                 coupon.setCoupon_id(rs.getInt("coupon_id"));
                 coupon.setCode(rs.getString("code"));
                 coupon.setDiscountType(rs.getString("discount_type"));
-                coupon.setDiscountValue(rs.getBigDecimal("discount_value"));
-                coupon.setMaxDiscountValue(rs.getBigDecimal("max_discount_value"));
-                coupon.setMinTotalValue(rs.getBigDecimal("min_total_value"));
+                coupon.setDiscountValue(rs.getDouble("discount_value"));
+                coupon.setMaxDiscountValue(rs.getDouble("max_discount_value"));
+                coupon.setMinTotalValue(rs.getDouble("min_total_value"));
                 coupons.add(coupon);
             }
         } catch (SQLException e) {
@@ -131,7 +131,28 @@ public class CouponDAO {
 
         return coupons;
     }
+    public Coupon getCouponByCode(String code) {
+        Coupon coupon = null;
+        try (Connection connection = JDBCUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM coupon WHERE code = ?")) {
+            ps.setString(1, code);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    coupon = new Coupon();
+                    coupon.setCoupon_id(rs.getInt("coupon_id"));
+                    coupon.setCode(rs.getString("code"));
+                    coupon.setDiscountType(rs.getString("discount_type"));
+                    coupon.setDiscountValue(rs.getDouble("discount_value"));
+                    coupon.setMaxDiscountValue(rs.getDouble("max_discount_value"));
+                    coupon.setMinTotalValue(rs.getDouble("min_total_value"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return coupon;
+    }
     public void insertSampleCoupons() {
-       // insertCoupon(new Coupon("DISCOUNT40", "percentage", new BigDecimal("40"), new BigDecimal("40000"), new BigDecimal("100000")));
+       // insertCoupon(new Coupon("DISCOUNT40", "percentage", new Double("40"), new Double("40000"), new Double("100000")));
     }
 }
