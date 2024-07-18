@@ -7,45 +7,42 @@ import java.util.List;
 import java.util.Set;
 
 import DBConnection.JDBCUtil;
-import Model.Customer;
-import Model.Order;
-import Model.OrderDetail;
-import Model.ShippingAddress;
-import Model.Transaction;
+import Model.*;
 
 public class OrderDao {
-    private static Connection con ;
-    private static  PreparedStatement ps = null;
+    private static Connection con;
+    private static PreparedStatement ps = null;
     private static ResultSet rs = null;
-// lưu order vào cơ so dữ liệu và return về id của order vừa lưu
-public static int insertOrder(double totalMoney, Timestamp dateorder, String statusOrder, String noteOrder) {
-    String query ="insert into orders(totalMoney, dateorder, statusOrder, noteOrder) values(?,?,?,?)";
-    int orderID=0;
-    try {
-        con = new JDBCUtil().getConnection();
-        PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        pst.setDouble(1, totalMoney);
+
+    // lưu order vào cơ so dữ liệu và return về id của order vừa lưu
+    public static int insertOrder(double totalMoney, Timestamp dateorder, String statusOrder, String noteOrder) {
+        String query = "insert into orders(totalMoney, dateorder, statusOrder, noteOrder) values(?,?,?,?)";
+        int orderID = 0;
+        try {
+            con = new JDBCUtil().getConnection();
+            PreparedStatement pst = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pst.setDouble(1, totalMoney);
 //            pst.setDate(2, dateorder);
-        pst.setTimestamp(2, dateorder);
-        pst.setString(3, statusOrder);
-        pst.setString(4, noteOrder);
-        pst.executeUpdate();
-        ResultSet generatedKeys = pst.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            orderID = generatedKeys.getInt(1);
+            pst.setTimestamp(2, dateorder);
+            pst.setString(3, statusOrder);
+            pst.setString(4, noteOrder);
+            pst.executeUpdate();
+            ResultSet generatedKeys = pst.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                orderID = generatedKeys.getInt(1);
+            }
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
+            e.printStackTrace();
         }
-        con.close();
-    } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu:");
-        e.printStackTrace();
+        return orderID;
     }
-    return orderID;
-}
 
     public static List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<Order>();
-        String query ="select * from orders ";
+        String query = "select * from orders ";
 
         try {
             con = new JDBCUtil().getConnection();
@@ -133,8 +130,8 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-  
-  try {
+
+        try {
             con = new JDBCUtil().getConnection();
             ps = con.prepareStatement(query);
             ps.setInt(1, customerId);
@@ -176,7 +173,7 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         }
         return orders;
     }
-  
+
 
     public static Set<Integer> getIDProductsOrderedLast3Months() throws SQLException {
         Set<Integer> list = new HashSet<>();
@@ -200,7 +197,6 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
             }
 
 
-
         } catch (SQLException e) {
             System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
         } finally {
@@ -216,8 +212,6 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         return list;
     }
 
-        
-
 
     public static void main(String[] args) {
         List<Order> orders = getAllOrders();
@@ -227,6 +221,75 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
             System.out.println("Danh sách đơn hàng:");
             for (Order order : orders) {
                 System.out.println(order);
+            }
+        }
+
+    }
+
+    public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        String query = "SELECT od.orderDetail_id, od.productID, p.nameProduct AS productName, p.img AS productImage, od.quantity, od.price " +
+                "FROM orderDetails od " +
+                "JOIN store.products p ON od.productID = p.productID " +
+                "WHERE od.order_id = ?";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, orderId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int orderDetailId = rs.getInt("orderDetail_id");
+                int productId = rs.getInt("productID");
+                String productName = rs.getString("productName");
+                String productImage = rs.getString("productImage");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+
+                // Tạo đối tượng Product từ thông tin đã truy vấn
+                Product product = new Product(productId, productName, productImage);
+
+                // Tạo đối tượng OrderDetail từ thông tin đã truy vấn
+                OrderDetail orderDetail = new OrderDetail(orderDetailId, product, quantity, price);
+                orderDetails.add(orderDetail);
+            }
+        } catch (SQLException e) {
+            System.err.println("Database operation error:");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return orderDetails;
+    }
+
+}
+
 
 //    public static Order getOrderById(int orderId) {
 //        Connection con = null;
@@ -288,5 +351,5 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
 //        return order;
 //    }
 
-}
+
 
