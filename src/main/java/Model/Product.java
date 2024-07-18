@@ -23,6 +23,12 @@ public class Product {
 		this.category = category;
 	}
 
+	public Product(int productId, String img, String name) {
+		this.productId = productId;
+		this.img = img;
+		this.name = name;
+	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
