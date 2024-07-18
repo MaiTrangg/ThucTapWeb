@@ -46,19 +46,41 @@ public class ApplyCouponServlet extends HttpServlet {
         response.getWriter().write("{\"success\": true, \"discountAmount\": " + discountAmount + ", \"newTotalPrice\": " + newTotalPrice + "}");
     }
 
-    private double calculateDiscount(double orderTotal, Coupon coupon) {
-        double discountAmount = 0.0;
-        if (coupon.getDiscountType().equals("percentage")) {
-            discountAmount = orderTotal * (coupon.getDiscountValue() / 100);
-        } else if (coupon.getDiscountType().equals("flat")) {
-            discountAmount = coupon.getDiscountValue();
-        }
+//    private double calculateDiscount(double orderTotal, Coupon coupon) {
+//        double discountAmount = 0.0;
+//        if (coupon.getDiscountType().equals("percentage")) {
+//            discountAmount = orderTotal * (coupon.getDiscountValue() / 100);
+//        } else if (coupon.getDiscountType().equals("flat")) {
+//            discountAmount = coupon.getDiscountValue();
+//        }
+//
+//        // Ensure discount does not exceed maximum discount value
+//        if (coupon.getMaxDiscountValue() != null && discountAmount > coupon.getMaxDiscountValue()) {
+//            discountAmount = coupon.getMaxDiscountValue();
+//        }
+//
+//        return discountAmount;
+//    }
+private double calculateDiscount(double orderTotal, Coupon coupon) {
+    double discountAmount = 0.0;
 
-        // Ensure discount does not exceed maximum discount value
-        if (coupon.getMaxDiscountValue() != null && discountAmount > coupon.getMaxDiscountValue()) {
-            discountAmount = coupon.getMaxDiscountValue();
-        }
-
+    // Check if order total meets minimum total value requirement
+    if (orderTotal < coupon.getMinTotalValue()) {
+        System.out.println("Không đủ giá trị tối thiểu để áp dụng mã giảm giá.");
         return discountAmount;
     }
+
+    if (coupon.getDiscountType().equals("percentage")) {
+        discountAmount = orderTotal * (coupon.getDiscountValue() / 100);
+    } else if (coupon.getDiscountType().equals("flat")) {
+        discountAmount = coupon.getDiscountValue();
+    }
+
+    // Ensure discount does not exceed maximum discount value
+    if (coupon.getMaxDiscountValue() != null && discountAmount > coupon.getMaxDiscountValue()) {
+        discountAmount = coupon.getMaxDiscountValue();
+    }
+
+    return discountAmount;
+}
 }
