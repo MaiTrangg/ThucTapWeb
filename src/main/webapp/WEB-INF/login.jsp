@@ -50,12 +50,13 @@
 &approval_prompt=force" class="login-google"><i class="fab fa-google"></i></a>
                         <br> <a href="register" class="login-register">Tạo tài khoản mới</a>
                         <a href="forgotpassword"  class="login-forgotpass" style="margin-left: 20px;">Quên mật khẩu</a>
+                        <p style="color: #e21818">${error}</p>
 
                     </div>
 
 
 
-                        <p style="color: #e21818">${error}</p>
+
 
 
                 </form>

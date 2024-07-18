@@ -2,7 +2,9 @@ package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import DBConnection.JDBCUtil;
 import Model.Customer;
@@ -120,6 +122,7 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         }
     }
 
+
     public static List<Order> getOrdersByCustomerId(int customerId) {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT o.order_id, o.totalMoney, o.dateorder, o.statusOrder, o.noteOrder " +
@@ -130,8 +133,8 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
-        try {
+  
+  try {
             con = new JDBCUtil().getConnection();
             ps = con.prepareStatement(query);
             ps.setInt(1, customerId);
@@ -173,6 +176,47 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         }
         return orders;
     }
+  
+
+    public static Set<Integer> getIDProductsOrderedLast3Months() throws SQLException {
+        Set<Integer> list = new HashSet<>();
+        //lấy tất cả id product có đơn hàng trừ trang thái hủy
+        String query = "SELECT DISTINCT productID " +
+                "FROM orderDetails " +
+                "WHERE order_id IN ( " +
+                "    SELECT order_id " +
+                "    FROM orders " +
+                "    WHERE dateorder >= DATE_SUB(NOW(), INTERVAL 3 MONTH) " +
+                "    AND statusOrder != 'Hủy'" +
+                ")";
+
+        try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(rs.getInt("productID"));
+            }
+
+
+
+        } catch (SQLException e) {
+            System.err.println("Đã xảy ra lỗi khi thao tác với cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Đã xảy ra lỗi khi đóng kết nối: " + e.getMessage());
+            }
+        }
+
+        return list;
+    }
+
+        
 
 
     public static void main(String[] args) {
@@ -183,9 +227,6 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
             System.out.println("Danh sách đơn hàng:");
             for (Order order : orders) {
                 System.out.println(order);
-            }
-        }
-    }
 
 //    public static Order getOrderById(int orderId) {
 //        Connection con = null;

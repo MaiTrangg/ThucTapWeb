@@ -238,6 +238,9 @@
                     </tbody>
                 </table>
 
+             <br>
+            <button onclick="exportTableToExcel('2', 'orders_data')">Export Table Data To Excel File</button>
+
                 <a href="index"><button type="button" class="btn btn-primary">Back to home</button> </a>
             </div>
             <!-- add Modal HTML -->

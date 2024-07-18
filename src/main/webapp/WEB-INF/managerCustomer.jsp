@@ -124,22 +124,22 @@
                     </tbody>
                     
                 </table>
-                <button onclick="exportTableToExcel('1', 'product_data')">Export Table Data To Excel File</button>
+<%--                <button onclick="exportTableToExcel('1', 'product_data')">Export Table Data To Excel File</button>--%>
  
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
+<%--                <div class="clearfix">--%>
+<%--                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>--%>
+<%--                    <ul class="pagination">--%>
+<%--                        <li class="page-item disabled"><a href="#">Previous</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">1</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">2</a></li>--%>
+<%--                        <li class="page-item active"><a href="#" class="page-link">3</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">4</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">5</a></li>--%>
+<%--                        <li class="page-item"><a href="#" class="page-link">Next</a></li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
             </div>
-            <a href="index"><button type="button" class="btn btn-primary">Back to home</button> </a>
+            <a href="index"><button type="button" class="btn btn-primary" style="margin-top: 50px">Back to home</button> </a>
 <!-- ad_addproServlet -->
         </div>
         <!-- add Modal HTML -->
@@ -252,7 +252,7 @@
         
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-         <c:import url="includes_ad/footer.jsp"></c:import>
+<%--         <c:import url="includes_ad/footer.jsp"></c:import>--%>
           <!-- partial -->
         </div>
         <!-- main-panel ends -->

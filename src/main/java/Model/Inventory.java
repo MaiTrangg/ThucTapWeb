@@ -46,4 +46,14 @@ public class Inventory {
     public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "inventoryId=" + inventoryId +
+                ", product=" + product.toString() +
+                ", quantity=" + quantity +
+                ", lastUpdated=" + lastUpdated +
+                '}';
+    }
 }

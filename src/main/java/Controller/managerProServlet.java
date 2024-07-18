@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.CategoryDAO;
+import DAO.InventoryDAO;
 import DAO.ProductDAO;
+import Model.Inventory;
 import Model.Product;
 
 /**
@@ -29,7 +31,8 @@ public class managerProServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("đã vào managerProServerlet");
 		HttpSession session = request.getSession();
-		List<Product> listNew = ProductDAO.getAllProduct();
+		List<Inventory> listNew = InventoryDAO.getAllInventoryPro();
+
 		session.removeAttribute("listP");
 		session.setAttribute("listP", listNew);
 		session.setAttribute("categoryList", new CategoryDAO().getListCategory());
