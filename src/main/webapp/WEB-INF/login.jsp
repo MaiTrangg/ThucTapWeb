@@ -42,12 +42,8 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary" >Đăng nhập</button>
                         <label class="login-loginwith">Đăng nhập với</label><br>
-
-                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid
-&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2FLoginGoogleHandler
-&response_type=code
-&client_id=392101766314-8h4fal0vgp81limr966ebjjfbap114l7.apps.googleusercontent.com
-&approval_prompt=force" class="login-google"><i class="fab fa-google"></i></a>
+<%--                        <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=332128406636362&redirect_uri=http://localhost:8080/LoginFacebookControll" class="login-facebook"><i class="fab fa-facebook"></i> </a>--%>
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/LoginGoogleHandler&response_type=code&client_id=103711909118-kj61sqe0bv8srccvmk7tire0ih1oi87o.apps.googleusercontent.com" class="login-google"><i class="fab fa-google"></i></a>
                         <br> <a href="register" class="login-register">Tạo tài khoản mới</a>
                         <a href="forgotpassword"  class="login-forgotpass" style="margin-left: 20px;">Quên mật khẩu</a>
 

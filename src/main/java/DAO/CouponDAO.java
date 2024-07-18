@@ -107,8 +107,6 @@ public class CouponDAO {
         return coupon;
     }
     public void insertSampleCoupons() {
-          insertCoupon(new Coupon("DISCOUNT40", "percentage", new BigDecimal("40"), new BigDecimal("40000"), new BigDecimal("100000")));
+       // insertCoupon(new Coupon("DISCOUNT40", "percentage", new BigDecimal("40"), new BigDecimal("40000"), new BigDecimal("100000")));
     }
-
-
 }

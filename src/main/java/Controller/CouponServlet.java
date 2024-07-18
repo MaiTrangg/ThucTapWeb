@@ -34,20 +34,19 @@ public class CouponServlet extends HttpServlet {
         boolean hasUsed = couponDAO.hasUserUsedCoupon(customerId, couponId);
 
         if (hasUsed) {
-            request.setAttribute("message", "Bạn đã sài mã này.");
+            request.setAttribute("message", "Bạn đã sài mã này");
         } else {
             couponDAO.recordCouponUsage(customerId, couponId);
-            request.setAttribute("message", "Lưu mã thành công.");
+            request.setAttribute("message", "Lưu mã thành công");
 
             HttpSession session = request.getSession();
             Coupon savedCoupon = couponDAO.getCouponById(couponId);  // Get the saved coupon details
             session.setAttribute("savedCoupon", savedCoupon);  // Save the coupon in the session
-
         }
 
         List<Coupon> couponList = couponDAO.getAllCoupons();
         request.setAttribute("couponList", couponList);
         request.getRequestDispatcher("/WEB-INF/coupon.jsp").forward(request, response);
     }
-
 }
+
