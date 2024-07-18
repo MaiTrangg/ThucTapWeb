@@ -11,6 +11,10 @@
 <html>
 <head>
     <c:import url="includes/head.jsp"></c:import>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 <!-- Spinner Start -->
@@ -56,21 +60,22 @@
 <!-- Coupon Codes Section Start -->
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="row">
                 <c:forEach var="coupon" items="${couponList}">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
                         <div class="card shadow">
                             <div class="card-body">
-                                <h5 class="card-title">${coupon.code}</h5>
-                                <p class="card-text">Discount Type: ${coupon.discountType}</p>
-                                <p class="card-text">Discount Value: ${coupon.discountValue}</p>
-                                <p class="card-text">Max Discount Value: ${coupon.maxDiscountValue}</p>
-                                <p class="card-text">Min Total Value: ${coupon.minTotalValue}</p>
-                                <form method="post" action="${pageContext.request.contextPath}/CouponServlet">
+                                <h5 class="card-title" style="text-align: center; font-family: 'Times New Roman', sans-serif;">${coupon.code}</h5>
+                                <hr>
+                                <p class="card-text" style="display: none;" >Discount Type: ${coupon.discountType}</p>
+                                <p class="card-text">Giảm: ${coupon.discountValue} %</p>
+                                <p class="card-text">Tối đa: ${coupon.maxDiscountValue} $</p>
+                                <p class="card-text">Đơn tối thiểu: ${coupon.minTotalValue} $</p>
+                                <form id="couponForm${coupon.id}" method="post" action="${pageContext.request.contextPath}/CouponServlet" class="d-flex justify-content-center" onsubmit="saveCoupon(event, ${coupon.id})">
                                     <input type="hidden" name="customer_id" value="${customer.user_id}">
                                     <input type="hidden" name="coupon_id" value="${coupon.id}">
-                                    <button class="btn btn-primary" type="submit">Use Coupon</button>
+                                    <button class="btn btn-primary" type="submit" >Lưu mã</button>
                                 </form>
                             </div>
                         </div>
@@ -107,11 +112,21 @@
 <script src="js/main.js"></script>
 
 <script>
-    function copyCouponCode(id) {
-        var copyText = document.getElementById("couponCode" + id);
-        copyText.select();
-        document.execCommand("copy");
-        alert("Copied the coupon code: " + copyText.value);
+    function saveCoupon(event, couponId) {
+        event.preventDefault();
+        var form = $('#couponForm' + couponId);
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(response) {
+                alert('Coupon saved successfully!');
+                // Optionally, you can update the UI or show a message to the user
+            },
+            error: function() {
+                alert('Error saving coupon.');
+            }
+        });
     }
 </script>
 

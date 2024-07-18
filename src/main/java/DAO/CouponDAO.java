@@ -81,7 +81,34 @@ public class CouponDAO {
             e.printStackTrace();
         }
     }
+    public Coupon getCouponById(int couponId) {
+        Coupon coupon = null;
+        String sql = "SELECT * FROM coupon WHERE coupon_id = ?";
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setInt(1, couponId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    coupon = new Coupon();
+                    coupon.setId(resultSet.getInt("coupon_id"));
+                    coupon.setCode(resultSet.getString("code"));
+                    coupon.setDiscountType(resultSet.getString("discount_type"));
+                    coupon.setDiscountValue(resultSet.getBigDecimal("discount_value"));
+                    coupon.setMaxDiscountValue(resultSet.getBigDecimal("max_discount_value"));
+                    coupon.setMinTotalValue(resultSet.getBigDecimal("min_total_value"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return coupon;
+    }
     public void insertSampleCoupons() {
           insertCoupon(new Coupon("DISCOUNT40", "percentage", new BigDecimal("40"), new BigDecimal("40000"), new BigDecimal("100000")));
     }
+
+
 }

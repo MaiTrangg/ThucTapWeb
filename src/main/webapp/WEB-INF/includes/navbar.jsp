@@ -79,7 +79,7 @@
                     <c:if test="${customer != null}">
                         <div class="my-auto dropdown">
                             <a class="dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                chao ${customer.username}
+                                Chào ${customer.username}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>
