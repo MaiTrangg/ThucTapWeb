@@ -83,7 +83,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="profile">Tài khoản của tôi</a></li>
-                                <li><a class="dropdown-item" href="orders">Đơn hàng của tôi</a></li>
+                                <li><a class="dropdown-item" href="userOrdersServlet">Đơn hàng của tôi</a></li>
                                 <li><a class="dropdown-item" href="changePass">Đổi mật khẩu</a></li>
                                 <li><a class="dropdown-item" href="logoutServlet">Đăng xuất</a></li>
                             </ul>

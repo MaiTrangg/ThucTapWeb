@@ -122,6 +122,62 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         }
     }
 
+
+    public static List<Order> getOrdersByCustomerId(int customerId) {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT o.order_id, o.totalMoney, o.dateorder, o.statusOrder, o.noteOrder " +
+                "FROM orders o " +
+                "JOIN transactions t ON o.order_id = t.order_id " +
+                "WHERE t.customer_id = ?";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+  
+  try {
+            con = new JDBCUtil().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, customerId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                double totalMoney = rs.getDouble("totalMoney");
+                Timestamp dateOrder = rs.getTimestamp("dateorder");
+                String statusOrder = rs.getString("statusOrder");
+                String noteOrder = rs.getString("noteOrder");
+
+                // Retrieve transaction and shipping address details
+                Transaction transaction = TransactionDAO.getTransactionByOrderId(orderId);
+                ShippingAddress shippingAddress = ShippingAddressDAO.getShippingAddressByOrderId(orderId);
+                List<OrderDetail> orderDetails = OrderDetailDAO.ListOrderLines(orderId);
+
+                Order order = new Order(orderId, transaction, shippingAddress, dateOrder, orderDetails, totalMoney, statusOrder, noteOrder);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            System.err.println("Database operation error:");
+            e.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return orders;
+    }
+  
+
     public static Set<Integer> getIDProductsOrderedLast3Months() throws SQLException {
         Set<Integer> list = new HashSet<>();
         //lấy tất cả id product có đơn hàng trừ trang thái hủy
@@ -160,9 +216,17 @@ public static int insertOrder(double totalMoney, Timestamp dateorder, String sta
         return list;
     }
 
-    public static void main(String[] args) {
+        
 
-    }
+
+    public static void main(String[] args) {
+        List<Order> orders = getAllOrders();
+        if (orders == null || orders.isEmpty()) {
+            System.out.println("Không có đơn hàng nào.");
+        } else {
+            System.out.println("Danh sách đơn hàng:");
+            for (Order order : orders) {
+                System.out.println(order);
 
 //    public static Order getOrderById(int orderId) {
 //        Connection con = null;
